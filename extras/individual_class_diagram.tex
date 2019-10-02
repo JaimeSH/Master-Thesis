@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Class diagram
+% Author: Salinas Hernández Jaime
+% Version: 1.0 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
+        text centered, anchor=north, text=white, text width=5cm]
+\tikzstyle{comment}=[rectangle, draw=black, rounded corners, fill=green, drop shadow,
+        text centered, anchor=north, text=white, text width=5cm]
+\tikzstyle{myarrow}=[->, >=open triangle 90, thick]
+\tikzstyle{line}=[-, thick]
+        
+
+\begin{tikzpicture}[node distance=2cm]
+    \node (Individual) [abstract, rectangle split, align=left, rectangle split parts=3]
+        {
+            \textbf{Individual}
+            \nodepart{second}list: chromosome \newline 
+            list: mask \newline 
+            list: chromosome\_objects\newline 
+            list: object\_list
+            \nodepart{third}update\_mutation \newline 
+            object\_list\_gen \newline 
+            generate\_xml \newline 
+            read\_xml \newline
+            read\_xml\_tourney \newline
+            assign\_mask \newline
+            combine\_mask \newline
+            get\_fitness \newline
+            generate\_xml\_masked \newline
+            generate\_xml\_tournery \newline
+            generate\_xml\_elite
+        };
+        
+        
+\end{tikzpicture}

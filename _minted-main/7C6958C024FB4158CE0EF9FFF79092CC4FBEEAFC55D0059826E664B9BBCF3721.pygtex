@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{n}{padre1} \PYG{o}{=} \PYG{n}{padre}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{punto\PYGZus{}corte}\PYG{p}{]}
+  \PYG{n}{padre2} \PYG{o}{=} \PYG{n}{padre}\PYG{p}{[}\PYG{n}{punto\PYGZus{}corte}\PYG{p}{,} \PYG{n}{fin}\PYG{p}{]}
+
+  \PYG{n}{madre1} \PYG{o}{=} \PYG{n}{madre}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{punto\PYGZus{}corte}\PYG{p}{]}
+  \PYG{n}{madre2} \PYG{o}{=} \PYG{n}{madre}\PYG{p}{[}\PYG{n}{punto\PYGZus{}corte}\PYG{p}{,} \PYG{n}{fin}\PYG{p}{]}
+
+  \PYG{n}{hijo1} \PYG{o}{=} \PYG{n}{padre1} \PYG{o}{+} \PYG{n}{madre2}
+  \PYG{n}{hijo2} \PYG{o}{=} \PYG{n}{madre1} \PYG{o}{+} \PYG{n}{padre2}
+\end{Verbatim}

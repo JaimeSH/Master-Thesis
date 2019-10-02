@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{n}{many} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{)} \PYG{o}{*} \PYG{n}{per\PYGZus{}cross}
+\end{Verbatim}

@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{class} \PYG{n+nc}{Circle}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+      \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{75}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{75}
+          \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+ \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}  \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}random\PYGZus{}chrom}\PYG{p}{(}\PYG{n}{sl}\PYG{p}{):}
+        \PYG{n}{asl} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{chrom} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{while} \PYG{n}{asl} \PYG{o}{\PYGZlt{}} \PYG{n}{sl}\PYG{p}{:}
+            \PYG{n}{prop} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{k}{if} \PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{prop}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Valid} \PYG{o}{==} \PYG{n+nb+bp}{True}\PYG{p}{:}
+                \PYG{n}{chrom}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{prop}\PYG{p}{)}
+                \PYG{n}{asl} \PYG{o}{+=} \PYG{l+m+mi}{1}
+        \PYG{c+c1}{\PYGZsh{}random.randint(0,len(Composites)\PYGZhy{}1) for p in range(ind\PYGZus{}pieces)}
+        \PYG{k}{return} \PYG{n}{chrom}
+
+ \PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n}{pieces}\PYG{p}{):}
+        \PYG{n}{div\PYGZus{}list} \PYG{o}{=}\PYG{p}{[]}
+        \PYG{k}{while} \PYG{n+nb+bp}{True}\PYG{p}{:}
+            \PYG{n}{div\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{pieces}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{for} \PYG{n}{col} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{)]}
+            \PYG{k}{if} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{div\PYGZus{}list}\PYG{p}{)} \PYG{o}{==} \PYG{n}{pieces}\PYG{p}{:}
+                \PYG{k}{break}
+
+        \PYG{k}{return} \PYG{n}{div\PYGZus{}list}
+\end{Verbatim}

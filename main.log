@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.6)  17 SEP 2019 13:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.6)  2 OCT 2019 12:01
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"d:/Documents/GitHub Projects/Master-Thesis/main.tex"
-(d:/Documents/GitHub Projects/Master-Thesis/main.tex
+**d:/Documents/Clonado/Master-Thesis/main.tex
+(d:/Documents/Clonado/Master-Thesis/main.tex
 LaTeX2e <2018-12-01>
-(d:/Documents/GitHub Projects/Master-Thesis/mitthesis.cls
+(d:/Documents/Clonado/Master-Thesis/mitthesis.cls
 Document Class: mitthesis 1999/10/20
 \vithesis=\count80
 (d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/report.cls
@@ -154,7 +154,7 @@ Package caption3 Info: TeX engine: e-TeX on input line 64.
 )
 \c@subfigure=\count109
 \c@subtable=\count110
-) (d:/Documents/GitHub Projects/Master-Thesis/lgrind.sty
+) (d:/Documents/Clonado/Master-Thesis/lgrind.sty
 Package: lgrind 1997/01/30 v3.4 LGrind environment and supporting stuff
 \lc@unt=\count111
 \ln@xt=\count112
@@ -1240,14 +1240,14 @@ runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > mai
 
 runsystem(del main.aex)...executed.
 
- (d:/Documents/GitHub Projects/Master-Thesis/main.aux (d:/Documents/GitHub Projects/Master-Thesis/cover.aux) (d:/Documents/GitHub Projects/Master-Thesis/contents.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap1.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap2.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap3.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap4.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap5.aux
+ (d:/Documents/Clonado/Master-Thesis/main.aux (d:/Documents/Clonado/Master-Thesis/cover.aux) (d:/Documents/Clonado/Master-Thesis/contents.aux) (d:/Documents/Clonado/Master-Thesis/chap1.aux) (d:/Documents/Clonado/Master-Thesis/chap2.aux) (d:/Documents/Clonado/Master-Thesis/chap3.aux) (d:/Documents/Clonado/Master-Thesis/chap4.aux) (d:/Documents/Clonado/Master-Thesis/chap5.aux
 
 LaTeX Warning: Label `code:dic_individual_piece' multiply defined.
 
 
 LaTeX Warning: Label `equation:error_ang' multiply defined.
 
-) (d:/Documents/GitHub Projects/Master-Thesis/chap6.aux) (d:/Documents/GitHub Projects/Master-Thesis/biblio.aux) (d:/Documents/GitHub Projects/Master-Thesis/appa.aux))
+) (d:/Documents/Clonado/Master-Thesis/chap6.aux) (d:/Documents/Clonado/Master-Thesis/biblio.aux) (d:/Documents/Clonado/Master-Thesis/appa.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 175.
@@ -1317,13 +1317,13 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 175.
 LaTeX Info: Redefining \pageref on input line 175.
 LaTeX Info: Redefining \nameref on input line 175.
- (d:/Documents/GitHub Projects/Master-Thesis/main.out) (d:/Documents/GitHub Projects/Master-Thesis/main.out)
+ (d:/Documents/Clonado/Master-Thesis/main.out) (d:/Documents/Clonado/Master-Thesis/main.out)
 \@outlinefile=\write8
 \openout8 = `main.out'.
 
 \openout2 = `cover.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/cover.tex
+ (d:/Documents/Clonado/Master-Thesis/cover.tex
 <./logos.png, id=312, 125.7498pt x 113.7048pt>
 File: ./logos.png Graphic file (type png)
 <use ./logos.png>
@@ -1351,7 +1351,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 141.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 141.
- (d:/Documents/GitHub Projects/Master-Thesis/abstract.tex [1
+ (d:/Documents/Clonado/Master-Thesis/abstract.tex [1
 
 
 {d:/Program Files/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./logos.png>] [2]) [3
@@ -1361,7 +1361,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ]
 \openout2 = `contents.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/contents.tex (d:/Documents/GitHub Projects/Master-Thesis/main.toc [1
+ (d:/Documents/Clonado/Master-Thesis/contents.tex (d:/Documents/Clonado/Master-Thesis/main.toc [1
 
 
 ]
@@ -1375,21 +1375,21 @@ This may cause the page layout to be inconsistent, however.
 \tf@toc=\write9
 \openout9 = `main.toc'.
 
- [3] (d:/Documents/GitHub Projects/Master-Thesis/main.lof
+ [3] (d:/Documents/Clonado/Master-Thesis/main.lof
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [4])
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [5] (d:/Documents/GitHub Projects/Master-Thesis/main.lot)
+ [5] (d:/Documents/Clonado/Master-Thesis/main.lot)
 \tf@lot=\write11
 \openout11 = `main.lot'.
 
 ) [6]
 \openout2 = `chap1.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap1.tex
+ (d:/Documents/Clonado/Master-Thesis/chap1.tex
 Capitulo 1.
 
 Underfull \vbox (badness 7133) has occurred while \output is active []
@@ -1431,7 +1431,7 @@ Underfull \vbox (badness 3439) has occurred while \output is active []
  [5]) [6]
 \openout2 = `chap2.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap2.tex
+ (d:/Documents/Clonado/Master-Thesis/chap2.tex
 Capitulo 2.
 [7
 
@@ -1443,13 +1443,13 @@ File: img/ga_life_cycle.png Graphic file (type png)
 <use img/ga_life_cycle.png>
 Package pdftex.def Info: img/ga_life_cycle.png  used on input line 86.
 (pdftex.def)             Requested size: 366.24518pt x 156.32016pt.
- [9 <d:/Documents/GitHub Projects/Master-Thesis/img/ga_life_cycle.png (PNG copy)>] [10] [11]
+ [9 <d:/Documents/Clonado/Master-Thesis/img/ga_life_cycle.png (PNG copy)>] [10] [11]
 <img/pcg_areas.png, id=578, 591.20876pt x 578.16pt>
 File: img/pcg_areas.png Graphic file (type png)
 <use img/pcg_areas.png>
 Package pdftex.def Info: img/pcg_areas.png  used on input line 176.
 (pdftex.def)             Requested size: 274.68562pt x 268.62988pt.
- [12 <d:/Documents/GitHub Projects/Master-Thesis/img/pcg_areas.png>]
+ [12 <d:/Documents/Clonado/Master-Thesis/img/pcg_areas.png>]
 Overfull \hbox (8.33266pt too wide) in paragraph at lines 206--219
 []\T1/lmr/m/n/12 El se-gundo ejem-plo es un video-juego de-sar-rol-lado por Markus Pers-son lla-mado Minecraft,
  []
@@ -1460,13 +1460,13 @@ File: img/DisgaeaIW.png Graphic file (type png)
 <use img/DisgaeaIW.png>
 Package pdftex.def Info: img/DisgaeaIW.png  used on input line 234.
 (pdftex.def)             Requested size: 457.80473pt x 257.51418pt.
- [14 <d:/Documents/GitHub Projects/Master-Thesis/img/DisgaeaIW.png>] [15] [16] [17] [18] [19]
+ [14 <d:/Documents/Clonado/Master-Thesis/img/DisgaeaIW.png>] [15] [16] [17] [18] [19]
 <img/Yavalath.png, id=633, 234.1247pt x 210.03468pt>
 File: img/Yavalath.png Graphic file (type png)
 <use img/Yavalath.png>
 Package pdftex.def Info: img/Yavalath.png  used on input line 436.
 (pdftex.def)             Requested size: 274.68562pt x 246.45107pt.
- [20 <d:/Documents/GitHub Projects/Master-Thesis/img/Yavalath.PNG>]
+ [20 <d:/Documents/Clonado/Master-Thesis/img/Yavalath.PNG>]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 480.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1479,10 +1479,10 @@ File: img/playabilityv2.png Graphic file (type png)
 <use img/playabilityv2.png>
 Package pdftex.def Info: img/playabilityv2.png  used on input line 515.
 (pdftex.def)             Requested size: 320.46191pt x 212.70935pt.
- [22] [23 <d:/Documents/GitHub Projects/Master-Thesis/img/playabilityv2.png>] [24]) [25]
+ [22] [23 <d:/Documents/Clonado/Master-Thesis/img/playabilityv2.png>] [24]) [25]
 \openout2 = `chap3.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap3.tex
+ (d:/Documents/Clonado/Master-Thesis/chap3.tex
 Capitulo 3.
 [26
 
@@ -1491,7 +1491,7 @@ Capitulo 3.
 ] [27] [28] [29]) [30]
 \openout2 = `chap4.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap4.tex
+ (d:/Documents/Clonado/Master-Thesis/chap4.tex
 Capitulo 4.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1509,13 +1509,13 @@ Package pdftex.def Info: img/list_pieces.png  used on input line 43.
 
 Underfull \vbox (badness 2310) has occurred while \output is active []
 
- [32 <d:/Documents/GitHub Projects/Master-Thesis/img/list_pieces.png>]
+ [32 <d:/Documents/Clonado/Master-Thesis/img/list_pieces.png>]
 <img/bounding_box_calculation.png, id=737, 748.89182pt x 262.40315pt>
 File: img/bounding_box_calculation.png Graphic file (type png)
 <use img/bounding_box_calculation.png>
 Package pdftex.def Info: img/bounding_box_calculation.png  used on input line 65.
 (pdftex.def)             Requested size: 457.80473pt x 160.41002pt.
- [33 <d:/Documents/GitHub Projects/Master-Thesis/img/bounding_box_calculation.png>] (d:/Documents/GitHub Projects/Master-Thesis/extras/pieces_class_diagram.tex
+ [33 <d:/Documents/Clonado/Master-Thesis/img/bounding_box_calculation.png>] (d:/Documents/Clonado/Master-Thesis/extras/pieces_class_diagram.tex
 Underfull \hbox (badness 10000) in paragraph at lines 18--19
  
  []
@@ -1525,10 +1525,10 @@ Overfull \hbox (2.68027pt too wide) in paragraph at lines 117--120
  [][] 
  []
 
-[34] (d:/Documents/GitHub Projects/Master-Thesis/extras/composite_class_diagram.tex)
+[34] (d:/Documents/Clonado/Master-Thesis/extras/composite_class_diagram.tex)
 Underfull \vbox (badness 3557) has occurred while \output is active []
 
- [35] (d:/Documents/GitHub Projects/Master-Thesis/extras/individual_class_diagram.tex)
+ [35] (d:/Documents/Clonado/Master-Thesis/extras/individual_class_diagram.tex)
 Underfull \vbox (badness 2005) has occurred while \output is active []
 
  [36] [37]
@@ -1542,16 +1542,16 @@ File: img/simulation_bef_aft_example.png Graphic file (type png)
 <use img/simulation_bef_aft_example.png>
 Package pdftex.def Info: img/simulation_bef_aft_example.png  used on input line 260.
 (pdftex.def)             Requested size: 457.80473pt x 207.51547pt.
- [38 <d:/Documents/GitHub Projects/Master-Thesis/img/system_model.png>]
+ [38 <d:/Documents/Clonado/Master-Thesis/img/system_model.png>]
 Underfull \vbox (badness 1888) has occurred while \output is active []
 
- [39 <d:/Documents/GitHub Projects/Master-Thesis/img/simulation_bef_aft_example.png>] [40]
+ [39 <d:/Documents/Clonado/Master-Thesis/img/simulation_bef_aft_example.png>] [40]
 <img/ruleofthirds_example.png, id=789, 548.7702pt x 387.3672pt>
 File: img/ruleofthirds_example.png Graphic file (type png)
 <use img/ruleofthirds_example.png>
 Package pdftex.def Info: img/ruleofthirds_example.png  used on input line 347.
 (pdftex.def)             Requested size: 457.80473pt x 323.16379pt.
- [41] [42 <d:/Documents/GitHub Projects/Master-Thesis/img/ruleofthirds_example.png>]
+ [41] [42 <d:/Documents/Clonado/Master-Thesis/img/ruleofthirds_example.png>]
 <img/chromosome_thirds.png, id=801, 776.0537pt x 372.02074pt>
 File: img/chromosome_thirds.png Graphic file (type png)
 <use img/chromosome_thirds.png>
@@ -1562,10 +1562,10 @@ File: img/result_example_thirds.png Graphic file (type png)
 <use img/result_example_thirds.png>
 Package pdftex.def Info: img/result_example_thirds.png  used on input line 399.
 (pdftex.def)             Requested size: 457.80473pt x 147.69127pt.
-) [43] [44 <d:/Documents/GitHub Projects/Master-Thesis/img/chromosome_thirds.png> <d:/Documents/GitHub Projects/Master-Thesis/img/result_example_thirds.png>]
+) [43] [44 <d:/Documents/Clonado/Master-Thesis/img/chromosome_thirds.png> <d:/Documents/Clonado/Master-Thesis/img/result_example_thirds.png>]
 \openout2 = `chap5.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap5.tex
+ (d:/Documents/Clonado/Master-Thesis/chap5.tex
 Capitulo 5.
 LaTeX Font Info:    Try loading font information for T1+lmtt on input line 7.
 (d:/Program Files/texlive/2018/texmf-dist/tex/latex/lm/t1lmtt.fd
@@ -1573,7 +1573,7 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/default-pyg-prefix.pygstyle) (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/default.pygstyle) (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/234000935A5DA2BA4EC40330612E72114FBEEAFC55D0059826E664B9BBCF3721.pygtex
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/default-pyg-prefix.pygstyle) (d:/Documents/Clonado/Master-Thesis/_minted-main/default.pygstyle) (d:/Documents/Clonado/Master-Thesis/_minted-main/234000935A5DA2BA4EC40330612E72114FBEEAFC55D0059826E664B9BBCF3721.pygtex
 LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 4.
  (d:/Program Files/texlive/2018/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1589,29 +1589,29 @@ Underfull \vbox (badness 2181) has occurred while \output is active []
  [46]
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/FC9B389D53C51FC7732C9A4D5367B2884FBEEAFC55D0059826E664B9BBCF3721.pygtex
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/FC9B389D53C51FC7732C9A4D5367B2884FBEEAFC55D0059826E664B9BBCF3721.pygtex
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2.
 ) [47]
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/8497C777EEFE4CD9968F816C4E6523194FBEEAFC55D0059826E664B9BBCF3721.pygtex) [48]
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/8497C777EEFE4CD9968F816C4E6523194FBEEAFC55D0059826E664B9BBCF3721.pygtex) [48]
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/33177A4D8727BB1FB23EBD48D05547BF4FBEEAFC55D0059826E664B9BBCF3721.pygtex
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/33177A4D8727BB1FB23EBD48D05547BF4FBEEAFC55D0059826E664B9BBCF3721.pygtex
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2.
 )
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/C54605634ED54C04AC0B79BE6F88DB154FBEEAFC55D0059826E664B9BBCF3721.pygtex) [49]
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/C54605634ED54C04AC0B79BE6F88DB154FBEEAFC55D0059826E664B9BBCF3721.pygtex) [49]
 Overfull \hbox (0.41165pt too wide) in paragraph at lines 205--228
 []\T1/lmr/m/n/12 Para la gen-era-cion de la lista de piezas o cro-mo-so-mas asig-na-dos a un in-di-viduo mostrada
  []
 
 \openout4 = `main.pyg'.
 
-(d:/Documents/GitHub Projects/Master-Thesis/_minted-main/1887347BE9B7034F5EB87E5BD3A1D2ED4FBEEAFC55D0059826E664B9BBCF3721.pygtex) [50] (d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.tex
+(d:/Documents/Clonado/Master-Thesis/_minted-main/1887347BE9B7034F5EB87E5BD3A1D2ED4FBEEAFC55D0059826E664B9BBCF3721.pygtex) [50] (d:/Documents/Clonado/Master-Thesis/extras/testpseudo.tex
 \openout6 = `main.listing'.
 
 LaTeX Font Info:    Try loading font information for T1+lmss on input line 28.
@@ -1629,7 +1629,7 @@ Overfull \hbox (11.64842pt too wide) in paragraph at lines 28--28
 File: lstlang1.sty 2018/09/02 1.7 listings language file
 ) (d:/Program Files/texlive/2018/texmf-dist/tex/latex/listings/lstlang2.sty
 File: lstlang2.sty 2018/09/02 1.7 listings language file
-) (d:/Documents/GitHub Projects/Master-Thesis/main.listing
+) (d:/Documents/Clonado/Master-Thesis/main.listing
 Overfull \hbox (62.51726pt too wide) in paragraph at lines 11--13
 [][][][][][][][][][][][][][] 
  []
@@ -1642,28 +1642,28 @@ Overfull \hbox (0.76723pt too wide) in paragraph at lines 13--15
 ))
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/5BDCC1912D375AF4DE3126C13BAE20374FBEEAFC55D0059826E664B9BBCF3721.pygtex [51]) [52] [53]
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/5BDCC1912D375AF4DE3126C13BAE20374FBEEAFC55D0059826E664B9BBCF3721.pygtex [51]) [52] [53]
 \openout4 = `main.pyg'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/_minted-main/7C6958C024FB4158CE0EF9FFF79092CC4FBEEAFC55D0059826E664B9BBCF3721.pygtex [54])
+ (d:/Documents/Clonado/Master-Thesis/_minted-main/7C6958C024FB4158CE0EF9FFF79092CC4FBEEAFC55D0059826E664B9BBCF3721.pygtex [54])
 <img/crossover.png, id=905, 596.59128pt x 513.65054pt>
 File: img/crossover.png Graphic file (type png)
 <use img/crossover.png>
 Package pdftex.def Info: img/crossover.png  used on input line 394.
 (pdftex.def)             Requested size: 366.24518pt x 315.34065pt.
- [55] [56 <d:/Documents/GitHub Projects/Master-Thesis/img/crossover.png>]
+ [55] [56 <d:/Documents/Clonado/Master-Thesis/img/crossover.png>]
 <img/mutation_add_remove.png, id=920, 775.08362pt x 328.36772pt>
 File: img/mutation_add_remove.png Graphic file (type png)
 <use img/mutation_add_remove.png>
 Package pdftex.def Info: img/mutation_add_remove.png  used on input line 435.
 (pdftex.def)             Requested size: 389.13681pt x 164.85986pt.
- [57 <d:/Documents/GitHub Projects/Master-Thesis/img/mutation_add_remove.png>]
+ [57 <d:/Documents/Clonado/Master-Thesis/img/mutation_add_remove.png>]
 <img/mutation_material.png, id=928, 963.27664pt x 382.69148pt>
 File: img/mutation_material.png Graphic file (type png)
 <use img/mutation_material.png>
 Package pdftex.def Info: img/mutation_material.png  used on input line 465.
 (pdftex.def)             Requested size: 434.91309pt x 172.78183pt.
- [58 <d:/Documents/GitHub Projects/Master-Thesis/img/mutation_material.png>]
+ [58 <d:/Documents/Clonado/Master-Thesis/img/mutation_material.png>]
 <img/mutation_composite.png, id=935, 825.04208pt x 441.38054pt>
 File: img/mutation_composite.png Graphic file (type png)
 <use img/mutation_composite.png>
@@ -1672,7 +1672,7 @@ Package pdftex.def Info: img/mutation_composite.png  used on input line 494.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59 <d:/Documents/GitHub Projects/Master-Thesis/img/mutation_composite.png>]
+ [59 <d:/Documents/Clonado/Master-Thesis/img/mutation_composite.png>]
 <img/layer12_combine.png, id=941, 667.40617pt x 473.87779pt>
 File: img/layer12_combine.png Graphic file (type png)
 <use img/layer12_combine.png>
@@ -1681,19 +1681,19 @@ Package pdftex.def Info: img/layer12_combine.png  used on input line 521.
 
 Underfull \vbox (badness 4595) has occurred while \output is active []
 
- [60 <d:/Documents/GitHub Projects/Master-Thesis/img/layer12_combine.png>] [61]
+ [60 <d:/Documents/Clonado/Master-Thesis/img/layer12_combine.png>] [61]
 <img/layer123_combine.png, id=957, 776.0537pt x 541.78249pt>
 File: img/layer123_combine.png Graphic file (type png)
 <use img/layer123_combine.png>
 Package pdftex.def Info: img/layer123_combine.png  used on input line 595.
 (pdftex.def)             Requested size: 412.02145pt x 287.64763pt.
- [62] [63 <d:/Documents/GitHub Projects/Master-Thesis/img/layer123_combine.png>] [64] [65]
+ [62] [63 <d:/Documents/Clonado/Master-Thesis/img/layer123_combine.png>] [64] [65]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [66] [67]) [68]
 \openout2 = `chap6.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/chap6.tex
+ (d:/Documents/Clonado/Master-Thesis/chap6.tex
 Capitulo 6.
 
 Underfull \vbox (badness 7133) has occurred while \output is active []
@@ -1804,18 +1804,18 @@ LaTeX Warning: Citation `Escobar2013' on page 92 undefined on input line 563.
 ) [92] [93]
 \openout2 = `biblio.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/biblio.tex (d:/Documents/GitHub Projects/Master-Thesis/main.bbl [94
+ (d:/Documents/Clonado/Master-Thesis/biblio.tex (d:/Documents/Clonado/Master-Thesis/main.bbl [94
 
 
 
 ] [95])) [96]
 \openout2 = `appa.aux'.
 
- (d:/Documents/GitHub Projects/Master-Thesis/appa.tex
+ (d:/Documents/Clonado/Master-Thesis/appa.tex
 Appendix A.
 \openout4 = `main.pyg'.
 
-(d:/Documents/GitHub Projects/Master-Thesis/_minted-main/4F5A396A387798B9BEBE7F9B57758E584FBEEAFC55D0059826E664B9BBCF3721.pygtex [97
+(d:/Documents/Clonado/Master-Thesis/_minted-main/4F5A396A387798B9BEBE7F9B57758E584FBEEAFC55D0059826E664B9BBCF3721.pygtex [97
 
 
 
@@ -1903,7 +1903,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [124])) [125]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 206.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 206.
- (d:/Documents/GitHub Projects/Master-Thesis/main.aux (d:/Documents/GitHub Projects/Master-Thesis/cover.aux) (d:/Documents/GitHub Projects/Master-Thesis/contents.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap1.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap2.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap3.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap4.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap5.aux) (d:/Documents/GitHub Projects/Master-Thesis/chap6.aux) (d:/Documents/GitHub Projects/Master-Thesis/biblio.aux) (d:/Documents/GitHub Projects/Master-Thesis/appa.aux))
+ (d:/Documents/Clonado/Master-Thesis/main.aux (d:/Documents/Clonado/Master-Thesis/cover.aux) (d:/Documents/Clonado/Master-Thesis/contents.aux) (d:/Documents/Clonado/Master-Thesis/chap1.aux) (d:/Documents/Clonado/Master-Thesis/chap2.aux) (d:/Documents/Clonado/Master-Thesis/chap3.aux) (d:/Documents/Clonado/Master-Thesis/chap4.aux) (d:/Documents/Clonado/Master-Thesis/chap5.aux) (d:/Documents/Clonado/Master-Thesis/chap6.aux) (d:/Documents/Clonado/Master-Thesis/biblio.aux) (d:/Documents/Clonado/Master-Thesis/appa.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 206.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 206.
 Package rerunfilecheck Info: File `main.out' has not changed.
@@ -1920,14 +1920,14 @@ runsystem(del main.pyg)...executed.
  ) 
 Here is how much of TeX's memory you used:
  42742 strings out of 492616
- 872392 string characters out of 6126092
+ 871418 string characters out of 6126092
  1313918 words of memory out of 5000000
  45512 multiletter control sequences out of 15000+600000
  618420 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,24n,101p,864b,2188s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,24n,101p,854b,2188s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{d:/Program Files/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmex10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr6.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr7.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr8.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmri12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmsso12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on "d:/Documents/GitHub Projects/Master-Thesis/main.pdf" (135 pages, 5840394 bytes).
+Output written on d:/Documents/Clonado/Master-Thesis/main.pdf (135 pages, 5840682 bytes).
 PDF statistics:
  1408 PDF objects out of 1440 (max. 8388607)
  1181 compressed objects within 12 object streams

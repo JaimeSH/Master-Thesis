@@ -1,0 +1,15 @@
+PWD d:/Documents/GitHub Projects/Master-Thesis/extras
+INPUT d:/Program Files/texlive/2018/texmf.cnf
+INPUT d:/Program Files/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT d:/Program Files/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.tex
+OUTPUT d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.log
+INPUT d:/Program Files/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT d:/Program Files/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT d:/Program Files/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssi10.tfm
+INPUT d:/Program Files/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmitt10.tfm
+INPUT d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.aux
+INPUT d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.aux
+OUTPUT d:/Documents/GitHub Projects/Master-Thesis/extras/testpseudo.aux
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/omlcmr.fd
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/omlcmr.fd

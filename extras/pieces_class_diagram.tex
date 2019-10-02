@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Class diagram
+% Author: Salinas Hernández Jaime
+% Version: 1.0 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
+        text centered, anchor=north, text=white, text width=4.2cm]
+\tikzstyle{comment}=[rectangle, draw=black, rounded corners, fill=green, drop shadow,
+        text centered, anchor=north, text=white, text width=4.2cm]
+\tikzstyle{myarrow}=[->, >=open triangle 90, thick]
+\tikzstyle{line}=[-, thick]
+        
+
+\begin{tikzpicture}[node distance=2cm]
+    \node (Item) [abstract, rectangle split, align=left, rectangle split parts=3]
+        {
+            \textbf{Pieza}
+            \nodepart{second}string: Material \newline float: X \newline float: Y \newline float: Z \newline
+            \nodepart{third}get\_edges \newline as\_dictionary \newline get\_points \newline update\_values
+        };
+    %\node (ItemInstants) [comment, rectangle split, rectangle split parts=2, below=0.2cm of Item, text justified]
+    %    {
+    %        \textbf{Methods}
+    %        \nodepart{second}
+    %            get\_edges
+    %            \newline as\_dictionary
+    %            \newline get\_points
+    %            \newline update\_values
+    %    };
+    \node (AuxNode01) [text width=4cm, below=3cm of Item] {};
+    
+    \node (Circle) [abstract, rectangle split, align=left, rectangle split parts=2, left=of AuxNode01]
+        {
+            \textbf{Circle}
+            \nodepart{second}text: "Circle" \newline
+            int: Height = 75 \newline
+            int: Width = 75
+        };
+    \node (RectTiny) [abstract, rectangle split, align=left, rectangle split parts=2, right=of Circle]
+        {
+            \textbf{RectTiny}
+            \nodepart{second}text: "RectTiny"\newline int: Height = 25 \newline int: Width = 45
+        };
+    \node (RectSmall) [abstract, rectangle split, align=left, rectangle split parts=2, right=of RectTiny]
+        {
+            \textbf{RectSmall}
+            \nodepart{second}text: "RectSmall"\newline int: Height = 25 \newline int: Width = 85
+        };
+    \node (RectMedium) [abstract, rectangle split, align=left, rectangle split parts=2, right=of RectSmall]
+        {
+            \textbf{RectMedium}
+            \nodepart{second}text: "RectMedium"\newline int: Height = 25 \newline int: Width = 165
+        };
+    \node (RectBig) [abstract, rectangle split, align=left, rectangle split parts=2, right=of RectMedium]
+        {
+            \textbf{RectBig}
+            \nodepart{second}text: "RectBig"\newline int: Height = 25 \newline int: Width = 185
+        };
+    
+    
+        
+    \node (AuxNode02) [text width=0.5cm, below=of Circle] {};   
+    
+    \node (RectFat) [abstract, rectangle split, align=left, rectangle split parts=2, left=of AuxNode02]
+        {
+            \textbf{RectFat}
+            \nodepart{second}text: "RectFat"\newline int: Height = 25 \newline int: Width = 85
+        };
+    \node (SquareTiny) [abstract, rectangle split, align=left, rectangle split parts=2, right=of RectFat]
+        {
+            \textbf{SquareTiny}
+            \nodepart{second}text: "SquareTiny"\newline int: Height = 25 \newline int: Width = 25
+        };
+    \node (SquareSmall) [abstract, rectangle split, align=left, rectangle split parts=2, right=of SquareTiny]
+        {
+            \textbf{SquareSmall}
+            \nodepart{second}text: "SquareSmall"\newline int: Height = 45 \newline int: Width = 45
+        };
+    \node (Triangle) [abstract, rectangle split, align=left, rectangle split parts=2, right=of SquareSmall]
+        {
+            \textbf{Triangle}
+            \nodepart{second}text: "Triangle"\newline int: Height = 75 \newline int: Width = 75
+        };
+    \node (TriangleHole) [abstract, rectangle split, align=left, rectangle split parts=2, right=of Triangle]
+        {
+            \textbf{TriangleHole}
+            \nodepart{second}text: "TriangleHole"\newline int: Height = 85 \newline int: Width = 85
+        };
+    \node (SquareHole) [abstract, rectangle split, align=left, rectangle split parts=2, right=of TriangleHole]
+        {
+            \textbf{SquareHole}
+            \nodepart{second}text: "SquareHole"\newline int: Height = 85 \newline int: Width = 85
+        };
+        
+    
+    
+    \draw[myarrow] (RectSmall.north) -- ++(0,0.8) -| (Item.south);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (RectTiny.north);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (RectSmall.north);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (RectMedium.north);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (RectBig.north);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (RectFat.north);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (SquareTiny.east);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (SquareSmall.east);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (Triangle.east);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (TriangleHole.east);
+    \draw[line] (Circle.north) -- ++(0,0.8) -| (SquareHole.east);
+        
+        
+\end{tikzpicture}
