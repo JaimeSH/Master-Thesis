@@ -1,0 +1,29 @@
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Ciclo de vida de un algoritmo genetico\relax }}{9}{figure.caption.7}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Areas de PCG en videojuegos\relax }}{12}{figure.caption.8}% 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Nivel generado en el juego Disgaea\relax }}{14}{figure.caption.9}% 
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Ejemplo de un juego en progreso en el juego de Yavalath\relax }}{20}{figure.caption.10}% 
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Puntos de evaluaci\IeC {\'o}n de jugabilidad\relax }}{23}{figure.caption.11}% 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Piezas basicas del juego angry birds\relax }}{32}{figure.caption.12}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Calculo de bordes de un conjunto\relax }}{33}{figure.caption.13}% 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Diagrama de clase de piezas\relax }}{34}{figure.caption.14}% 
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagrama de clase de Composite\relax }}{35}{figure.caption.15}% 
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagrama de clase de Individuo\relax }}{36}{figure.caption.16}% 
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagrama de flujo del algoritmo\relax }}{38}{figure.caption.17}% 
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Ejemplo de una estructrura antes(izquierda) y despues(derecha) de una simulacion\relax }}{39}{figure.caption.18}% 
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Ejemplo del uso de la regla de tercios en una imagen, el punto de interes se encuentra en la parte central\relax }}{42}{figure.caption.19}% 
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Ejemplo del uso de la regla de tercios en un conjunto de piezas, el cromosoma de un individuo(izquierda) se combina con la mascara(centro) para generar una estructura mas compleja(derecha)\relax }}{44}{figure.caption.20}% 
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Resultado obtenido utilizando la regla de tercios, la mascara(izquierda) utilizada y el resultado generado(derecha)\relax }}{44}{figure.caption.21}% 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Cruce de un punto (arriba) y cruce a dos puntos (abajo) aplicada a la mascara de individuos\relax }}{56}{figure.caption.22}% 
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Ejemplo del operador de mutacion enfocado a remover y agregar compuestos\relax }}{57}{figure.caption.23}% 
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Ejemplo del operador de mutacion enfocado a cambiar el material de los compuestos, pre-mutacion (izquierda) y post-mutacion (derecha)\relax }}{58}{figure.caption.24}% 
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Ejemplo del operador de mutacion enfocado a cambiar los compuestos asignados, pre-mutacion (izquierda) y post-mutacion (derecha)\relax }}{59}{figure.caption.25}% 
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Ejemplo de la combinacion de capas de un individuo\relax }}{60}{figure.caption.26}% 
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Ejemplo de la combinacion de un genotipo armado de la figura \ref {figure:individual_representation} con la colocacion de enemigos\relax }}{63}{figure.caption.27}% 
+\addvspace {10\p@ }
+\addvspace {10\p@ }

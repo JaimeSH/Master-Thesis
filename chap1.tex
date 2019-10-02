@@ -1,0 +1,177 @@
+\chapter{Introduction}
+\label{chapter:introduction}
+
+El tema de generación de contenido procedural es un tema que ha sido tomado con
+gran interés en el ámbito de desarrollo de videojuegos debido a las facilidades
+que brinda a las compañías para poder generar contenido que puede ser utilizado
+en juegos, no es posible ligar la generación procedural de contenido con algún
+aspecto especifico de la creación de videojuegos o inclusive únicamente en el
+enfoque de videojuegos debido a que el tema puede ser utilizado para varios
+aspectos diferentes, desde la generación de áreas como en el videojuego Spelunky
+\cite{RovioEntertainmentCorporation2009} \cite{Mossmouth2013}
+\cite{Mossmouth2013}, la generación de historias que sean inmersivas como en
+Façade \cite{Mateas}, la generación de piezas sonoras como las que son posibles
+de escuchar en Audioverdrive \cite{Holtar}, generación de efectos gráficos como
+el diseño de pétalos en Petalz \cite{Risi2012}, así como otros en los enfoques
+de gameplay y videojuegos completos.
+
+Estas ideas han sido de gran interés mutuo entre la industria y la comunidad
+científica que en 2005 se originó un simposio de la IEEE en el ámbito de
+Computación Inteligente y Videojuegos (Computational Intelligence and Games) el
+cual posteriormente pasaría a ser una conferencia en el año 2009.
+
+Esta conferencia tiene el fin de unir a ambos grupos de interés en un mismo
+lugar con el fin de conocer sobre los avances de la computación inteligente
+enfocada en juegos, dentro del marco de la misma conferencia se celebran
+competencias de diferentes juegos tales como Inteligencia artificial en el juego
+de Hearthstone, jugar niveles de Ms Pac-Man, competencias de agentes para ganar
+en juegos de pelea y varios otros.
+
+Dentro de estas mismas competencias se celebra la de generación de niveles para
+el videojuego de Angry Birds la cual consiste primordialmente en generar niveles
+que sean interesantes visualmente y sean complejos en el sentido de que sean
+difíciles de completar por una persona pero que al mismo tiempo no sean
+imposibles de completar, este juego fue desarrollado por la compañía Rovio
+Entertainment Corporation\cite{RovioEntertainmentCorporation2009} en el año
+2009, el objetivo dentro del juego consta de utilizar un numero dado de aves con
+diferentes efectos para eliminar puercos color verde que se encuentran
+protegidos eh inclusive sobre estructuras de diferentes materiales y formas, en
+algunos casos al golpear partes de las estructuras se crea un efecto domino que
+termina por destruir la mayoría de las misma, el juego en cuestión cuenta con un
+sistema de gravedad que permite que las trayectorias de tiro generen diferentes
+efectos en las estructuras, en este caso el interés principal es que mediante el
+uso del sistema de gravedad del mismo juego se puedan crear estructuras
+interesantes visualmente y que sean lo suficientemente robustas para soportar
+golpes de las mismas aves y logre mantenerse de pie lo más posible.
+
+El objetivo principal de este proyecto es el de generar un sistema basado en
+computo evolutivo que logre generar las estructuras que conformaran los niveles
+del juego de Angry Birds y evaluar estas mismas estructuras mediante los
+aspectos propuestos en la competencia para que sean entretenidos y complejos con
+un cierto grado de dificultad. De una manera más estructurada los puntos
+objetivo que se enmarcaran en el proyecto son los siguientes: 
+
+\begin{itemize}
+  \item Adaptar un algoritmo genético para que sea capaz de generar secuencias
+  de estructuras para un nivel mediante objetivos propuestos.
+  \item Modificar y adaptar el software de simulación para poder obtener datos
+  específicos de un nivel para poder evaluarlo.
+  \item Adaptar el método de evolución para permitir que se puedan generar
+  estructuras complejas.
+  \item Explorar las posibilidades de integrar alguna otra técnica de computo
+  evolution para optimizar la generación de niveles.
+\end{itemize} 
+
+El trabajo propuesto en este trabajo de tesis tiene como objetivo la generacion
+de el contenido con el cual un jugador podra interactuar en el videojuego de
+angry birds, cabe remarcar que el uso de metodos de generacion procedural han
+sido utilizados con el proposito de realizar competencias en el marco de la
+conferencia del Instituto de Ingeniería Eléctrica y Electrónica (IEEE) que lleva
+por nombre Conferencia de Juegos (CoG) en dicha competencia se utilizan
+algoritmos capaces de generar los niveles que una persona o agente puede jugar.
+En nuestro caso la metodologia propuesta en este proyecto pretende servir de
+base para mostrar que es posible la utilizacion de algoritmos evolutivos libres
+de tal manera que el contenido generado sera unico y entretenido para los
+usuarios. En este mismo capitulo se presentan las motivaciones para la
+realizacion del proyecto asi como la manera en que la computacion evolutiva
+sirve de apoyo en la industria del entretenimiento (ver la Seccion
+\ref{section:justification}).
+
+El metodo propuesto en este documento consta de tres campos diferentes, estos
+campos son Generacion de contenido procedural y dos areas de la computacion
+evolutiva las cuales son algoritmos geneticos y open-ended evolution. El
+Capitulo \ref{chapter:preliminaries} esta dedicado para explicar los conceptos
+de estas areas, mismos que son necesarios para comprender mejor el contenido de
+los capitulos subsecuentes a ese asi como de todo el proyecto de tesis.
+
+Una vez que los conceptos mostrados en el capitulo anterior han sido
+comprendidos el Capitulo \ref{chapter:related-work} procede a presentar un
+conjuntos de trabajos relacionados con lo que se quiere lograr. Estos trabajos
+permiten tener un mejor entendimiento de que es lo que se puede llegar a lograr
+con las areas presentadas asi como el comprender las diferentes maneras que
+existen para trabajar en el proyecto.
+
+Posteriormente en el Capitulo \ref{chapter:proposed-method} se presenta la
+propuesta del proyecto de tesis, en este capitulo se muestra el como nuestra
+propuesta sirve para resolver el problema de generacion de contenido para el
+juego. De igual manera se toca el tema de las propuestas que previamente se
+habian contemplado para resolver el mismo problea y como fue que mediante la
+modificacion y adaptacion de conceptos de estas ideas se logro llegar a la
+propuesta definitiva.
+
+La implementacion particular del metodo propuesto se presenta en el Capitulo
+\ref{chapter:implementation}, este capitulo cubre todo el aspecto tecnico del
+proyecto tal como los lenguajes de programacion utilizados, las adapataciones
+que realizaron a los archivos de ejecucion del software que se utiliza para la
+simulacion asi como la manera en el como las ideas propuestas en el Capitulo
+\ref{chapter:proposed-method} fueron implementadas en el codigo, debido a que
+los conceptos que se presentaron en el Capitulo \ref{chapter:proposed-method}
+son adaptadas en este, varios nombres de secciones tenderan a ser similares.
+
+Despues de realizar las implementaciones pertinentes de las ideas presentadas en
+el Capitulo \ref{chapter:proposed-method} se procede a realizar un conjunto de
+experimentos del sistema funcional. Los experimentos permiten comprender la
+menera en como se puede realizar la generacion de contenido con los metodos
+propuestos ademas de que los resultados obtenidos sirven de apoyo para analizar
+las partes en donde se pueden realizar mejorar para un mejor desempeño. Estos
+experimentos se presentan en el Capitulo \ref{chapter:experiments-and-results},
+en este mismo capitulo se analizan los resultados y se dan comparaciones con
+diferentes variaciones del metodo y con otras idead de los trabajos presentados
+en el Capitulo \ref{chapter:related-work}.
+
+Finalmente en el Capitulo \ref{chapter:conclusions-and-future-work} se presentan
+la conclusiones a las que se logro llegar despues de concluir el trabajo asi
+como varias propuestas que se pueden agregar o secciones que se puecen optimizar
+para mejorar el proyecto en un futuro.
+
+Este proyecto de tesis describe un metodo innovador para la generacion de
+estructuras del juego mediante el uso de tecnicas evolutivas como la convinacion
+de un algoritmo genetico con un algoritmo de evolucion libre. Este metodo es
+robusto y permite modificaciones rapidas a las caracteristicas evolutivas y de
+evaluacion, ademas de que es flexible parpoder establecer restricciones en el
+contenido generado. Por ejemplo que no se utilizen ciertas piezas o que se
+generen niveles con cierta cantidad de objetivos.
+
+\section{Justificacion}
+\label{section:justification}
+
+La justificación de este proyecto se enfoca en dos puntos diferentes, el primero
+tomando en cuenta el punto de vista científico por el cual se tiene interés
+particular en el proyecto en el cual la utilización de generación procedural de
+contenido en este caso de generación de niveles es un caso de estudio muy
+particular debido a las restricciones que se deben de tomar en cuenta al momento
+del diseño debido a que varios aspectos tales como los diferentes terrenos, el
+posicionamiento y balance de los elementos colocados deben de ser tomados en
+cuenta de una manera que se asemeje a una manera que podrían ser posicionados en
+el mundo real con restricciones de gravedad para poder generar estructuras que
+logren cumplir los aspectos denotados por la jugabilidad que hacen a un nivel
+viable e interesante, mientras que el segundo aspecto de la justificación se
+enfoca al ámbito tecnológico que toma el proyecto para las empresas que utilizan
+este tipo de recursos en el diseño de videojuegos, esto es debido a que las
+mismas empresas muchas veces se ven presionados en cumplir fechas de salida para
+dichos productos de esta manera el uso de este tipo de recursos permite generar
+el contenido de manera automatizada y que logre cumplir con los estándares
+establecidos por las compañías.
+
+El problema presentado al inicio de este Capitulo se puede dividir dos partes:
+un algoritmo de generacion de compuestos que requiere considerar 1) que los
+conjuntos generados logren mantenerse estables, 2) que los conjuntos generados
+no sean igual a otros previamente generados y 3) que estos conjuntos puedan
+hacer uso de los ya existentes y puedan alimentar en paralelo una lista con los
+conjuntos que pueden ser utilizados por el algoritmo principal, mientras que la
+segunda parte la cual es el sistema evolutivo debe de poder utilizar los
+compuestos obtenidos por la part anterior para poder generar estructuras que
+puedan mantenerse de pie y aumentar su complejidad mediante las estructuras.
+
+Se propone, mediante el uso de un algoritmo genetico agregarle complejidad a un
+nivel mediante la evolucion de las estructuras que lo componen, esto debido a
+que es posible realizar operaciones de cruce y mutaciones que lograran producir
+nuevas estructuras como posibles soluciones ademas de que permite encaminar el
+sistema a encontrar las mejores mediante funciones objetivo. Esto es interesante
+debido a las posibilidades de generacion del sistema debido a que es posible
+obtener tanto estructuras como combinaciones de elementos que normalmente una
+persona no utilizaria de manera manual.
+
+Finalmente, el metodo propuesto provee un sistema que es capaz de crear niveles
+que seran entretenidos, unicos eh interesantes para los jugadores.
+ 

@@ -1,0 +1,16 @@
+if elite not null
+   for member in elite
+      population <- member
+      trim population
+
+execute process (game)
+
+for individual in population
+   individual.getfitness
+
+parents <- selector_operator(population, required)
+
+crossover_operation(population, parents)
+
+population.order('fitness')
+elite.add(population[1])

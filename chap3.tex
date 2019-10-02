@@ -1,0 +1,158 @@
+\chapter{Estado del arte}
+\label{chapter:related-work}
+
+Este capitulo se enfoca en mostrar los diferentes trabajaos que permitiran
+comprender mejor la problematica que se quiere resolver asi como los diferentes
+enfoques que se le han dado para poder resolverlo.
+
+\section{Competencia IEEE CoG}
+\label{section:ieeecog}
+
+Como se demuestra en el articulo presentado por J. Renz et al.\cite{Renz2016} la
+competencia de Angry Birds utilizando inteligencia artificial se realiza de
+manera anual desde el año 2012 iniciando en la conferencia dentro del marco de
+la AAAI (Association for the Advancement of Artificial Intelligence), en este
+articulo se explica la primera linea de competencia que consta de desarrollar
+agentes que sean capaces de solucionar niveles del juego de tal manera que se
+asemeje a la manera en como jugaria una persona real, se explica el estado del
+arte el cual consta de previos competidores y de como han logrado realizar sus
+agentes para el juego, de igual manera se explica la nueva linea de competencia
+que consta de utilizar el mismo conjunto de niveles y permitir que los agentes
+compitan para ver cual logra resolver mas rapido el conjunto de niveles.
+
+Posteriormente en un articulo elaborado por M. Stephenson et
+al.\cite{Stephenson2018The2A} se explica detalladamente como es que el juego se
+conecta en una arquitectura cliente-servidor y como es que se adapta la
+arquitectura para que los agentes utilizados puedan obtener datos del juego para
+poder realizar los calculos pertinentes, en este mismo articulo se presenta
+informacion de la segunda linea de competencia llamada competencia de generacion
+de niveles de AIBIRDS la cual se comenzo a realizar desde el año 2016, en esta
+version de la competencia los generadores deben de cumplir con el proposito de
+crear noveles que sean creativos, divertidos, estables en cuanto a la gravedad
+del juego y posibles de ser solucionados, ademas de esto se debe de tener en
+consideracion realizar niveles que sean desafiantes a los jugadores, como el
+juego no es open source los niveles se generan en una version clon del juego que
+cuenta con las mismas mecanicas.
+
+Un segundo articulo escrito por M. Stephenson et al.\cite{Stephenson2018} se
+presenta una version mas actualizada de las reglas de la competencia, en este
+articulo se establece el uso de un archivo proporcionado por los organizadores,
+este archivo cuenta con 4 lines en las cuales se establece las condiciones que
+los niveles generados deberan de cumplir, la informacion proporciona en el
+archivo es la cantidad de niveles que se deberan de generar, las piezas no
+permitidas en un nivel asi como las combinaciones que se deberan de evitar, la
+cantidad de puercos a colocar en un nivel y por ultimo el tiempo limite para
+terminar los niveles, en el caso de los tipos de materiales prohibidos se
+entrega una lista que especifica que piezas con que material no se puede
+colocar, en el caso de los puercos se entrega un rango numerico en el cual se
+especifica la cantidad minima y maxima a colocar, en cuanto a los valores de
+niveles y tiempo limite se entragan como valores numericos enteros, sin embargo
+los valores que se entregan generalmente son 5 para la cantidad de niveles y 30
+en la cantidad de minutos que puede durar el generador.
+
+\section{Algoritmos de busqueda}
+\label{section:search-based}
+
+L. Ferreira et al.\cite{Ferreira2014} presentaron un sistema de generación de
+niveles mediante el uso de algoritmos genéticos, en el sistema se propone la
+definición de un individuo como una listas de elementos que se acomodaran en
+forma de torre, el sistema propuesto utiliza las piezas base del juego y se
+agregaron 4 elementos compuestos, los niveles se definen como un área de trabajo
+con tres posiciones donde las torres podrán ser generadas a base de las piezas
+en la lista principal, las piezas irregulares tales como los dos diferentes
+tipos de triángulos son tomados en cuenta únicamente en la última posición de
+las torres.
+
+Una herramienta de generacion de niveles basado en el uso de patrones de
+generacion es propuesto por Y. Jiang et al.\cite{Jiang2017}, en este paper los
+autores propoen el uso de patrones predefinidos de generacion de estructuras
+basadas en el alfabeto americano, valores numericos, simbolos asi como el
+ordenamiento de estos en base a patrones de frases o palabras predefinidas que
+pueden ser utilizadas, utilizando estos patrones se generan niveles en donde se
+muestran frases divertidas o motivacionales que serian jugados por personas para
+evaluarlos, debido a la manera de acomodo de bloques utilizada en este paper el
+problema de que los niveles sean estables se eliminaba y simplemente se utiliza
+el sistema para cumplir los dos objetivos restantes los cuales son que los
+niveles sean jugables y entretenidos, mientras que la manera final de evaluar la
+funcionalidad del generador se basaba la rejugabilidad, la legibilidad del texto
+asi como de la dificultad de los niveles, para esto los autores se apoyaron de
+10 personas con cirto grado de comprension del idioma ingles, de esta manera en
+caso de que los textos fueran dificiles de comprender, la dificultad fuera
+demasiado alta o generara un interes por repetir el nivel los participantes
+serian los encargados de proporcionar estos resultados.
+
+Para la adaptabilidad de los niveles basados en los resultados de la funcion de
+aptitud M. Kaidan et al.\cite{Kaidan2015} proponen una medicion basada en la
+habilidad de un jugador en un nivel, la evaluacion de la habilidad esta dada por
+el puntaja obtenido durante el juego, en el juego de angry birds el puntaje de
+un jugador esta ligado a la cantidad de destruccion de estructuras lograda y la
+cantidad de aves que no se utilizaron para completar el nivel, en este caso el
+paper se apoyaba de la funcion de aptitud de L. Ferreira et
+al.\cite{Ferreira2014} para la distribucion de los puercos en un nivel y se
+adaptaba la funcion para modificar la cantidad de puercos colocados deacuerdo a
+la facilidad con la que se lograba resolver el nivel, de esta manera el sistema
+generaba un conjunto de niveles para que una persona los solucionara y basandose
+en los resultados de los niveles se generaba el siguiente conjunto para
+resolver, de tal manera que el sistema requeria que una persona evaluara los
+niveles cada generacion para que el sistema generara niveles mas desafiantes
+para esa persona.
+
+Otro generador propone el uso de un selector de dificultad como parametro de
+entrada de un algoritmo genetico para la generacion de niveles con elementos
+predefinidos, en este paper M. Kaidan et al.\cite{Kaidan2016} utilizan una
+version extendida del Algebra de Intevalo Temporal de Allen (Allen's Temporal
+Interval Algebra)\cite{ALLEN1990} para calcular area minima delimitadora
+(Minimum Bounding Rectangle) de cada elemento del juego para realizar calculos
+de posicion mas exactos al momento de obtener resultados, utilizando estas
+mecanicas proponen evaluar la relacion de movimiento despues de que una ave a
+impactado en alguna de las piezas del nivel.
+
+Otros investigadores proponen utilizar sistemas de generacion que no incluyan
+limitantes en las estructuras a fin de permitir una evolucion general mas
+"libre" tal es el caso del paper desarrollado por L. Calle et al.
+\cite{Calle2019} en donde utilizan un sistema de generacion que ignora la
+necesidad de crear estructuras siguiendo patrones o simetria, en este paper se
+busca utilizar un espacio de busqueda relativamente pequeño para ahorrar tiempo
+de procesamiento, ademas de esto utilizan una aplicacion de codigo libre llamada
+Box2D (https://box2d.org) sobre la cual esta basado el codigo del juego de Angry
+Birds y permite realizar simulaciones de manera mas rapida debido a que solo se
+calcula la estabilidad de las estructuras para el valor de fitness de los
+individuos, sin embargo debido que el sistema de generacion no esta encaminado
+por patrones las estructuras finales generadas carecen de llamatividad visual,
+cabe mencionar que este trabajo se utilizo como base para el desarrollo del
+proyecto actual, algunas de las ideas tuvieron origen en este trabajo para ser
+modificadas y adaptadas en nuestra propuesta.
+
+\section{Agentes para jugar}
+\label{section:others}
+
+De igual manera varios autores toman la ruta de programacion de agentes que sean
+capaces de solucionar los niveles presentados en el juego, de estos se hacen
+mencion algunos.
+
+Dentro de la competencia de diseño de agentes el objetivo es que el agente sea
+capaz de solucionar los niveles utilizando las mecanicas de gravedad y colision
+del juego, por tal manera F. Calimeri et al. \cite{Calimeri2016} propones el uso
+de una forma de programacion declarativa llamada Answer Set Programming (ASP por
+sus siglas en ingles) dicha mecanica esta orientada hacia algoritmos de busqueda
+dificiles, en este caso utilizan ASP para analizar el campo de juego que
+involucra los bloques utilizados en las estructuras y los puercos estacionados
+en ellas, de esta manera ASP tratara de identificar el daño que puede ser
+causado asi como el movimiento resultante de los bloques en base a la gravedad
+del juego al momento de disparar una ave en un cierto angulo con determinada
+fuerza, en base a esto se determina el siguiente tiro a realizar para poder
+completar el nivel. 
+
+Diferentes autores han utilizado diferentes técnicas para la generación de
+contenido, algunas utilizando computación evolutiva y algunas otras simplemente
+a base de algoritmos de búsqueda, de estos mismos los mas relevantes se les hace
+mención: G. Smith et al.\cite{Smith2009} proponen un software de generación de
+niveles estilo juego de plataformas mediante el uso de un software aplicando
+inteligencia artificial, en este software se le permite a un usuario seleccionar
+la altura de el punto de inicio y punto final de un nivel en particular y el
+sistema trata de llenar el espacio restante con plataformas que permitan que el
+nivel se pueda completar, el sistema se basa en una medición de pulsos en los
+cuales una persona podría realizar una acción determinada para avanzar a la
+siguiente sección.
+
+
