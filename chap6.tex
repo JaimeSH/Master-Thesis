@@ -93,484 +93,242 @@ Utilizando estas configuraciones se realizaron un total de [Write number here?]
 sin embargo debido a que los resultados mostrados por cada experimentos son
 demasiados solo algunos resultados de experimentos seran mostrados.
 
+\section{Generacion de niveles estables}
+\label{section:chap6_stable_level_generation}
 
+La primera seccion de resultados se enfoca a mostrar lo que el sistema es capaz
+de generar en caunto a niveles estables se refiere, para este aspecto se tomaron
+en cuenta los puntos propuestos en la seccion \ref{chapter:proposed-method} en
+donde se busca obtener los mejores niveles tomando en cuenta las posiciones de
+las piezas colocadas antes y despues de las simulaciones siempre teniendo en
+cuenta que aquellos niveles que logren mantenerse de pie o inclusive mantener la
+mayor cantidad de compuestos aun presentes en el nivel son los que se consideran
+como los mejores niveles para cada generacion, de la misma manera en como se
+explico anterioremente aquellos niveles que logren cumplir estas caracteristicas
+son registrados en una lista que mantiene la informacion de los mejores niveles
+generados a lo largo de las generaciones y elementos de este mismo grupo son
+reintegrados a la poblacion al iniciar la siguiente generacion.
 
-The experiments cover the following variants in the parameters: 4 agents, 4
-rules and 4 individuals; 10 agents, 10 rules and 10 individuals; 20 agents, 20
-rules and 20 individuals; and these variants are used to created models for the
-following foreign exchange markets: AUD/USD, EUR/GBP, EUR/USD, GBP/USD and
-USD/CAD.
+La manera en como se representan los resultados de las simulaciones es mediante
+el uso de 2 graficas que muestran los valores de la funcion de aptitud
+obtenidos, en esta grafica se muestra el promedio de los individuos en una
+generacion dada, el valor minimo que se alcanza en dicha generacion asi como el
+valor de aptitud maximo que se logra obtener en las generaciones, en este
+aspecto cabe resaltar que obtener no todos los individuos con un valor de 100\%
+de aptitud seran los mejores elementos de la pobalcion, sino que simplemente la
+manera en como se generaron los niveles no permite que los compuestos sean
+destruidos para esto es necesario revisar de manera visual los resultados y
+darse cuenta de que elementos que logran obtener valores diferentes al 100\% de
+aptitud pueden ser elemntos validos si las estructuras generadas logran cumplir
+con los objetivos buscados, despues de la grafica de aptitud de presentan dos
+ejemplos de los niveles generados, aquellos denotados por b) representan el
+"mejor" individuo de la generacion, mientras que aquellos representados por c)
+representan el "peor" elemento de la primera generacion, estsos ejemplos son
+representados a su vez de dos maneras, la imagen superior representa el estado
+inicial del individuo, es decir al momento de iniciar la simulacion, mientras
+que la imagen inferior representa el estado final del mismo individuo, es decir
+el punto en el que la simulacion termino, mediante el uso de estas imagenes es
+posible apreciar la manera en como los niveles generados se comportan en
+terminos de estabilidad bajo la gravedad proporcionada en el juego.
 
-A total of 135 experiments were performed, but due to space constraints in this
-thesis document, only some of the experiments are shown. Specifically, the
-forecasting and interpretation Sections show results for the cases of 4 agents,
-4 rules and 4 individuals; 10 agents, 10 rules and 10 individuals; and 20
-agents, 20 rules and 20 individuals. Each of the aforementioned cases are
-extracted for each of the five foreign exchange markets: AUD/USD, EUR/GBP,
-EUR/USD, GBP/USD and USD/CAD. The reader can find the plots and interpretations
-for all the experiments performed in the Git repository of this thesis here:
-https://github.com/amherag/PhD-Thesis/.
+De igual manera se presenta informacion de la ultima generacion de la
+simulacion, en este caso se toman unicamente los dos indiviudos (diferentes
+entre si) que representan los mejores individuos de la poblacion, en este caso
+se toman dos individuos diferentes debido a que debido a la naturaleza de los
+algoritmos geneticos la tendencia de los individuos es asemejarse unos a otros y
+mediante esto se busca mostrar que es posible inclusive en la generacion de
+niveles obtener elementos que no necesariamente son los mejores generados pero
+logran acercarse lo suficiente a los objetivos del sistema.
 
-\section{Forecasting the Prices of a Financial Market}
-\label{section:forecasting-the-prices-of-a-financial-market}
+\subsection{Experimento 1}
+\label{chap6:exp_1}
 
-This Section shows some experiments that have the goal of forecasting different
-foreign exchange markets. Different agent-based models were generated using the
-parameters indicated in each of the Subsection titles. The datasets used for the
-training stage of the model comprehends the prices and timestamps associated to
-each of these prices, from Monday, January 28, 2019 5:00:00 PM GMT-08:00, minus
-20 hours that are required to generate the initial retracements (see Section
-\ref{section:preprocessing-a-financial-market-using-retracements:implementation})
-to Sunday, February 3, 2019 8:00:00 PM GMT-08:00. Regarding the datasets used
-for the testing stage of the model, the data comprehends the prices and
-timestamps associated to each of these prices, from Sunday, February 3, 2019
-9:00:00 PM GMT-08:00, minus 20 hours that are required to generate the initial
-retracements, to Friday, February 8, 2019 12:00:00 AM GMT-08:00. All the
-datasets have a size of 100 data points, and they correspond to the prices of
-the foreign exchange markets AUD/USD, EUR/GBP, EUR/USD, GBP/USD and USD/CAD
-according to the corresponding experiments Section.
+La figura \ref{figure:exp_01_a} mas especificamente en la parte
+\ref{fig:exp1_first} la grafica de los resultados de aptitud obtenidos durante
+las simulaciones, en esta grafica se puede notar que durante las primeras
+generaciones se un elemento de la poblacion siempre mantiene el mismo nivel de
+estabilidad, una vista de este elemento de la poblacion se puede aprecia en la
+sub figura \ref{fig:exp1_third} de la misma imagen, asi mismo se obtuvo uno de
+los "peores" elementos de la generacion el cual se muestra en la sub figura
+\ref{fig:exp1_fourth}, como se puede apreciar en la imagen este elemento de la
+poblacion inicia la simulacion con varias piezas muy elevadas e inclusive mal
+acomodadas lo cual genera que al terminar la simulacion solo una parte de las
+estructuras originales se mantenga de pie.
 
-Each of the following Subsections shows five plots: two plots of the
-curve-fitting of the optimized model for the training and testing datasets, two
-plots of the profits generated by the simulated trades of the optimized models
-for the training and testing datasets, and a plot of the error minimization in
-the training or optimization stage. The titles of the plots for both the
-training and testing stages also include the mean-squared error in parentheses
-(denoted by $\epsilon$) for the simulated versus real prices. The profit plots
-show the accumulated profits through time in asset units. The minimization plot
-shows the mean-squared error obtained by the best individual in each of the
-generations.
+Como es posible apreciar en la grafica este conjunto de niveles con dicha
+estabilidad se logra mantener durante varias generaciones no es sino hasta las
+ultimas dos generaciones en donde por medio de las operaciones de cruce y
+mutacion se obtiene un nuevo indivuo capaz de llegar al 80\% de estabilidad,
+este nuevo elemento elemento se puede aprecia en \ref{fig:exp1_fifth}, aqui
+mismo se puede aprecia que a pesar de tenener el mejor resultado de aptitud de
+la generacion en ocasiones no es posible mantener el balance en todos los
+elementos, sin embargo muchos se logran mantener sin ser destruidos, de igual
+manera se presenta en \ref{fig:exp1_sixth} otro individuo representante de la
+ultima generacion de la simulacion, en este caso este segundo individuos
+representa el segundo mejor valor de aptitud que no es completamente igual a
+aquel que esta en la primera posicion, esto es debido a que al integrar miembros
+de elite de vuelta a la poblacion muchas veces se integran mas de uno que son
+invididuos completamente iguales debido a que si durante una generacion dada el
+valor de aptitud no fue mejor que el de un miembro de elite ya existente
+entonces el mejor de la generacion muchas veces siendo el mismo que se reintegro
+a la poblacion es el que se agrega de vuelta a la lista de miembros elite.
 
-\newpage
-
-\subsection{AUD/USD 4 Agents, 4 Rules, 4 Individuals}
-\label{results:forecast-aud-usd-4agents-4rules-4individuals}
-
-Figure \ref{figure:aud-usd-4agents-4rules-4individuals} shows the plots for the
-agent-based model with the worse modelling capabilities for the foreign exchange
-market AUD/USD. As can be expected, the model did not achieve good training or
-testing profits, although the mean-squared error is considerably low. This can
-be a sign of poor generalization capabilities of the model due to the low number
-of agents and rules. Additionally, the low number of individuals can provide
-cause bad exploration in the genetic algorithm.
-
-
-
-\newpage
-
-\subsection{AUD/USD 10 Agents, 10 Rules, 10 Individuals}
-\label{results:forecast-aud-usd-10agents-10rules-10individuals}
-
-The plots for the model generated using 10 agents with 10 rules each are shown
-in Figure \ref{figure:aud-usd-10agents-10rules-10individuals}. It can be seen
-that this model has better modelling capabilities than the 4 agents with 4 rules
-each, as it performed better regarding profits in the training stage. However,
-both models failed to obtain profits during the testing stage.
-
-
-
-\newpage
-
-\subsection{AUD/USD 20 Agents, 20 Rules, 20 Individuals}
-\label{results:forecast-aud-usd-20agents-20rules-20individuals}
-
-Despite the increased modelling capabilities and diversity for the genetic
-algorithm, the model generated by using 20 agents, 20 rules and 20 individuals
-could not outperform the other two models for the AUD/USD. An explanation for
-this is that the patterns present in the training dataset are notably different
-than those found in the testing dataset, as it can be seen in Figure
-\ref{figure:aud-usd-20agents-20rules-20individuals}.
-
-
-
-
-
-
+\import{extras/experimentos/exp_01/}{test.tex} 
+%\subimport{extras/experimentos/exp_01/}{test.tex}
 
 \newpage
 
-\subsection{EUR/GBP 4 Agents, 4 Rules, 4 Individuals}
-\label{results:forecast-eur-gbp-4agents-4rules-4individuals}
+\subsection{Experimento 2}
+\label{chap6:exp_2}
 
-Figure \ref{figure:aud-usd-20agents-20rules-20individuals} shows the plots for
-the 4 agent, 4 rules, 4 individuals model. One can see that both profit plots
-show bad performance. Although this is expected from this configuration, it can
-also be seen that the model struggled in obtaining a simulation that resembled a
-close representation of the real market, especially if it is compared to the 4
-agents, 4 rules and 4 individual model for the AUD/USD market (see Figure
-\ref{figure:eur-gbp-20agents-20rules-20individuals}).
+Como se puede apreciar en la figura \ref{figure:exp_03_a} o mas directamente en
+\ref{fig:exp3_first} esta experimento inicio mal debido a la manera en como se
+generaron los compuestos al inciar las generaciones, de igual manera este inicio
+no tan bueno se puede aprecia en la sub figura \ref{fig:exp3_third} en donde
+varios de los elementos generados no logran mantenerse en buen balace y terminan
+cayendo, algunos destruyendose en el proceso, de igual manera en la sub figura
+\ref{fig:exp3_fourth} del peor individuo de la generacion se puede ver que
+muchos de los elementos inician su posicion en posiciones muy altas o en el caso
+mostrado en esta figura con acomodos muy extraños que terminan por destruir toda
+la estructura que se esperaba crear en ese punto.
 
+A pesar de tener mal acomodo y distribucion de los elementos en el caso del peor
+individuo, se puede apreciar que a pesar de generar estructuras mal ordenadas es
+posible generar estructurs que por la manera en como se acomodan debido a la
+gravedad son capaces de mantenerce de pie, este tipo de estructuras aun siendo
+visualmente un acomodo "errado" de las piezas puede ser considerado como una
+estructura que puede ser rescatada para su uso en futuras generaciones.
 
+A diferencia del primer experimento presentado en esta seccion este es capaz de
+comenzar a subir el nivel de aptitud a partir de la segunda generacion de
+individuos, a pesar de ser capaz de subir la aptitud de la primera a la segunda
+generacion despues de eso el sistema no es capaz de continuar mejorando estos
+resultados en este caso los resultados se quedan estancados en niveles como los
+que se muestran en la sub figura \ref{fig:exp3_fifth} la cual a pesar de lograr
+mantener la mayor cantidad de elementos durante la simulacion tiene el problema
+de que las piezas inician en posiciones muy elevadas y al momento de ser movidas
+por la gravedad pierden su posicion original lo cual provoca que el valor de
+aptitud se vea afectado, el mejor individuo comparte el mismo problema con el
+segundo mejor mostrado en la sub figura \ref{fig:exp3_sixth} donde se puede
+apreciar que las extructuras a pesar de estar aun de pie dado el tiempo
+necesario estas estructuras terminaran cayendo hacia un lado u otro, a pesar de
+esto este tipo de estructuras generadas permiten ver que existen compuestos en
+donde a pesar de mantener los elementos de pie la base de alguna de las
+estructuras tiene el comportamiento de una balanza debido al uso de estructuras
+triangulares en las cuales un pequeño cambio de peso en alguno de los lados del
+mismo provocara que la estructura completa termine cayendo, sin embargo este
+tipo de estructuras proveeen un punto de interes debido a lo visualmente
+complejo que pueden ser este tipo de estructuras.
 
-\newpage
-
-\subsection{EUR/GBP 10 Agents, 10 Rules, 10 Individuals}
-\label{results:forecast-eur-gbp-10agents-10rules-10individuals}
-
-An interesting situation is presented in the plots in Figure
-\ref{figure:eur-gbp-10agents-10rules-10individuals}. The profit plots are
-identical in shape than the plots in Figure
-\ref{figure:eur-gbp-4agents-4rules-4individuals}. The only inconsistency is the
-magnitude of the trades, as the agents in the previous model traded more units
-than the agents in this model.
-
-
-
-\newpage
-
-\subsection{EUR/GBP 20 Agents, 20 Rules, 20 Individuals}
-\label{results:forecast-eur-gbp-20agents-20rules-20individuals}
-
-Although the model generated with these parameters performed well in the
-training stage, as seen in Figure
-\ref{figure:eur-gbp-20agents-20rules-20individuals}, it can be seen that the
-model performed badly in the testing stage. However, it is worth mentioning that
-the model performed well in the first 18-20 hours of the testing stage.
-
-
-
-
-
-
-\newpage
-
-\subsection{EUR/USD 4 Agents, 4 Rules, 4 Individuals}
-\label{results:forecast-eur-usd-4agents-4rules-4individuals}
-
-This model can be seen how badly it performed in the testing stage, as shown in
-Figure \ref{figure:eur-usd-4agents-4rules-4individuals}. However, it performed
-well in the training stage. It must also be noted that a bad performance can be
-expected due to the differences in the patterns between the training and testing
-datasets.
-
-
+\import{extras/experimentos/exp_03/}{test.tex}
 
 \newpage
 
-\subsection{EUR/USD 10 Agents, 10 Rules, 10 Individuals}
-\label{results:forecast-eur-usd-10agents-10rules-10individuals}
+\subsection{Experimento 3}
+\label{chap6:exp_3}
 
-The plots in Figure \ref{figure:eur-usd-10agents-10rules-10individuals}
-demonstrate an improvement regarding the curve-fitting capabilities of the model
-compared to the previous model for the EUR/USD market. This is surprising, given
-the differences in patterns between the two datasets. Additionally, it can be
-noted that the model performed well in both the training and testing stages,
-despite the model performing badly in the last hours of the testing stage.
+Un tercer grupo de resultados de experimentos se presenta en la figura
+\ref{figure:exp_04_a} mas directamente mediante la grafica de
+\ref{fig:exp4_first} este experimento en particular se puede aprecia tuvo un
+inicio no muy bueno iniciando en aproximadamente 40\% de aptitud de estabilidad,
+esto se puede apreciar mas detalladamente en la imagen \ref{fig:exp4_third}
+donde se puede ver que el mejor individuo de la primera generacion inicia muy
+mal la simulacion al tener elementos que inicial con muy mal acomodo lo cual
+provoca que la estructura que se habia construido se desplome y muchos de los
+elementos que la conformaban se destruyan en el proceso, aun teniendo un mal
+inicio se puede apreciar dos estructuras generadas que logra salvarse, estos dos
+tipos de estructuras son interesantes debido a la manera en como estan
+conformadas lo cual permite que se mantengan estables a pesar de que la parte
+superio de ambas se desplome y pudiera afectar la estabilidad de las mismas. 
 
+El segundo caso mostrado en \ref{fig:exp4_fourth} demuestra el problema del que
+se ah estado hablando de los niveles generados pero a una mas grande escala en
+donde la mayor parte de los componenetes del nivel aparecen demasiado elevados y
+separados entre si ademas de tener el problema del mal acomodo de los mismo lo
+cual provoca que terminen cayendo todos al piso y se destruyan en el proceso,
+aun asi, como se ah estado tratando de hacer enfasis en estos resultados es que
+conjuntos como los que se lograron generar en este nivel no son completamente
+malos como los que se pueden ver en las esquinas del nivel arriba de los
+elementos de concreto o inclusive el conjunto de la base de la estructura
+central, estos elementos pueden ser buenos compuestos para futuras pruebas pero
+debido a la manera en como se comportan los niveles en la simulacion son
+destruidos y por tal se pierden en futuras generaciones.
 
+Este experimento se puede asemejar mucho al que se discutio en \ref{chap6:exp_2}
+en donde los resultados de aptitud de los individuos se mantenia en incrementos
+graduales ententualmente logrando llegar a un indiviudo que logra obtener el
+mejor promodio de las generaciones, tal es el caso del nivel presentado en
+\ref{fig:exp4_fifth} la cual se puede aprecia logra mantener en balance los
+componentes del nivel mediate un acomodo que asemeja la apilacion de piezas, a
+pesar de tener una distribucion de este tipo se puede observar como algunos
+elementos se mantienen en un tipo de balance en sus posiciones debido que
+algunas de las bases utilizan elementos demasiado chicos de igual manera que con
+estructuras que utilizan piezas triangulares cuando se balancean las demas
+estructuras estas tambien se pueden ver afectadas por el cambio de peso hacia
+alguno de los lados de los elementos que sostienen y eventualmente caer hacia
+los lados, sin embargo debido a que las piezas cuadradas que utilizan en la base
+son mas estables que los piezas triangulares entonces es un poco mas complicado
+lograr que estos conjuntos se desplomen.
 
-\newpage
-
-\subsection{EUR/USD 20 Agents, 20 Rules, 20 Individuals}
-\label{results:forecast-eur-usd-20agents-20rules-20individuals}
-
-The model represented by the plots in Figure
-\ref{figure:eur-usd-20agents-20rules-20individuals} is seen to have performed
-badly in both the training and testing stages. A possible explanation for this
-behavior is that more generations would be required in order for the model to
-extract a generalization of the market, as a consequence of the high number of
-agents and rules.
-
-
-
-
-
-
-\newpage
-
-\subsection{GBP/USD 4 Agents, 4 Rules, 4 Individuals}
-\label{results:forecast-gbp-usd-4agents-4rules-4individuals}
-
-As expected from a model with poor modelling capabilities, the profit plots in
-Figure \ref{figure:gbp-usd-4agents-4rules-4individuals} show that the model was
-not able to simulate the patterns of the GBP/USD market.
-
-
-
-\newpage
-
-\subsection{GBP/USD 10 Agents, 10 Rules, 10 Individuals}
-\label{results:forecast-gbp-usd-10agents-10rules-10individuals}
-
-In the case of this model for the GBP/USD market, a remarkable performance can
-be noticed in Figure \ref{figure:gbp-usd-10agents-10rules-10individuals} in the
-profit plots for both the training and testing stages.
-
-
-
-\newpage
-
-\subsection{GBP/USD 20 Agents, 20 Rules, 20 Individuals}
-\label{results:forecast-gbp-usd-20agents-20rules-20individuals}
-
-In contrast to other models using 20 agents with 20 rules each, the model
-represented by the plots in Figure
-\ref{figure:gbp-usd-20agents-20rules-20individuals} is shown to perform well in
-both the training and testing stages regarding the accumulated profits, although
-the profits do not reach a similar magnitude as the previous model.
+De igual manera se presenta el segundo mejor elemento de la ultima generacion
+mostrado en \ref{fig:exp4_sixth}, en este caso el segundo "mejor" elemento de la
+ultima generacion esta conformado por estructuras que en su estado inicial estan
+mal distribuidas como las que se mostraron anterioremente en
+\ref{fig:exp4_third} de igual manera que con los casos anteriores que utilizaban
+este tipo de elementos mal acomodados las estructuras terminan cayendo y algunos
+componentes terminan destruyendose en el proceso, de igual manera que los
+individuos anteriormente presentados se puede aprecia un cierto conjunto de
+elementos que logran mantenerse en pie a pesar de los errores de distribucion de
+los demas componentes lo cual demuestra al igual que en los ejemplos anteriores
+es posible generar conjuntos que pueden ser utilizados en experimentos
+subsecuentes para la generacion de niveles.
 
 
-
-
-
-
-
-
+\import{extras/experimentos/exp_04/}{test.tex}
 
 \newpage
 
-\subsection{USD/CAD 4 Agents, 4 Rules, 4 Individuals}
-\label{results:forecast-usd-cad-4agents-4rules-4individuals}
+\section{Diversidad del contenido ceado}
+\label{section:chap6_diversity_results}
 
-The plots in Figure \ref{figure:usd-cad-4agents-4rules-4individuals} present an
-interesting situation: the model seems to perform badly regarding profits in the
-training stage, but not in the testing stage. This behavior is clearer after
-examining the plots of the training and testing datasets: one exhibits a
-downtrend market direction, while the other shiftes to a clear uptrend. The
-model learned how to perform badly in a downtrend market, but it performed well
-in the testing stage because of the shift in direction.
+La segunda seccion de resultados se enfoca en los difetenetes resultado
+obtenidos de diversidad de los compuestos generados, es decir, se mostraran los
+diferentes compuestos que se lograron generar durante las simulaciones del
+sistema, el conjunto de ejemplos que se utilizaran para esto se presenta en la
+figura \ref{figure:chap6_div_1} en donde se muestran tres grupos de
+agrupamientos que se lograron obtener en diferentes experimentos, en estos se
+puede mostrar que el sistema es capaz de genrar estructuras que logran ser
+interesantes, innovadoras y llamativas para el usuario, de manera independiente
+algunas de las estructuras generadas tiene la posibilidad de caer si se les da
+el tiempo suficiente para que el desplazamiento de peso logre tomar efecto, sin
+embargo muchos de los conjuntos obtenidos pueden ser evolucionados de manera
+independiente de tal manera que se pueda obtener elementos como los mostrados en
+las figure \ref{figure:chap6_div_2} en los cuales las bases de los compuestos
+sean modificadas para que en vez de tener una sola base que puede ser inestables
+se tengan dos en bas lados que permitan al compuesto tener la estabilidad
+neceasaria para que no se vean tan afectadas por la gravedad del juego o por
+acciones del jugaro al estar interactuando en el nivel.
 
+Para estos conjuntos de resultados cabe remarcar que debido a la manera en como
+esta codificado el sistema los conjuntos que se presentan como los resultantes
+asi como los niveles que terminan conformando son muy dificiles de poder
+replicar, es posible replicar partes que conforman las estructuras completas
+debido a que muchos de estos son combinaciones a veces sencillas, sin embargo no
+se tiene la seguridad de que se logren replicar todas las estructuras en su
+totalidad, estos conjuntos obtenidos pueden a su vez ser integrados en listas
+extras que permitan que al iniciar experimentos subsecuentes puedan ser
+integrados a la lista de compuestos disponibles del experimento, como se explico
+anteriomente se proponia que todos los experimentos realizados iniciaran en el
+mismo nivel de complejidad es es solamente utilizando los elementos basicos del
+juego y cada experimento generara compuestos para utilizar esto permitio que los
+niveles que se lograban obtener al final del experimento siempre fuesen
+diferentes entre otros experimentos realizados.
 
+\import{extras/experimentos/diversity/}{test.tex}
 
-\newpage
-
-\subsection{USD/CAD 10 Agents, 10 Rules, 10 Individuals}
-\label{results:forecast-usd-cad-10agents-10rules-10individuals}
-
-In contrast to the previous model, the model represented by the plots shown in
-Figure \ref{figure:usd-cad-10agents-10rules-10individuals} performs badly in the
-testing stage, most likely because of the nature of the training dataset which
-sharply contrasts with the nature of the testing dataset.
-
-
-
-\newpage
-
-\subsection{USD/CAD 20 Agents, 20 Rules, 20 Individuals}
-\label{results:forecast-usd-cad-20agents-20rules-20individuals}
-
-The model represented by the plots in Figure
-\ref{figure:usd-cad-20agents-20rules-20individuals} performs similarly to the
-previously discussed model. The explanation behind this behavior should be the
-same as the one mentioned in the previous Subsection.
-
-
-
-
-
-\newpage
-
-\section{Extracting Insights about a Financial Market}
-\label{section:extracting-insights-about-a-financial-market}
-
-This Section shows interpretations of two different foreign exchange markets
-obtained by examining the agents in the agent-based models generated for the
-experiments shown in Section
-\ref{section:forecasting-the-prices-of-a-financial-market}. Only the two markets
-are presented in this Section as they are enough to demonstrate their use. The
-rest of the interpretetations for the markets described in Section
-\ref{section:forecasting-the-prices-of-a-financial-market} can be found in
-Appendix \ref{app:market-interpretations}, and the full list of interpretations
-for all the experiments performed can be found in the git repository of this
-thesis document. The interpretations
-consist of a series of sentences, where each give a summary of the profits,
-perceptions, hesitancy and actions of groups of agents. Considering the
-following sentence: ``3 agents — with an average profit of 68 units — perceived
-in 85\% of the market that a weak resistance above current price — with a
-hesitancy of 0.147 — is a signal to sell — with a hesitancy of 0.079.'', one can
-draw the following conclusions about 3 agents in a community of agents: their
-average profit in a dataset is of 68 units; in 85\% of the data points in the
-dataset, they perceived that a price area with a low weight above the current
-price is a signal to sell; after perceiving a low weight price area, they add
-some hesitancy or doubt to their perception, and then they decide to sell, but
-this decision has also some hesitancy or doubt. Hesitancy or doubt (see Section
-\ref{section:using-the-agent-based-model-to-generate-insights-about-a-financial-market})
-in this case is an indicative of how significant the perception has to be in
-order to be indeed perceived as a low weight price area, and how many units are
-actually traded; it can be seen as penalties to the agent's perception and
-action.
-
-The following interpretations show five sentences for the training stage of the
-model and five sentences for the testing stage. These only represent excerpts of
-the generated interpretations; it was decided for them to be truncated due to
-space constraints in this thesis document, but the reader can find the full
-interpretations in this thesis' Git repository. In order to obtain these five
-sentence excerpts, all the generated sentences were ordered by the number of
-agents and then by the number of units in profits. This way the sentences show
-where the most number of agents in the community of agents coincided in their
-perceptions and decisions, and then show what situations were the more
-profitable.
-
-%% Interpretations for the five foreign exchange markets AUD/USD, EUR/GBP, EUR/USD,
-%% GBP/USD and USD/CAD are included. Each of these markets show interpretations for
-%% the models with the following variants in parameters: 4 agents, 4 rules and 4
-%% individuals; 10 agents, 10 rules and 10 individuals; 20 agents, 20 rules and 20
-%% individuals.
-
-\subsection{AUD/USD 4 Agents, 4 Rules, 4 Individuals}
-
-One can see in the first sentence of the training set that 3 agents decided to
-trade when a weak resistance is presented above the current price. In the
-training stage these agents were not profitable, while in the testing stage they
-were profitable. This indicates that this pattern is not as reliable as, for
-example, the one presented in the second sentence in the training set, where
-agents decided to buy when they perceived a weak resistance nearby the current
-price. This behavior showed to also be profitable in the testing stage, as is
-shown in the fourth sentence of the corresponding set.
-
-\subsubsection{Training}
-
-{\small
-  \begin{itemize}
-  \item 3 agents — with an average profit of -68 units — perceived in 68\% of
-    the market that a weak resistance above current price — with a hesitancy of
-    0.147 — is a signal to sell — with a hesitancy of 0.079.
-  \item 2 agents — with an average profit of 280 units — perceived in 46\% of
-    the market that a weak resistance nearby current price — with a hesitancy of
-    0.133 — is a signal to buy — with a hesitancy of 0.097.
-  \item 2 agents — with an average profit of 280 units — perceived in 22\% of
-    the market that a moderate resistance above current price — with a hesitancy
-    of 0.15 — is a signal to buy — with a hesitancy of 0.113.
-  \item 2 agents — with an average profit of 38 units — perceived in 56\% of the
-    market that a weak resistance below current price — with a hesitancy of
-    0.246 — is a signal to buy — with a hesitancy of 0.094.
-  \item 2 agents — with an average profit of -41 units — perceived in 56\% of
-    the market that a weak resistance below current price — with a hesitancy of
-    0.009 — is a signal to sell — with a hesitancy of 0.132.
-  \end{itemize}
-}
-
-\subsubsection{Testing}
-
-{\small
-  \begin{itemize}
-  \item 3 agents — with an average profit of 68 units — perceived in 85\% of the
-    market that a weak resistance above current price — with a hesitancy of
-    0.147 — is a signal to sell — with a hesitancy of 0.079.
-  \item 2 agents — with an average profit of 352 units — perceived in 47\% of
-    the market that a moderate resistance below current price — with a hesitancy
-    of 0.134 — is a signal to sell — with a hesitancy of 0.151.
-  \item 2 agents — with an average profit of 323 units — perceived in 6\% of the
-    market that a strong resistance below current price — with a hesitancy of
-    0.098 — is a signal to sell — with a hesitancy of 0.024.
-  \item 2 agents — with an average profit of 323 units — perceived in 55\% of
-    the market that a weak resistance nearby current price — with a hesitancy of
-    0.04 — is a signal to sell — with a hesitancy of 0.138.
-  \item 2 agents — with an average profit of 309 units — perceived in 0\% of the
-    market that a strong resistance above current price — with a hesitancy of
-    0.127 — is a signal to sell — with a hesitancy of 0.14.
-  \end{itemize}
-}
-
-\subsection{EUR/GBP 4 Agents, 4 Rules, 4 Individuals}
-
-An interesting situation in these sets of interpretations is that the only
-sentence in the training set that signals an actual trade action is among the
-most profitable interpretations in the testing stage -- but with a 0\% of
-perception in the market. This can also be seen as a signal to not follow the
-behavior presented by this model, which agrees the profit plots of the model
-presented in the previous Section.
-
-\subsubsection{Training}
-
-{\small
-  \begin{itemize}
-  \item 3 agents — with an average profit of 60 units — perceived in 56\% of the
-    market that a weak resistance above current price — with a hesitancy of
-    0.094 — is a signal to hold the current position — with a hesitancy of
-    0.029.
-  \item 3 agents — with an average profit of 31 units — perceived in 36\% of the
-    market that a moderate resistance nearby current price — with a hesitancy of
-    0.126 — is a signal to hold the current position — with a hesitancy of
-    0.194.
-  \item 3 agents — with an average profit of -44 units — perceived in 13\% of
-    the market that a strong resistance below current price — with a hesitancy
-    of 0.044 — is a signal to hold the current position — with a hesitancy of
-    0.152.
-  \item 2 agents — with an average profit of 105 units — perceived in 13\% of
-    the market that a strong resistance below current price — with a hesitancy
-    of 0.114 — is a signal to sell — with a hesitancy of 0.102.
-  \item 2 agents — with an average profit of 105 units — perceived in 42\% of
-    the market that a weak resistance nearby current price — with a hesitancy of
-    0.105 — is a signal to hold the current position — with a hesitancy of
-    0.048.
-  \end{itemize}
-}
-
-\subsubsection{Testing}
-
-{\small
-  \begin{itemize}
-  \item 3 agents — with an average profit of 34 units — perceived in 79\% of the
-    market that a weak resistance above current price — with a hesitancy of
-    0.094 — is a signal to hold the current position — with a hesitancy of
-    0.029.
-  \item 3 agents — with an average profit of 18 units — perceived in 33\% of the
-    market that a moderate resistance nearby current price — with a hesitancy of
-    0.126 — is a signal to hold the current position — with a hesitancy of
-    0.194.
-  \item 3 agents — with an average profit of -23 units — perceived in 0\% of the
-    market that a strong resistance below current price — with a hesitancy of
-    0.044 — is a signal to hold the current position — with a hesitancy of
-    0.152.
-  \item 2 agents — with an average profit of 60 units — perceived in 0\% of the
-    market that a strong resistance below current price — with a hesitancy of
-    0.114 — is a signal to sell — with a hesitancy of 0.102.
-  \item 2 agents — with an average profit of 60 units — perceived in 57\% of the
-    market that a weak resistance nearby current price — with a hesitancy of
-    0.105 — is a signal to hold the current position — with a hesitancy of
-    0.048.
-  \end{itemize}
-}
-
-\section{Comparison with other Works}
-\label{section:comparison-with-other-works}
-
-This Section presents a set of works that share many similarities to the work
-proposed in this thesis and that are comparable to it. Table \ref{table:results}
-shows five different works that focus on forecasting a financial market and
-yield a rate of return. The table columns show the work reference and its
-authors; the technique used to perform the forecasting; the optimization
-algorithm used, if any; the financial market type used; the percentage of profit
-or rate of return after a number of trades; and the standard deviation for the
-aforementioned rate of return. The purpose of this table is to showcase what are
-normal values of performance when forecasting financial markets and not to
-provide a concise comparison for the proposed method, as many factors do not
-match among the different works shown in the table: the size of the dataset used
-for training, the technique used, the parameters of the optimization algorithm,
-the number of trades performed, the type of the financial market,
-etc. Furthermore, the results shown in this Chapter had the purpose of
-demonstrating how the proposed method behaves using different parameters and not
-to obtain the maximum possible rate of return.
-
-\begin{table}[ht]
-\caption{Performance of different approaches to financial market forecasting}
-\label{table:results}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-Work                                         & Technique                  & Optim. Alg. & Market Type              & ROR & SD \\
-\hline
-\hline
-\cite{Fernandez-Blanco2008} & TI            & Genetic algorithm         & Stock             & 76.13\%     & 14.15\%            \\
-\hline
-\cite{Korczak2015}          & Fuzzy MAS        & -                      & ForEx & 32.77\%     & 109.09\%           \\
-\hline
-\cite{Korczak2016}          & Fuzzy MAS        & Genetic algorithm      & ForEx & 223.08\%    & 385.7\%            \\
-\hline
-\cite{Barbosa2010}          & Ensemble MAS     & -                      & ForEx & 27.78\%     & 12.43\%            \\
-\hline
-\cite{Escobar2013}          & Fuzzy TI         & -                      & Stock             & 7.35\%      & 6.9\%              \\
-\hline
-Thesis             & Fuzzy MAS        & Genetic algorithm      & ForEx & 2.15\%      & 38.85\%  \\
-\hline
-\end{tabular}
-\end{table}
-
-The rate of returns shown in Table \ref{table:results} for the proposed method
-were obtained by averaging the units of profit for all the models that used a
-configuration of 10 agents, 10 rules and 10 individuals for the following
-financial markets: AUD/USD, EUR/GBP, EUR/USD, GBP/USD and USD/CAD. These models
-were chosen because this configuration showed a good performance, considering
-only the results included in this thesis document; other configurations could
-have achieved a better performance.
+A pesar de que los resultados que se muestran en esta seccion logran demostrar
+que el sistema es capaz tanto de crear niveles diferentes e interesantes asi
+como de generar compuestos de estructuras nuevas con la base de las piezas
+basicas del juego el sistema aun cuenta con detalles que se pueden pulir para
+mejorar el rendimiento del mismo, estos detalles se veran mas detalladamente en
+la seccion \ref{chapter:conclusions-and-future-work}.

@@ -1,0 +1,155 @@
+\begin{thebibliography}{10}
+
+\bibitem{RovioEntertainmentCorporation2009}
+{Rovio Entertainment Corporation}, ``{Angry Birds},'' 2009.
+
+\bibitem{Mossmouth2013}
+L.~Mossmouth, ``{Spelunky World},'' 2013.
+
+\bibitem{Mateas}
+M.~Mateas and A.~Stern, ``{Fa{\c{c}}ade: An Experiment in Building a
+  Fully-Realized Interactive Drama},'' tech. rep.
+
+\bibitem{Holtar}
+N.~I. Holtar, ``{AUDIOVERDRIVE: EXPLORING BIDIRECTIONAL RELATIONSHIPS BETWEEN
+  MUSIC AND GAME},'' tech. rep.
+
+\bibitem{Risi2012}
+S.~Risi, J.~Lehman, D.~B. D'ambrosio, R.~Hall, and K.~O. Stanley, ``{Combining
+  Search-based Procedural Content Generation and Social Gaming in the Petalz
+  Video Game},'' tech. rep., 2012.
+
+\bibitem{Holland1975}
+J.~H. Holland, ``{Adaptation in Natural and Artificial Systems},'' {\em Sgart
+  Newsletter}, 1975.
+
+\bibitem{Whitley1994}
+D.~C. S.~U. Whitley, ``{A Genetic Algorithm Tutorial},'' {\em Statistics and
+  Computing}, no.~4, pp.~65--85, 1994.
+
+\bibitem{Harik1999}
+G.~R. Harik, F.~G. Lobo, and D.~E. Goldberg, ``{The Compact Genetic
+  Algorithm},'' Tech. Rep.~4, 1999.
+
+\bibitem{Hastings2009}
+E.~Hastings, R.~Guha, and K.~Stanley, ``{Automatic Content Generation in the
+  Galactic Arms Race Video Game},'' {\em IEEE Transactions on Computational
+  Intelligence and AI in Games}, vol.~1, pp.~245--263, dec 2009.
+
+\bibitem{garner2014sonic}
+T.~Garner and M.~Grimshaw, ``Sonic virtuality: Understanding audio in a virtual
+  world,'' {\em The Oxford Handbook of Virtuality}, p.~364.
+
+\bibitem{lopes2015sonancia}
+P.~Lopes, A.~Liapis, and G.~N. Yannakakis, ``Sonancia: Sonification of
+  procedurally generated game levels,'' in {\em In Proceedings of the 1st
+  Computational Creativity and Games Workshop}, Citeseer, 2015.
+
+\bibitem{mateas2003faccade}
+M.~Mateas and A.~Stern, ``Fa{\c{c}}ade: An experiment in building a
+  fully-realized interactive drama,'' in {\em Game developers conference},
+  vol.~2, pp.~4--8, 2003.
+
+\bibitem{evans2013versu}
+R.~Evans and E.~Short, ``Versu—a simulationist storytelling system,'' {\em
+  IEEE Transactions on Computational Intelligence and AI in Games}, vol.~6,
+  no.~2, pp.~113--130, 2013.
+
+\bibitem{Browne2010}
+C.~Browne and F.~Maire, ``{Evolutionary Game Design},'' {\em IEEE Transactions
+  on Computational Intelligence and AI in Games}, vol.~2, pp.~1--16, mar 2010.
+
+\bibitem{Togelius2008}
+J.~Togelius and J.~Schmidhuber, ``{An experiment in automatic game design},''
+  in {\em 2008 IEEE Symposium On Computational Intelligence and Games},
+  pp.~111--118, IEEE, dec 2008.
+
+\bibitem{Nielsen2015}
+T.~S. Nielsen, G.~A.~B. Barros, J.~Togelius, and M.~J. Nelson, ``{Towards
+  generating arcade game rules with VGDL},'' in {\em 2015 IEEE Conference on
+  Computational Intelligence and Games (CIG)}, pp.~185--192, IEEE, aug 2015.
+
+\bibitem{treanor2012game}
+M.~Treanor, B.~Blackford, M.~Mateas, and I.~Bogost, ``Game-o-matic: Generating
+  videogames that represent ideas,'' in {\em Proceedings of the The third
+  workshop on Procedural Content Generation in Games}, p.~11, ACM, 2012.
+
+\bibitem{Nelson2008}
+M.~J. Nelson and M.~Mateas, ``{An interactive game-design assistant},'' in {\em
+  Proceedings of the 13th international conference on Intelligent user
+  interfaces - IUI '08}, (New York, New York, USA), p.~90, ACM Press, 2008.
+
+\bibitem{cook2011multi}
+M.~Cook and S.~Colton, ``Multi-faceted evolution of simple arcade games,'' in
+  {\em 2011 IEEE Conference on Computational Intelligence and Games (CIG'11)},
+  pp.~289--296, IEEE.
+
+\bibitem{sanchez2009playability}
+J.~G. S{\'a}nchez, N.~P. Zea, and F.~L. Guti{\'e}rrez, ``Playability: How to
+  identify the player experience in a video game,'' in {\em IFIP Conference on
+  Human-Computer Interaction}, pp.~356--359, Springer, 2009.
+
+\bibitem{Taylor2016}
+T.~Taylor, M.~Bedau, A.~Channon, D.~Ackley, W.~Banzhaf, G.~Beslon, E.~Dolson,
+  T.~Froese, S.~Hickinbotham, T.~Ikegami, B.~McMullin, N.~Packard,
+  S.~Rasmussen, N.~Virgo, E.~Agmon, E.~Clark, S.~McGregor, C.~Ofria,
+  G.~Ropella, L.~Spector, K.~O. Stanley, A.~Stanton, C.~Timperley, A.~Vostinar,
+  and M.~Wiser, ``{Open-Ended Evolution: Perspectives from the OEE Workshop in
+  York},'' {\em Artificial Life}, vol.~22, pp.~408--423, aug 2016.
+
+\bibitem{Renz2016}
+J.~Renz, X.~Ge, R.~Verma, and P.~Zhang, ``{Angry Birds as a Challenge for
+  Artificial Intelligence},'' {\em Thirtieth AAAI Conference on Artificial
+  Intelligence}, mar 2016.
+
+\bibitem{Stephenson2018The2A}
+M.~Stephenson, J.~Renz, X.~Ge, and P.~Zhang, ``The 2017 aibirds competition,''
+  {\em CoRR}, vol.~abs/1803.05156, 2018.
+
+\bibitem{Stephenson2018}
+M.~J.~B. Stephenson, J.~Renz, X.~Ge, L.~N. Ferreira, J.~Togelius, and P.~Zhang,
+  ``{The 2017 AIBIRDS Level Generation Competition},'' {\em IEEE Transactions
+  on Games}, pp.~1--1, jul 2018.
+
+\bibitem{Ferreira2014}
+L.~Ferreira and C.~Toledo, {\em {A search-based approach for generating Angry
+  Birds levels}}.
+\newblock IEEE Conference on Computational Intelligence and Games, 2014.
+
+\bibitem{Jiang2017}
+Y.~Jiang, T.~Harada, and R.~Thawonmas, {\em {Procedural generation of angry
+  birds fun levels using pattern-struct and preset-model}}.
+\newblock IEEE Conference on Computational Intelligence and Games, 2017.
+
+\bibitem{Kaidan2015}
+M.~Kaidan, C.~Y. Chu, T.~Harada, and R.~Thawonmas, ``{Procedural generation of
+  angry birds levels that adapt to the player's skills using genetic
+  algorithm},'' in {\em 2015 IEEE 4th Global Conference on Consumer Electronics
+  (GCCE)}, pp.~535--536, IEEE, oct 2015.
+
+\bibitem{Kaidan2016}
+M.~Kaidan, T.~Harada, C.~Y. Chu, and R.~Thawonmas, ``{Procedural generation of
+  angry birds levels with adjustable difficulty},'' in {\em 2016 IEEE Congress
+  on Evolutionary Computation (CEC)}, pp.~1311--1316, IEEE, jul 2016.
+
+\bibitem{ALLEN1990}
+J.~F. ALLEN, ``{Maintaining Knowledge about Temporal Intervals},'' {\em
+  Readings in Qualitative Reasoning About Physical Systems}, pp.~361--372, jan
+  1990.
+
+\bibitem{Calle2019}
+L.~Calle, J.~J. Merelo, A.~Mora-Garc{\'{i}}a, and J.-M. Garc{\'{i}}a-Valdez,
+  ``{Free Form Evolution for Angry Birds Level Generation},'' pp.~125--140,
+  Springer, Cham, apr 2019.
+
+\bibitem{Calimeri2016}
+F.~Calimeri, M.~Fink, S.~Germano, A.~Humenberger, G.~Ianni, C.~Redl,
+  D.~Stepanova, A.~Tucci, and A.~Wimmer, ``{Angry-HEX: An Artificial Player for
+  Angry Birds Based on Declarative Knowledge Bases},'' {\em IEEE TRANSACTIONS
+  ON COMPUTATIONAL INTELLIGENCE AND AI IN GAMES}, vol.~8, no.~2, 2016.
+
+\bibitem{Smith2009}
+G.~Smith, M.~Treanor, J.~Whitehead, and M.~Mateas, ``{Rhythm-Based Level
+  Generation for 2D Platformers},'' tech. rep., 2009.
+
+\end{thebibliography}

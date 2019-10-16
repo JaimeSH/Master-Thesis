@@ -1,0 +1,19 @@
+\relax 
+\newlabel{fig:first}{{1(a)}{1}}
+\newlabel{sub@fig:first}{{(a)}{1}}
+\newlabel{fig:second}{{1(b)}{1}}
+\newlabel{sub@fig:second}{{(b)}{1}}
+\newlabel{fig:third}{{1(c)}{1}}
+\newlabel{sub@fig:third}{{(c)}{1}}
+\newlabel{fig:fourth}{{1(d)}{1}}
+\newlabel{sub@fig:fourth}{{(d)}{1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Resultados de aptitud para el experimento}}}{1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Distancia Hamming promedio en el experimento}}}{1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {Mejor individuo de la primera generacion}}}{1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {Peor individuo de la primera generacion}}}{1}\protected@file@percent }
+\newlabel{fig:fifth}{{1(e)}{2}}
+\newlabel{sub@fig:fifth}{{(e)}{2}}
+\newlabel{fig:sixth}{{1(f)}{2}}
+\newlabel{sub@fig:sixth}{{(f)}{2}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(e)}{\ignorespaces {Mejor individuo de la ultima generacion}}}{2}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(f)}{\ignorespaces {Segundo mejor individuo de la ultima generacion}}}{2}\protected@file@percent }

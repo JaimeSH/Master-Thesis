@@ -1,0 +1,128 @@
+PWD d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01
+INPUT d:/Program Files/texlive/2018/texmf.cnf
+INPUT d:/Program Files/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT d:/Program Files/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.tex
+OUTPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.log
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.cls
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.cls
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/tools/shellesc.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/tools/shellesc.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/tools/shellesc.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.cfg
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.cfg
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/article.cls
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/article.cls
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/standalone/standalone.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/currfile/currfile.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/currfile/currfile.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/filehook/filehook.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/filehook/filehook.sty
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.sta
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.sta
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/gincltex/gincltex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/gincltex/gincltex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/gincltex/gincltex.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/svn-prov/svn-prov.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/svn-prov/svn-prov.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/filemod/filemod-expmin.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/filemod/filemod-expmin.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/import/import.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/import/import.sty
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.aux
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.aux
+OUTPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.aux
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.sta
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.sta
+OUTPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.sta
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT d:/Program Files/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Fitness.png
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Fitness.png
+OUTPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.pdf
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Fitness.png
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Hamming.png
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Hamming.png
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Hamming.png
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Ind1Bundle.tex
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Ind1Bundle.tex
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/./Gen1Ind1_BF.PNG
+INPUT ./Gen1Ind1_BF.PNG
+INPUT ./Gen1Ind1_BF.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/./Gen1Ind1_AF.PNG
+INPUT ./Gen1Ind1_AF.PNG
+INPUT ./Gen1Ind1_AF.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1WorstBundle.tex
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1WorstBundle.tex
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_Before.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_Before.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_Before.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_After.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_After.PNG
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/Gen1Worst_After.PNG
+INPUT d:/Program Files/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT d:/Documents/Clonado/Master-Thesis/extras/experimentos/exp_01/main_pdf.aux
+INPUT d:/Program Files/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb

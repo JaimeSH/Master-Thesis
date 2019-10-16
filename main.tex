@@ -27,6 +27,7 @@
 
 
 \documentclass[12pt,twoside]{mitthesis}
+\usepackage[subpreambles=true]{standalone}
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -36,7 +37,8 @@
 %\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{bm}
-\usepackage{subcaption}
+%\usepackage{subcaption}
+\usepackage{subfigure}
 \usepackage{lgrind}
 \usepackage{listings}
 \usepackage{color}
@@ -60,7 +62,7 @@
 
 %\usepackage[a4paper,margin=1cm,landscape]{geometry}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
-
+ 
 %%%<
 \usepackage{verbatim}
 %\usepackage[active,tightpage]{preview}
@@ -83,6 +85,12 @@
 \renewcommand{\lstlistingname}{Algoritmo}
 
 %\bibliographystyle{named}
+
+% Include the subfolders
+
+%\newcommand*{\Exp2}{../extras/experimentos/exp_02}
+%\newcommand*{\Exp3}{../extras/experimentos/exp_03}
+\usepackage{import}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -136,7 +144,7 @@
 
 \addto\captionsenglish{\renewcommand{\chaptername}{Capitulo}}
 
-\renewcommand{\chaptername}{Capitulo}
+\renewcommand{\chaptername}{Capítulo}
 
 \renewcommand{\listingscaption}{Codigo}
 %\addto\captionsenglish{
@@ -170,10 +178,10 @@ listing options={% put any listing options here
     aboveskip=0pt, belowskip=0pt,
     basicstyle=\ttfamily,columns=fullflexible},
 comment={#2},#1
-}
-
+} 
+ 
 \begin{document}
-
+%\subimport{extras/experimentos/exp_01/}{test.tex}
 \include{cover}
 % Some departments (e.g. 5) require an additional signature page.  See
 % signature.tex for more information and uncomment the following line if
@@ -195,7 +203,7 @@ comment={#2},#1
 \include{chap4}
 \include{chap5}
 \include{chap6}
-%\include{chap7}
+\include{chap7}
 %\include{chap8}
 %\include{chap9}
 \appendix

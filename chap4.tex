@@ -1,114 +1,114 @@
 \chapter{Propuesta del proyecto}
 \label{chapter:proposed-method}
 
-Este capitulo describe los componentes que integran el metodo propuesto, asi
-como la maera en como estos componentes proveen de apoyo al sistema final, este
-capitulo esta dividido en dos secciones la primera siendo la seccion
+Este capítulo describe los componentes que integran el método propuesto, así
+cómo la manera en cómo estos componentes proveen de apoyo al sistema final, este
+capítulo está dividido en dos secciones la primera siendo la sección
 \ref{section:used-method} en donde se explican los conceptos propuestos y
-utilizados en el proyecto, esta seccion se divide en varias subsecciones en
-donde se explican partes de la propuesta y el como permitiran que el sistema
-generado cumpla con los objetivos requeridos, la segunda parte siendo la seccion
+utilizados en el proyecto, esta sección se divide en varias subsecciones en
+donde se explican partes de la propuesta y el cómo permitirán que el sistema
+generado cumpla con los objetivos requeridos, la segunda parte siendo la sección
 \ref{section:previous-proposed-methods} explica ideas y conceptos que se
-propusieron a lo largo del desarrollo, el como estos ayudarian a mejorar el
+propusieron a lo largo del desarrollo, el cómo estos ayudarían a mejorar el
 sistema generado.
 
 \section{Propuesta utilizada}
 \label{section:used-method}
 
-La propuesta final utilizada en el proyecto esta basada en el uso de varias
-tecnicas para la generacion de los compuestos y subsecuentemente los niveles
-para el juego de Angry Birds, la base de todo el proyecto esta en el uso de un
-algoritmo genetico para evolucionar los individuos, esto se explica mas a
-detalle en la seccion \ref{subsection:generate-levels-using-GA}
+La propuesta final utilizada en el proyecto está basada en el uso de varias
+técnicas para la generación de los compuestos y subsecuentemente los niveles
+para el juego de Angry Birds, la base de todo el proyecto está en el uso de un
+algoritmo genético para evolucionar los individuos, esto se explica más a
+detalle en la sección \ref{subsection:generate-levels-using-GA}
 
 \subsection{Generar compuestos de piezas base}
 \label{subsection:generate-composites}
 
 El videojuego de Angry Birds cuenta con un total de 11 diferentes tipos de
-bloques, ademas de 2 grupos de objetos siendo estos cajas de explosivos y los
-puercos que pueden ser colocados en el nivel, ademas de esto cuenta con
+bloques, además de 2 grupos de objetos siendo estos cajas de explosivos y los
+puercos que pueden ser colocados en el nivel, además de esto cuenta con
 plataformas que pueden ser agregadas y rotadas para establecer plataformas en
-donde colocar mas bloques, de estos solo utilizaremos las 11 piezas basicas
+donde colocar más bloques, de estos solo utilizaremos las 11 piezas básicas
 mostradas en la figura \ref{figure:game-basic-blocks} y los puercos para generar
 niveles.
 
-Las piezas basicas no pueden ser modificadas, tampoco es posible agregar nuevos
-bloques al codigo debido a que la competencia solo utiliza las piezas regulares,
-para poder librar esta restriccion se generaran compuestos con las piezas base,
-estos compuestos pueden estar formados de 1, 2 o mas bloques basicos, estos
-grupos se utilizaran para generar las estructuras que se colocaran en los niveles.
+Las piezas básicas no pueden ser modificadas, tampoco es posible agregar nuevos
+bloques al código debido a que la competencia solo utiliza las piezas regulares,
+para poder librar esta restricción se generarán compuestos con las piezas base,
+estos compuestos pueden estar formados de 1, 2 o más bloques básicos, estos
+grupos se utilizarán para generar las estructuras que se colocaran en los niveles.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/list_pieces.png}
-  \caption{Piezas basicas del juego angry birds}
+  \caption{Piezas básicas del juego angry birds}
   \label{figure:game-basic-blocks}
 \end{figure}
 
-La manera porpuesta para generar estos conjuntos es mediante el uso de los
+La manera propuesta para generar estos conjuntos es mediante el uso de los
 valores de alto y ancho de las piezas para poder definir los bordes de las
-mismas, de esta manera al momento de querer unir dos o mas piezas para formar un
-conjunto la medida del conjunto se calculara buscando el punto mas alto, mas
-bajo asi como las posiciones mas a la derecha e izquierda teniendo ambas piezas
-unidas, un ejemplo de la union de cuatro piezas se muestra en la figura
+mismas, de esta manera al momento de querer unir dos o más piezas para formar un
+conjunto la medida del conjunto se calculará buscando el punto más alto, más
+bajo, así como las posiciones más a la derecha e izquierda teniendo ambas piezas
+unidas, un ejemplo de la unión de cuatro piezas se muestra en la figura
 \ref{figure:bounding-box-calculation} en donde cuatro piezas se colocan unas
-sobre otras para formar un objeto cuadrado, para poder agregar las piezas como
-un conjunto se buscan los puntos mas alejados, una vez que se ah calculado el
+sobre otras para formar un objeto cuadrado, para poder agregar las piezas cómo
+un conjunto se buscan los puntos más alejados, una vez que se ha calculado el
 alto y ancho del conjunto se procede a encontrar el punto central del mismo,
 desde este punto se calcula la distancia en \textit{x} y \textit{y} hacia los
-centros de cada una de las piezas del conjnto, estos valores de centros se
-agregan en manera de diccionario para poder genererar los objetos requeridos al
+centros de cada una de las piezas del conjunto, estos valores de centros se
+agregan en manera de diccionario para poder generar los objetos requeridos al
 momento de crear a los individuos antes de iniciar las generaciones.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/bounding_box_calculation.png}
-  \caption{Calculo de bordes de un conjunto}
+  \caption{Cálculo de bordes de un conjunto}
   \label{figure:bounding-box-calculation}
 \end{figure}
 
-Debido a que los conjuntos son creados antes de la ejecucion del algoritmo se
-permite que el algoritmo se base unicamente manteniendo los apuntadores a las
-composiciones de piezas y solo trabaja con estas mendiante las operaciones
-geneticas del propio algoritmo, esto permitira que el algoritmo utilize menos
+Debido a que los conjuntos son creados antes de la ejecución del algoritmo se
+permite que el algoritmo se base únicamente manteniendo los apuntadores a las
+composiciones de piezas y solo trabaja con estas mediante las operaciones
+genéticas del propio algoritmo, esto permitirá que el algoritmo utilice menos
 tiempo identificando posibles composiciones.
 
 Utilizando esta manera de generar los compuestos simplemente se utiliza un
 algoritmo basado en clases para poder acomodar los elementos y crear los objetos
-requeridos segun sean necesarios, esto se explica mas detalladamente en la
-seccion \ref{subsection:classorientedidea}.
+requeridos según sean necesarios, esto se explica más detalladamente en la
+sección \ref{subsection:classorientedidea}.
 
-\subsection{Generacion de compuestos mediante objetos de clase}
+\subsection{Generación de compuestos mediante objetos de clase}
 \label{subsection:classorientedidea}
 
 Para mantener un control de los compuestos, principalmente de las piezas
-individuales que forman los compuestos se propuso la generacion de clases con
-herencia en donde una clase principal contendra los metodos que las clases hijas
-utilizaran para obtener valores especificos cuando las piezas requieran,
-principalmente estos metodos se encargan de calcular las esquinas de las piezas
-particulares las cuales permitiran una vez se tenga un conjunto encontrar la
-altura y tamaño total del conjunto asi como el centro del mismo.
+individuales que forman los compuestos se propuso la generación de clases con
+herencia en donde una clase principal contendrá los métodos que las clases hijas
+utilizarán para obtener valores específicos cuando las piezas requieran,
+principalmente estos métodos se encargan de calcular las esquinas de las piezas
+particulares las cuales permitirán una vez se tenga un conjunto encontrar la
+altura y tamaño total del conjunto, así como el centro del mismo.
 
 Utilizando la estrategia mostrada en la figura
-\ref{figure:bounding-box-calculation} y explicada en el capitulo anterior se
-define una clase para los conjuntos de piezas, aqui se utilizan los calculos de
-las clases particulares anteriorente mencionadas para obtener los valores de
-bordes y tamaño de los conjuntos, estas clases se crean deacuerdo a los
-apuntadores indicados en los individuaos de la poblacion, cuando un apuntador
-hace referencia a un grupo se obtienen los datos de la piezas que integran al
-conjunto y se crean objetos nuevos de esas mismas clases que perteneceran a un
+\ref{figure:bounding-box-calculation} y explicada en el capítulo anterior se
+define una clase para los conjuntos de piezas, aquí se utilizan los cálculos de
+las clases particulares anteriormente mencionadas para obtener los valores de
+bordes y tamaño de los conjuntos, estas clases se crean de acuerdo a los
+apuntadores indicados en los individuaos de la población, cuando un apuntador
+hace referencia a un grupo se obtienen los datos de las piezas que integran al
+conjunto y se crean objetos nuevos de esas mismas clases que pertenecerán a un
 individuo particular, esto debido a que al hacer referencia a un objeto
-previamente creado un cambio realizado en un individuo particular se propagaria
-a todos los individuos que utilizen ese mismo apuntador, por tal motivo cuando
+previamente creado un cambio realizado en un individuo particular se propagaría
+a todos los individuos que utilicen ese mismo apuntador, por tal motivo cuando
 se crean los conjuntos se mantiene una lista de valores que indican la clase que
-se debera de crear y la posicion en \textit{x} y \textit{y} relativa al centro
+se deberá de crear y la posición en \textit{x} y \textit{y} relativa al centro
 del mismo conjunto.
 
-El sistema de clases se establecio con el fin de reducir la redundancia de
-codigo y para permitir que cada clase particular mantenga los datos necesarios
-para crear los objetos que contiene asi como mantener las listas de las piezas
-que conforman los niveles antes y despues de haber realizado las simulaciones
-para poder realizar los calculos de manera mas rapida ademas de las clases que
+El sistema de clases se estableció con el fin de reducir la redundancia de
+código y para permitir que cada clase particular mantenga los datos necesarios
+para crear los objetos que contiene, así como mantener las listas de las piezas
+que conforman los niveles antes y después de haber realizado las simulaciones
+para poder realizar los cálculos de manera más rápida además de las clases que
 controlan los conjuntos y subsecuentemente las piezas individuales. 
 
 \begin{figure}
@@ -121,25 +121,25 @@ controlan los conjuntos y subsecuentemente las piezas individuales.
   \label{figure:pieces-class-diagram}
 \end{figure}
 
-Estas clases se desarrollaron utilizando herencia, como se muestra en la figura
-\ref{figure:pieces-class-diagram} las once clases de las piezas basicas heredan
-los metodos de la clase principal, esto es como se menciona anteriormente por
-que las acciones que las clases particulares haran seran las mismas sin
-modificar nada en los metodos, sin embargo cada una activa un constructor con
-los datos de tamaño y nombre especificos, estos dato son utilizados para las
-medicones y para integrar casa pieza particular como una lista de texto que se
-utilizara para generar los archivos de los niveles.
+Estas clases se desarrollaron utilizando herencia, cómo se muestra en la figura
+\ref{figure:pieces-class-diagram} las once clases de las piezas básicas heredan
+los métodos de la clase principal, esto es cómo se menciona anteriormente por
+que las acciones que las clases particulares harán serán las mismas sin
+modificar nada en los métodos, sin embargo, cada una activa un constructor con
+los datos de tamaño y nombre específicos, estos datos son utilizados para las
+mediciones y para integrar casa pieza particular cómo una lista de texto que se
+utilizará para generar los archivos de los niveles.
 
-De igual manera se utiliza una clase especifica para controlar la generacion de
-los conjuntos, la manera en co o funciona esta clase es que se entrega una lista
-al generador de compuestos, esta lista contiene una o mas piezas que conformaran
-el conjunto particular, la manera en como se entregan estas listas es cada linea
-de la lista contiene la informacion necesaria para crear los objetos de clase de
+De igual manera se utiliza una clase específica para controlar la generación de
+los conjuntos, la manera en cómo funciona esta clase es que se entrega una lista
+al generador de compuestos, esta lista contiene una o más piezas que conformaran
+el conjunto particular, la manera en cómo se entregan estas listas es cada línea
+de la lista contiene la información necesaria para crear los objetos de clase de
 las piezas requeridas, estos elementos se utilizan con las clases previamente
-descritas para para generar un conjunto especifico, ademas de eso esta clase se
+descritas para para generar un conjunto especifico, además de eso esta clase se
 encarga de generar las listas y calcular los valores finales de los conjuntos,
-siendo estos valores, el punto mas alto al centro del conjunto, la altura, el
-ancho y las esquinas del mismo asi como un metodo que permite crear, apoyandose
+siendo estos valores, el punto más alto al centro del conjunto, la altura, el
+ancho y las esquinas del mismo, así como un método que permite crear, apoyándose
 de las clases particulares obtiene los valores que definen cada elemento del
 conjunto, siendo el nombre, material del que esta hecho y los offsets o
 distancias desde el centro del conjunto al centro de cada pieza particular.
@@ -155,15 +155,15 @@ distancias desde el centro del conjunto al centro de cada pieza particular.
 \end{figure}
 
 Finalmente, debido a que se requiere controlar una gran cantidad de datos
-necesarios para el algoritmo genetico por cada individuo se utiliza tambien una
+necesarios para el algoritmo genético por cada individuo se utiliza también una
 clase extra para ellos, esta clase permite que cada individuo mantenga los
-resultados de fitness despues de las simulaciones asi como tambien controlar el
-numero y listado de las piezas que conformaran cada nivel que representa el
-individuo, ademas de esto la clase permite que los individuos generen los
-archivos necesarios de los niveles para ser evaluados, el modelo basico de esta
+resultados de fitness después de las simulaciones, así como también controlar el
+número y listado de las piezas que conformaran cada nivel que representa el
+individuo, además de esto la clase permite que los individuos generen los
+archivos necesarios de los niveles para ser evaluados, el modelo básico de esta
 clase se muestra en la figura \ref{figure:composite-class-diagram} en donde se
-puede ver los elementos que utiliza la clase como variables principales asi como
-los metodos que es capaz de ejecutar una vez iniciado el algoritmo.
+puede ver los elementos que utiliza la clase cómo variables principales así cómo
+los métodos que es capaz de ejecutar una vez iniciado el algoritmo.
 
 \begin{figure}
   \centering
@@ -175,64 +175,64 @@ los metodos que es capaz de ejecutar una vez iniciado el algoritmo.
   \label{figure:individual-class-diagram}
 \end{figure}
 
-Mediante el uso de estas clases se controla la generacion de individuos de tal
-manera que un cambio realizado en la clase principal de un individuo debera de
+Mediante el uso de estas clases se controla la generación de individuos de tal
+manera que un cambio realizado en la clase principal de un individuo deberá de
 propagarse hasta la base del mismo siendo estos el controlador de conjuntos y
 las piezas individuales, de esta manera las modificaciones realizadas por las
-operaciones geneticas de igual manera se deberan de propagar por todod el
+operaciones genéticas de igual manera se deberán de propagar por todo el
 individuo realizando las actualizaciones y modificaciones pertinentes en las
-posiciones y tipos de piezas utilizadas. Como se ah mencionado a lo largo de
-esta seccion el uso de clases para controlar los aspectos basicos de lo
+posiciones y tipos de piezas utilizadas. Cómo se ha mencionado a lo largo de
+esta sección el uso de clases para controlar los aspectos básicos de lo
 individuos resulto de gran utilidad, una de las maneras anteriores de controlar
-este aspecto fue mediante el uso individual de metodos para realizar las
-modificaciones de los individios de manera mas detallada sin embargo el sistema
-de clases permitia que muchos de los metodos se fusionaran de tal manera que
-todos los individuos, compuestos y piezas particulares cuentan con los metodos
-que utilizaran desde el inicio en lugar de estar llamando los mismos mandando la
-informacion de cada individuo de manera particular sino que al estar integrados
-en los individuos es posible simplemente llamar los parametros de clase segun
-sean requeridos, la manera que se tenia anterioremente de utilizar metodos
-particulares para la generacion, modificacion y evolucion de los individuos se
-exlica mas adelante en la seccion \ref{section:previous-proposed-methods} junto
+este aspecto fue mediante el uso individual de métodos para realizar las
+modificaciones de los individuos de manera más detallada sin embargo el sistema
+de clases permitía que muchos de los métodos se fusionaran de tal manera que
+todos los individuos, compuestos y piezas particulares cuentan con los métodos
+que utilizarán desde el inicio en lugar de estar llamando los mismos mandando la
+información de cada individuo de manera particular, sino que al estar integrados
+en los individuos es posible simplemente llamar los parámetros de clase según
+sean requeridos, la manera que se tenía anteriormente de utilizar métodos
+particulares para la generación, modificación y evolución de los individuos se
+explica más adelante en la sección \ref{section:previous-proposed-methods} junto
 con otras ideas que no fueron utilizadas o fueron modificadas.
 
-\subsection{Generar niveles utilizando algoritmos geneticos}
+\subsection{Generar niveles utilizando algoritmos genéticos}
 \label{subsection:generate-levels-using-GA}
 
-Utilizando las ideas anteriormente presentadas, se llego a la definicion del
-algoritmo generico, se decido que debera de ser lo que se utilizaria para
-representar a los individuos de la poblacion dentro del algoritmo asi como el
-que seria lo que evolucionaria y evaluaria, mientras que el sistema de clases
+Utilizando las ideas anteriormente presentadas, se llegó a la definición del
+algoritmo genérico, se decido que deberá de ser lo que se utilizaría para
+representar a los individuos de la población dentro del algoritmo, así como el
+que sería lo que evolucionaria y evaluaría, mientras que el sistema de clases
 permite tener un control de que es lo que englobara a un individuo el algoritmo
-genetico es el que a final de cuentas se encargara de realizar la evolucion
-necesaria mediante los parametros propuestos, para esto primero se decisio que
-seria lo que se alimentaria en el algoritmo para realizar la evaluacion de los
-individuos, para este valor o variable se decidio que lo que se alimentaria
-seria el listado de posiciones de piezas en el individuo, esto es primero se
-ejecutaria una instancia del juego con los individuos existentes al momento y se
-evaluaria la posicion final de las piezas contra la misma posicion de las piezas
-antes de entrar a la simulacion de esta manera lo el valor de fitness de los
-individuos seria el total de piezas restantes en el nivel asi como el que tan
-bien logran conservar sus posiciones originales dentro de la simulacion, esto es
+genético es el que a final de cuentas se encargara de realizar la evolución
+necesaria mediante los parámetros propuestos, para esto primero se decidió que
+sería lo que se alimentaria en el algoritmo para realizar la evaluación de los
+individuos, para este valor o variable se decidió que lo que se alimentaria
+sería el listado de posiciones de piezas en el individuo, esto es primero se
+ejecutaría una instancia del juego con los individuos existentes al momento y se
+evaluaría la posición final de las piezas contra la misma posición de las piezas
+antes de entrar a la simulación de esta manera lo el valor de fitness de los
+individuos sería el total de piezas restantes en el nivel, así como el que tan
+bien logran conservar sus posiciones originales dentro de la simulación, esto es
 debido a que se busca crear niveles que logren conservar su forma sin ser
-manipuladas por el jugador, de igual manera se decidio que seria lo que se
-utilizaria para evolucionar a los individuos, en este aspecto se decidio
+manipuladas por el jugador, de igual manera se decidió que sería lo que se
+utilizaría para evolucionar a los individuos, en este aspecto se decidió
 utilizar una lista de valores enteros que representan a los individuos, esta
-lista se explica mas a detalle en la seccion \ref{chapter:implementation} esta
-lista se utilizara dentro del algoritmo genetico para realizar la operaciones
-genetica necesarias para crear a los nuevos individuos de la poblacion. e
+lista se explica más a detalle en la sección \ref{chapter:implementation} esta
+lista se utilizará dentro del algoritmo genético para realizar las operaciones
+genéticas necesarias para crear a los nuevos individuos de la población. e
 
 El diagrama del sistema se muestra en la figura \ref{figure:algorithm_model}, en
-este diagrama se muestra el proceso por el cual pasa el algoritmo genetico, desde
-el inicio que utiliza un archivo con los parametros de configuracion necesarios
-para inicializar el sistema, asi como el proceso por el cual pasan los
-individuos para su evaluacion, de igual manera los individuos pasan por un
-proceso de seleccion en el cual los mejores o en este caso el mejoro individio
+este diagrama se muestra el proceso por el cual pasa el algoritmo genético, desde
+el inicio que utiliza un archivo con los parámetros de configuración necesarios
+para inicializar el sistema, así como el proceso por el cual pasan los
+individuos para su evaluación, de igual manera los individuos pasan por un
+proceso de selección en el cual los mejores o en este caso el mejoro individuo
 es seleccionado para entrar a un grupo especial con el fin de ser integrado de
-vuelta a la poblacion en generaciones subsecuentes para encaminar al algoritmo a
+vuelta a la población en generaciones subsecuentes para encaminar al algoritmo a
 obtener el mejor valor de fitness posible, de igual manera este proceso se
-explica mas a detalle en el caputulo siguiente en donde se muestra como los
-conceptos vistos en este capitulo fueron implememntados para generacion del
+explica más a detalle en el capítulo siguiente en donde se muestra cómo los
+conceptos vistos en este capítulo fueron implementados para generación del
 sistema.
 
 \begin{figure}
@@ -246,158 +246,159 @@ sistema.
 \label{section:previous-proposed-methods}
 
 Dentro del aspecto de generar compuestos nuevos para ser utilizados, previamente
-se propuso utilizar los resultados de un nivel como compuestos para las
-siguientes generaciones, un ejemplo de esto se muestrs en la figura
+se propuso utilizar los resultados de un nivel cómo compuestos para las
+siguientes generaciones, un ejemplo de esto se muestra en la figura
 \ref{figure:prev_composite_proposal_bef_aft} en donde una estructura generada
-mediante el algoritmo genetico se simula en el juego y despues de varios
-segundos el resultante del mismo podia ser utilizado como un compuesto para la
-siguiente generacion, este metodo proveeria una manera de tener compuestos
-verificados como viables, sin embargo se opto por utilizar el generador de
-compuestos antes de entrar al ciclo del algoritmo genetico.
+mediante el algoritmo genético se simula en el juego y después de varios
+segundos el resultante del mismo podía ser utilizado cómo un compuesto para la
+siguiente generación, este método proveería una manera de tener compuestos
+verificados cómo viables, sin embargo, se optó por utilizar el generador de
+compuestos antes de entrar al ciclo del algoritmo genético.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/simulation_bef_aft_example.png}
-  \caption{Ejemplo de una estructrura antes(izquierda) y despues(derecha) de una simulacion}
+  \caption{Ejemplo de una estructura antes(izquierda) y después(derecha) de una simulación}
   \label{figure:prev_composite_proposal_bef_aft}
 \end{figure}
 
-\subsection{Propuesta orientada a metodos}
+\subsection{Propuesta orientada a métodos}
 \label{subsection:objectorientedidea}
 
 Una de las maneras en las que propuso originalmente el desarrollo del proyecto
-fue mediante el uso de diccionarios mediante el uso de python, esto permitiria
+fue mediante el uso de diccionarios mediante el uso de Python, esto permitiría
 tener un control de los compuestos generados debido a que mediante el uso de
-diccionarios se podia generar un apuntados que permitiria que al momento de
-generar los cromosomas de los individuos de la poblacion estos utilizaran
-simplemente listas numericas que hicieran referencia al compuesto al cual
-pertenecian, esto al final permitiria generar una solo diccionario que
+diccionarios se podía generar un apuntados que permitiría que al momento de
+generar los cromosomas de los individuos de la población estos utilizarán
+simplemente listas numéricas que hicieran referencia al compuesto al cual
+pertenecían, esto al final permitiría generar un solo diccionario que
 contuviera todos los apuntadores a los compuestos generados.
 
-Esto sin embargo presento un problema para la generacion de nuevos compuestos
+Esto sin embargo presento un problema para la generación de nuevos compuestos
 debido a que en caso de querer realizar pruebas restringiendo el uso de ciertas
-piezas o ciertas combinaciones de material-pieza se tenia que cambiar cada
-elemento en el diccionario generado, ademas de esto se requeria de que las
-piezas pudieran no solo restringirse sino que se pudieran realizar cambios en
-las maneras de como se generaban de manera sencilla, por tal se descarto esta
-propuesta con el fin de utilizar la propuesta de generacion de elementos
-mediante el uso de clases como se explico en el capitulo
+piezas o ciertas combinaciones de material-pieza se tenía que cambiar cada
+elemento en el diccionario generado, además de esto se requería que las
+piezas pudieran no solo restringirse, sino que se pudieran realizar cambios en
+las maneras de cómo se generaban de manera sencilla, por tal se descartó esta
+propuesta con el fin de utilizar la propuesta de generación de elementos
+mediante el uso de clases cómo se explicó en el capítulo
 \ref{subsection:classorientedidea}.
 
-Ademas de esto otro de los problemas que se presentaban mediante el uso de
-metodos para la generacion de los cromosomas fue que los metodos se asignaban de
-manera directa a los individuos lo cual probocaba que simplemente se asignaran
-diccionarios que especifican el conjunto de metodos que se deberian de llamar,
-sin embargo al no tener los beneficios de un sistema de clases que puede ser
+Además de esto otro de los problemas que se presentaban mediante el uso de
+métodos para la generación de los cromosomas fue que los métodos se asignaban de
+manera directa a los individuos lo cual provocaba que simplemente se asignaran
+diccionarios que especifican el conjunto de métodos que se deberían de llamar,
+sin embargo, al no tener los beneficios de un sistema de clases que puede ser
 re-instanciado en caso de ser requerido se tiene el problema de que cada que se
-realiza una modificacion en los metodos llamados estos cambios se propagan a los
-demas individuos provocando errores en los niveles generados.
+realiza una modificación en los métodos llamados estos cambios se propagan a los
+demás individuos provocando errores en los niveles generados.
 
 Uno de los puntos importantes que se lograron rescatar de esta idea fue el uso
 de diccionarios para almacenar los valores iniciales de las piezas para permitir
 que cada conjunto o compuesto pudiera generarse de manera diferente y que las
-piezas en cada uno estarian separadas en relacion a un centro absoluto del
-compuesto, ademas de que permite agregar nuevos compuestos de manera rapida lo
+piezas en cada uno estarían separadas en relación a un centro absoluto del
+compuesto, además de que permite agregar nuevos compuestos de manera rápida lo
 cual permite una mejor escalabilidad en la complejidad de los niveles generados.
 
 \subsection{Regla de tercios}
 \label{subsection:ruleofthirds}
 
-Uno de los temas que mas interesaba en la generacion de niveles fue la manera en
-como se acomodarian las estructuras en al area del juego, debido a que lo que se
+Uno de los temas que más interesaba en la generación de niveles fue la manera en
+cómo se acomodarían las estructuras en al área del juego, debido a que lo que se
 busco en el proyecto originalmente fue crear estructuras que tuvieran una gran
 altura y lograran mantenerse estables se buscaron maneras de lograr que los
-posicionamientos de las piezas o compuestos fuese lo mas \textit{'controlado'}
-posible debido a que simplemente colocar piezas al azar generaria demasiado caos
+posicionamientos de las piezas o compuestos fuese lo más \textit{'controlado'}
+posible debido a que simplemente colocar piezas al azar generaría demasiado caos
 en los niveles generados, por tal motivo una de las primeras propuestas fue el
 uso de la \textit{regla de tercios}.
 
-La regla de tercios es una tecnica utilizada en el area de fotografia cuyo
-proposito es crear imagenes esteticamente agradables a la vista en donde el
-punto focal o punto de interes se encuentra colocado en la alguna de las areas
+La regla de tercios es una técnica utilizada en el área de fotografía cuyo
+propósito es crear imágenes estéticamente agradables a la vista en donde el
+punto focal o punto de interés se encuentra colocado en la alguna de las áreas
 de la imagen, un ejemplo de esto se puede apreciar en la figura
 \ref{figure:ruleofthirdsexample} en donde el objeto principal que se quiere
-resaltar se trata de colocar en el area central de la imagen completa.
+resaltar se trata de colocar en el área central de la imagen completa.
 
-La regla de tercios es una tecnica utilizada en el area de fotografia cuyo
-proposito es crear imagenes balanceadas y esteticamente agradables a la vista,
-esto es mediante el uso de lineas imaginarias que dividen la imagen en nueve
-areas, la manera en que funciona la regla es que mediante el uso de la
+La regla de tercios es una técnica utilizada en el área de fotografía cuyo
+propósito es crear imágenes balanceadas y estéticamente agradables a la vista,
+esto es mediante el uso de líneas imaginarias que dividen la imagen en nueve
+áreas, la manera en que funciona la regla es que mediante el uso de la
 cuadricula generada se colocan los objetos principales de una imagen entre
-lineas divisoria de tal manera que en caso de imagenes grandes donde existen dos
-o mas elementos importantes un solo objeto no tome el centro absoluto de la
-imagen, sino que se mantenga alineado a un punto donde las lineas se cruzan para
-que los demas elementos de la imagen tengan un mismo nivel de interes y en el
-caso de que solo sea un elementos no utilize toda la parte central de la imagen
+líneas divisorias de tal manera que en caso de imágenes grandes donde existen dos
+o más elementos importantes un solo objeto no tome el centro absoluto de la
+imagen, sino que se mantenga alineado a un punto donde las líneas se cruzan para
+que los demás elementos de la imagen tengan un mismo nivel de interés y en el
+caso de que solo sea un elemento no utilice toda la parte central de la imagen
 sino que exista un nivel de balance en la imagen en donde el cielo o el fondo
-tenga una tercera parte del espacio de la fotografia, mientras que el 'area
-activa' o el area inmediantamente adyacente al sujeto de la imagen cubra el
+tenga una tercera parte del espacio de la fotografía, mientras que el 'área
+activa' o el área inmediatamente adyacente al sujeto de la imagen cubra el
 resto de la misma.
 
-La manera en como se planeo utilizar esta tecnica es mediante el uso de una
+La manera en cómo se planeó utilizar esta técnica es mediante el uso de una
 cuadricula de tres por tres de la misma manera que se me muestra en la figura
 \ref{figure:ruleofthirdsexample}, pero en el caso de los niveles generados se
-espera utilizar la cuadricula para rellenar areas del nivel iniciando desde la
-parte inferior para geenerar niveles mas robustos en en sentido de que la
-distribucion de las piezas es mas enfocada al centro creando una piramide o
-llenando todas las areas dependiendo de la cantidad de piezas utilizadas. 
+espera utilizar la cuadricula para rellenar áreas del nivel iniciando desde la
+parte inferior para generar niveles más robustos en sentido de que la
+distribución de las piezas es más enfocada al centro creando una pirámide o
+llenando todas las áreas dependiendo de la cantidad de piezas utilizadas. 
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/ruleofthirds_example.png}
-  \caption{Ejemplo del uso de la regla de tercios en una imagen, el punto de interes se encuentra en la parte central}
+  \caption{Ejemplo del uso de la regla de tercios en una imagen, el punto de interés se encuentra en la parte central}
   \label{figure:ruleofthirdsexample}
 \end{figure}
 
-Debido a que los niveles generados tienen un area de vision o area jugable
-variante hasta cierto punto, se definira un area de juego estatica para los
+Debido a que los niveles generados tienen un área de visión o área jugable
+variante hasta cierto punto, se definirá un área de juego estática para los
 niveles de tal forma que todos siempre se generen con las mismas dimensiones, de
-esta manera se evita el tener que estar calculando areas areas para los nueve
+esta manera se evita el tener que estar calculando áreas para los nueve
 cuadrantes utilizando la regla de tercios y se utilizan siempre los mismos
 valores para distribuir las piezas en los niveles.
 
-La manera en como se planeo principalmente el uso de la regla de tercios dentro
-del proyecto fue mediante el uso de mascaras de generacion, estas mascaras se
-generaron mediante la modificacion del la idea detras de la regla de tercios,
-esto se utilizo de ugual manera una cuadricula que cubriera el area de juego, la
-cuadricula se modifico para cubriera el area con un tamaño de 3 cuadros de
-altura y 7 cuadros de largo, de esta manera las piezas tendrian un poco mas de
-libertad sobre el donde seria posible colocarlas, el ejemplo basico de la idea
-detras del uso de la regla de tercios se muestra en la figura
-\ref{figure:ruleofthird_on_pieces} en donde se utiliza una mascara simple para
+La manera en cómo se planeó principalmente el uso de la regla de tercios dentro
+del proyecto fue mediante el uso de máscaras de generación, estas máscaras se
+generaron mediante la modificación de la idea detrás de la regla de tercios,
+esto se utilizó de igual manera una cuadricula que cubriera el área de juego, la
+cuadricula se modificó para cubriera el área con un tamaño de 3 cuadros de
+altura y 7 cuadros de largo, de esta manera las piezas tendrían un poco más de
+libertad sobre el dónde sería posible colocarlas, el ejemplo básico de la idea
+detrás del uso de la regla de tercios se muestra en la figura
+\ref{figure:ruleofthird_on_pieces} en donde se utiliza una máscara simple para
 acomodar los elementos en un individuo de tal manera que el ordenamiento dentro
-de la cuadricula permitiria la generacion de estructuras mas complejas, sin
-embargo esta idea a pesar de proveeer una buena mecanica en el acomodo de las
-piezas conllevaba un error debido que no solo se deberia de buscar los puntos en
-los cuales los elementos se podrian apoyar entre ellos, si no que era requerido
-tomaer en cuenta las posiciones, alturas, tamaños y angulos de todos los
+de la cuadricula permitiría la generación de estructuras más complejas, sin
+embargo esta idea a pesar de proveer una buena mecánica en el acomodo de las
+piezas conllevaba un error debido que no solo se debería de buscar los puntos en
+los cuales los elementos se podrían apoyar entre ellos, si no que era requerido
+tomar en cuenta las posiciones, alturas, tamaños y ángulos de todos los
 elementos presentes en el cromosoma una vez colocados en el nivel, los
 resultados obtenidos utilizando la regla de tercios se muestran en la figura
-\ref{figure:ruleofthird_on_chromosome}, en esta imagen se muestra como una
-mascara pre-generada con una forma de castillo mostrada del lado izquiero de la
-imagen se combina con el chromosoma entrante de un individuo para generar el
-nivel mostrado del lado derecho d ela imagen, este nivel se trata de asemejar a
-lo establecido en la mascara, mientras que el uso de mascaras pre-generadas
-permite encaminar el sistema de generacion a un conjunto de resultados de igual
+\ref{figure:ruleofthird_on_chromosome}, en esta imagen se muestra cómo una
+máscara pre-generada con una forma de castillo mostrada del lado izquierdo de la
+imagen se combina con el cromosoma entrante de un individuo para generar el
+nivel mostrado del lado derecho de la imagen, este nivel se trata de asemejar a
+lo establecido en la máscara, mientras que el uso de máscaras pre-generadas
+permite encaminar el sistema de generación a un conjunto de resultados de igual
 manera inhibe que se logre tener una diversidad de niveles debido a que siempre
-se mantendran dentro de las formas especificadas por las mascaras, debido a esto
-se opto por modificar la idea para permitir que los individiduos tengan una
-mascara no pre-generada sino que de manera pseudo-aleatoria se les asigna una
-mascara que contendra de igual manera varias columnas en donde el total de
-piezas se reparte de manera aleatoria, esto permitira tener mas diversidad en
+se mantendrán dentro de las formas especificadas por las máscaras, debido a esto
+se optó por modificar la idea para permitir que los individuos tengan una
+máscara no pre-generada, sino que de manera pseudoaleatoria se les asigna una
+máscara que contendrá de igual manera varias columnas en donde el total de
+piezas se reparte de manera aleatoria, esto permitirá tener más diversidad en
 los niveles generados.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/chromosome_thirds.png}
-  \caption{Ejemplo del uso de la regla de tercios en un conjunto de piezas, el cromosoma de un individuo(izquierda) se combina con la mascara(centro) para generar una estructura mas compleja(derecha)}
+  \caption{Ejemplo del uso de la regla de tercios en un conjunto de piezas, el cromosoma de un individuo(izquierda) se combina con la máscara(centro) para generar una estructura más compleja(derecha)}
   \label{figure:ruleofthird_on_pieces}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{img/result_example_thirds.png}
-  \caption{Resultado obtenido utilizando la regla de tercios, la mascara(izquierda) utilizada y el resultado generado(derecha)}
+  \caption{Resultado obtenido utilizando la regla de tercios, la máscara(izquierda) utilizada y el resultado generado(derecha)}
   \label{figure:ruleofthird_on_chromosome}
 \end{figure}
+
 
