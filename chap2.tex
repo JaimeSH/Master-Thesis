@@ -1,35 +1,35 @@
 \chapter{Preliminares}
 \label{chapter:preliminaries}
 
-En este capítulo se explican los conceptos básicos de los temas que toman un
-papel importante en el desarrollo del proyecto separados cada uno en secciones,
-principalmente algoritmos genéticos siendo que este tema es la parte primordial
-del proyecto, además de esto se explica de manera detallada los conceptos que se
-tomaran en cuenta en el desarrollo de los métodos que componen el sistema,
-siendo estos open-ended evolution, generación procedural de contenido, los
+En este capítulo se explican los conceptos básicos para
+el desarrollo del proyecto, separados en secciones.
+El tema principal son los algoritmos genéticos, 
+además de esto se explican de manera detallada los conceptos que se
+tomarán en cuenta en el desarrollo de los métodos que componen el sistema,
+siendo estos: open-ended evolution, generación procedural de contenido y los
 conceptos básicos de jugabilidad.
 
 \section{Algoritmos Genéticos}
 \label{section:genetic-algorithms}
 
-Los algoritmos genéticos (Genetic Algorithm, GA por sus siglas en Inglés) son
+Los algoritmos genéticos (Genetic Algorithms, GAs por sus siglas en Inglés) son
 algoritmos inspirados en la evolución Darwiniana y utilizados para la
-optimización de procesos, fue introducido por John Holland en 1975
-\cite{Holland1975}, los GA son métodos de optimización y búsqueda basados en los
+optimización de procesos, fueron propuestos por John Holland en 1975
+\cite{Holland1975}, los GAs son métodos de optimización y búsqueda basados en los
 principios de la selección natural y genética, la manera de representarlos es
 mediante un grupo de individuos que representan posibles soluciones a un
 problema y mediante el uso de operadores genéticos estos individuos se cruzan y
 evolucionan para acercarse más al objetivo, el cual puede ser minimizar o
-maximizar un valor resultado de un sistema.
+maximizar una función de utilidad para un sistema.
 
 De acuerdo a una explicación proporcionada por Whitley en uno de sus artículos
-\cite{Whitley1994}, un algoritmo genético (GA) son algoritmos de optimización
-inspirados en el proceso natural de evolución. Por esta razón los GAs son
+\cite{Whitley1994}, un algoritmo genético (GA) es un algoritmo de optimización
+inspirado en el proceso natural de evolución. Por esta razón los GAs son
 considerados como parte de una subárea de algoritmos de optimización llamada
 algoritmos evolutivos. La manera en cómo funciona un GA es que se propone tener
 un conjunto inicial de posibles soluciones al problema, estas soluciones son
 llamadas población dentro del algoritmo. Cada una de estas soluciones propuestas
-lleva el nombre de individuos y en ocasiones se definen como cromosomas. Esta
+llevan el nombre de individuos y en ocasiones se definen como cromosomas. Esta
 población es evaluada mediante el uso de una función de aptitud encargada de
 determinar el rendimiento de cada uno de los individuos como una de las posibles
 soluciones para el problema que se está tratando. Este tipo de problemas
@@ -49,11 +49,11 @@ mejores. Este proceso mencionado se repite durante un número determinado de
 iteraciones las cuales llevan el nombre de generaciones.
 
 El objetivo de los GAs así como en otros algoritmos evolutivos es que, mientras
-las generaciones van pasando la población comenzara a volverse más apta y se
-encaminara a cierto punto o valor que se espera sea el indicado para resolver un
+las generaciones van pasando la población comenzará a volverse más apta y se
+encaminará a cierto punto o valor que se espera sea el indicado para resolver un
 problema, sin embargo, es común que ninguno de los individuos logre llegar a una
 solución óptima para el problema presentado. Sin embargo, al ejecutar el
-algoritmo múltiples veces el algoritmo evolutivo lograra proveer varios
+algoritmo múltiples veces el algoritmo evolutivo logrará proveer varios
 resultados diferentes, esto es debido a que la población inicial en cada ciclo o
 ejecución se genera de manera aleatoria. Por esta razón, los algoritmos
 evolutivos y por ende los algoritmos genéticos son considerados como algoritmos
@@ -69,8 +69,9 @@ siguiente manera:
 \begin{enumerate}
     \item Inicializar una población aleatoria de n individuos.
     \item Evaluar la aptitud de cada individuo(solución) en la población.
-    \item Revisar si se ha llegado a una condición de terminación (el valor buscado)
-    \item En caso de que no
+    \item Revisar si se ha llegado a una condición de terminación 
+          (el valor buscado o un número máximo de iteraciones)
+    \item En caso de que no:
     \begin{enumerate}
         \item Introducir nuevos individuos a la población mediante los
         operadores de selección y cruce.
@@ -88,14 +89,14 @@ siguiente manera:
     \label{figure:GA-Cycle}
 \end{figure}
 
-Esta lista de pasos se muestra gráficamente en la imagen \ref{figure:GA-Cycle} en
+La lista anterior se muestra gráficamente en la Figura \ref{figure:GA-Cycle}, en
 donde se puede apreciar más claramente como los operadores de selección, cruce y
 mutación se engloban en una sola área que es la de la generación e integración
-de nuevos individuos, estos mismos nuevos individuos también se evalúan para
-definir si el algoritmo ha logrado alcanzar el punto de terminación buscado, como
+de nuevos individuos, éstos  también se evalúan para definir si el algoritmo ha
+logrado alcanzar el punto de terminación, como
 se explicó anteriormente estos nuevos individuos no se eliminan en caso de no
 haber sido los ideales, sino que se comparan con los individuos originales y en
-caso de ser mejores irán recorriendo a los peores con el fin de encaminar al
+caso de ser mejores irán reemplazando a los peores con el fin de encaminar al
 algoritmo a un punto especifico que se espera sea la solución idónea.
 
 \section{Generación procedural de contenido}
@@ -103,13 +104,15 @@ algoritmo a un punto especifico que se espera sea la solución idónea.
 
 El término "Generación procedural de contenido" (Procedural Content Generation o
 PCG por sus siglas en inglés) denota la manera de crear contenido de manera
-automática mediante algoritmos en lugar de generar los mismos contenidos de
-manera manual.
+automática mediante algoritmos, en lugar de generar los mismos contenidos de
+manera manual. %  Agrega referencias
+
 
 La PCG es un sistema de generación de contenido utilizado desde finales de los
 70s, inicialmente se utilizaba para generar los laberintos de algunos juegos
 utilizando arte ASCII donde se denotaba la distribución de los cuartos y objetos
-que se podían encontrar en juegos estilo \textit{"rogue"} o juegos que simulan
+que se podían encontrar en juegos estilo \textit{"rogue"} 
+o juegos que simulan %  Agrega referencias
 un juego RPG de mesa, actualmente es ámbito de la generación de contenido ah
 tomado varias variantes y cada vez más empresas toman un interés por el uso de
 este tipo de herramientas de diseño, cabe remarcar que los diferentes ámbitos no
@@ -118,7 +121,7 @@ aspectos específicos en el ciclo de desarrollo son capaces de crear los
 contenidos que se requieran.
 
 Mientras que la generación de contenido es un aspecto que se ha utilizado en
-muchos ámbitos diferentes como el fotografía, video, anuncios y arte digital, en
+muchos ámbitos diferentes como en el fotografía, video, anuncios y arte digital, en
 el área de videojuegos se maneja el uso de generación "procedural" de contenido
 en donde procedural se define como el proceso computacional de una función
 particular, en este caso lo que se busca con la generación procedural de
@@ -131,9 +134,9 @@ siguiente sección explica más detalladamente como se utiliza esta mecánica en
 
 Dentro del ámbito de videojuegos la generación de contenido procedural es un
 aspecto que ha tenido un gran impulso en tiempos recientes debido a que muchas
-empresas de preocupan por sacar al mercado juegos de manera continua, estos
-mismos muchas veces en ciclos de desarrollos muy cortos, por tal se ha buscado
-diferentes maneras de reducir dichos problemas, una herramienta útil que ha
+empresas de preocupan por sacar al mercado juegos de manera contínua, estos
+mismos muchas veces en ciclos de desarrollos muy cortos, por lo mismo, se han buscado
+diferentes maneras de reducir dichos problemas. Una herramienta útil que ha
 surgido debido a esto es la generación procedural la cual permite reducir no
 solo los tiempos de desarrollo, sino que también permite recudir el espacio de
 memoria total de un juego en particular debido a que ya no es necesario tener
@@ -141,7 +144,7 @@ todos los archivos englobados en un solo lugar, sino que lo requerido se obtiene
 de manera automática, de esta misma manera se les permite a las empresas reducir
 el número de personal necesario y por tal reducir los costos de desarrollo.
 
-De una manera simple la generación procedural de contenido tiene tres objetivos
+La generación procedural de contenido tiene tres objetivos %% Referencias Según X la ..
 principales:
 \begin{itemize}
     \item Brindar apoyo a los creadores para poder crear contenido mas
@@ -163,7 +166,7 @@ estos aspectos pueden o no estar ligados unos con otros y además cabe mencionar
 que no se enfocan primordialmente en la generación de "objetos" sino más bien en
 la generación de recursos que pueden ser utilizados en el desarrollo de
 videojuegos, la generación procedural se enfoca en seis puntos mostrados en la
-imagen \ref{figure:pcg_areas}, cada uno se explica en un apartado iniciando con
+Figura \ref{figure:pcg_areas}, cada uno se explica en un apartado iniciando con
 el 'Diseño de niveles' en el capítulo \ref{subsection:LevelDesign}, la
 generación de gráficos en el capítulo \ref{subsection:Visuals}, la creación de
 audio en el capítulo \ref{subsection:Audio}, creación de narrativa o historias
@@ -182,28 +185,28 @@ explicada en el capítulo \ref{subsection:games}.
 \label{subsection:LevelDesign}
 
 El área del desarrollo de niveles es una de las populares en PCG debido a que
-los niveles son la parte esencia de un juego debido a que es el área sobre el
-cual un jugador puede interactuar, la representación de estas áreas se puede dar
-desde imágenes en 2D simplemente con el alto y ancho de los objetos hasta
+los niveles son la parte esencial de un juego, debido a que es el área sobre la
+cual un jugador puede interactuar, la representación de estas áreas pueden ser 
+desde imágenes en 2D, simplemente con el alto y ancho de los objetos, hasta
 elementos en 3D que abarquen también el grosor de los objetos.
 
 Debido a que los niveles son esencialmente el área principal de interacción en
-un videojuego estos deben de considerar los aspectos funcionalidad y estética
+un videojuego, éstos deben de considerar los aspectos de funcionalidad y estética
 para que exista una buena interacción y sea llamativo a los usuarios, de esta
 manera se pueden crear áreas con tonos oscuros y ambiente tétrico para entregar
-un nivel con temática de terror, la generación de niveles de juego es un tema
+un nivel con temática de terror. La generación de niveles de juego es un tema
 reciente en el ámbito de investigación debido a los elementos que se deben de
 tener en cuenta sin embargo dentro del ámbito de videojuegos, es un elemento
-comúnmente utilizado, algunos ejemplos recientes siendo Spelunky, Minecraft,
-Disgaea.
+comúnmente utilizado, algunos ejemplos recientes siendo Spelunky, Minecraft y
+Disgaea. %% urls o referencias
 
 Primero tenemos el juego de plataforma Spelunky desarrollado por Derek Yu, el
 juego consta de múltiples niveles alrededor de cinco diferentes áreas, cada área
 con un estilo diferente (niveles con hielo, lava, etc.) en este juego los niveles
 que recorre el jugador son desarrollados de manera procedural por diferentes
-algoritmos dependiendo el área en la que se encuentre el jugador.
+algoritmos dependiendo el área en la que se encuentre el jugador.%% urls o referencias
 
-El segundo ejemplo es un videojuego desarrollado por Markus Persson llamado
+El segundo ejemplo es un videojuego desarrollado por Markus Persson llamado %% urls o referencias
 Minecraft, este juego consta de un área estilo caja de arena en donde el jugador
 puede realizar las acciones que quiera, las estructuras están definidas en
 manera de bloques con diferentes texturas y propiedades que el jugador puede
@@ -217,7 +220,7 @@ juego, sino que el sistema utiliza una "semilla"(seed) que define la manera en
 cómo está conformado el mapa, mientras más se va recorriendo del mapa las áreas
 se van generando acorde a la semilla de manera infinita.
 
-Finalmente tenemos el juego Disgaea desarrollado por Nippon Ichi Software, este
+Finalmente tenemos el juego Disgaea desarrollado por Nippon Ichi Software, este %% urls o referencias
 es un juego de estrategia por turnos en donde el objetivo es eliminar a todos
 los enemigos en un mapa para continuar al siguiente, la manera en cómo se
 utiliza la generación de contenido procedural es en una sección extra del juego
@@ -243,14 +246,14 @@ El área de desarrollo de gráficos se encarga principalmente de generar las
 representaciones visuales de los juegos debido a que la mayor parte de los
 juegos llevan una parte visual a menos que no se requiera, es necesario generar
 una imagen que denote lo que se quiere dar a entender en un juego, de esta
-manera se le brinda al jugador un nivel más de inmersión en la situación
+manera se le brinda al jugador un nivel más de inmersión en la situación,
 mediante el uso de paletas de colores o imágenes en pantalla que puedan
 representar mejor las situaciones que se presentan.
 
 El ámbito de generación de gráficos ha sido uno de los más explotados debido a
-que es posible generar gráficos desde simples representaciones de 8 bits como
+que es posible generar gráficos que van desde simples representaciones de 8 bits a
 representaciones foto realísticas de los eventos u objetos presentes en un
-juego, tal es el caso explicado en el paper de Risi S. et al.\cite{Risi2012} en
+juego. Tal es el caso explicado en el paper de Risi S. et al.\cite{Risi2012} en
 donde utilizan una red de producción de patrones composicionales (CPPN por sus
 siglas en inglés) la cual es una variante de las redes neuronales artificiales
 (ANN) regulares, utilizando esta red se buscó modificar un círculo de tal manera
@@ -262,7 +265,7 @@ entre neuronas y la adición de nuevos nodos de tal manera que se buscaba un
 nivel adecuado de complejidad para las redes que generaron diferentes tipos de
 patrones de flores.
 
-Mientras que un segundo paper escrito por Erin J. et al.\cite{Hastings2009} en
+Mientras que un segundo artículo escrito por Erin J. et al.\cite{Hastings2009} en
 el cual presentan un nuevo algoritmo de generación de contenido llamado
 neuro evolución de topologías aumentativas para generación de contenido (cgNEAT)
 el cual se encarga de generar contendió gráfico y contenido del juego de acuerdo
@@ -304,7 +307,7 @@ desarrollado por Phil Lopez et al. \cite{lopes2015sonancia}, en este paper los
 autores proponen una metodología que permitirá a un sistema generador de niveles
 seleccionar pistas de audio o sonidos que vallan de acuerdo a un tema específico,
 en este caso los autores colocaron una lista de pistas y mediante un generador
-crearon un entorno 2-D que simulaba una mansión, el propósito fue el de crear un
+crearon un entorno 2D que simulaba una mansión, el propósito fue el de crear un
 juego de terror/suspenso y que las habitaciones tuvieran un audio diferente y
 que al acercarse a la división entre una y otra el audio de la habitación
 adyacente fuese subiendo el volumen conforme más se adentraba y el audio de la
@@ -314,13 +317,13 @@ limitante de que se debe de proporcionar el listado de pistas de audio debido a
 que aún no tiene la capacidad de generar audio por cuenta propia sin embargo es
 otro buen ejemplo de cómo combinar áreas de generación de contenido.
 
-Otro caso de estudio es el del juego \textit{Audio Surf} desarrolla en 2008 por
+Otro caso de estudio es el del juego \textit{Audio Surf} desarrollada en 2008 por
 Fitterer, la manera en cómo funciona es que mediante el uso de archivos de audio
 de alguna canción para generar niveles estilo pista de carreras que el usuario
 recorre al momento de jugar, como este existen varios otros juegos que utilizan
 mecánicas de PCG para generar los niveles a jugar por los participantes.
 
-Finalmente tenemos \textit{Mezzo} desarrollado por Daniel B. este paper muestra
+Finalmente tenemos \textit{Mezzo} desarrollado por Daniel B. este artículo muestra
 un programa de computadora del mismo nombre diseñado con el fin de generar
 música de la era romántica que puede ser utilizada en juegos de computadora, el
 software fue desarrollado con el propósito de poder darle más expresividad a
@@ -369,7 +372,7 @@ de ser la base para el desarrollo de otros juegos de estilo similar.
 \subsection{Reglas y Mecánicas}
 \label{subsection:rulesandmechanics}
 
-Las reglas y mecánicas de un juego proveen de un marco de trabajo en el cual el
+Las reglas y mecánicas de un juego proveen un framework en el cual el
 jugador puede realizar acciones y el cómo debe de influenciarlas hacia un
 objetivo final, las reglas y mecánicas de un juego pueden variar dependiendo del
 tipo de juego que se trate, por ejemplo, en juegos de estilo plataforma la regla
@@ -388,7 +391,7 @@ requieran acomodar a esta nueva habilidad y de igual manera los niveles de un
 juego se tengan que re-imaginar de tal modo que ahora se pueda utilizar en
 ciertas o se coloquen lugares que solo se pueden acceder con esa habilidad por
 ejemplo la transición de reglas y mecánicas entre los juegos Super Mario Bros.
-(Nintendo, 1985) y Super Mario World (Nintendo, 1990).
+(Nintendo, 1985) y Super Mario World (Nintendo, 1990). %Referencias
 
 Para la evaluación de la generación de mecánicas y reglas de un juego existen
 diferentes métodos a utilizar, el primero se basa en el balance de las reglas es
@@ -475,7 +478,8 @@ estipuladas, en este caso los juegos generados tienen mecánicas estilo WarioWar
 en donde los juegos tienen una regla de victoria sencilla que hace los juegos
 relativamente cortos. 
 
-Finalmente, uno de los mejores generadores de juegos lleva en nombre de ANGELINA \cite{cook2011multi} %(Ref ANGELINA num135-137) 
+Finalmente, uno de los mejores generadores de juegos lleva en nombre
+de ANGELINA \cite{cook2011multi} %(Ref ANGELINA num135-137) 
 \footnote{De acuerdo al autor: "A Novel Game-Evolving Labrat I've Named
 ANGELINA"}, ANGELINA es un sistema de generación de juegos diseñado
 originalmente en 2011 y que ha recibido modificaciones desde entonces, la base
@@ -487,8 +491,8 @@ un campo de trabajo que representa un juego, además de esto es capaz de
 seleccionar elementos musicales relevantes al tema de los mapas generados o de
 la faceta emocional presente en el juego además de crear asignarle un nombre a
 los juegos que logra crear, inicialmente el sistema era capaz de generar niveles
-de plataforma en 2-D, pero actualmente es capaz de generar niveles de temática de
-aventura en entornos 3-D.
+de plataforma en 2D, pero actualmente es capaz de generar niveles de temática de
+aventura en entornos 3D.
 
 Los anteriores generadores a pesar de no ser perfectos han permitido dar un gran
 paso en la generación de contenido o más bien en la generación de juegos, sin
