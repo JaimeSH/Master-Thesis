@@ -14,6 +14,20 @@ A level-1 auxiliary file: biblio.aux
 The style file: ieeetr.bst
 A level-1 auxiliary file: appa.aux
 Database file #1: main.bib
+Warning--entry type for "DoulAndrew2008" isn't style-file defined
+--line 695 of file main.bib
+Warning--entry type for "PerssonK2011" isn't style-file defined
+--line 713 of file main.bib
+Warning--entry type for "BurchAnthony2009" isn't style-file defined
+--line 731 of file main.bib
+Warning--entry type for "DisgaeaAndrew2008" isn't style-file defined
+--line 749 of file main.bib
+Warning--entry type for "RuntimeLevelAndrew2008" isn't style-file defined
+--line 767 of file main.bib
+Warning--entry type for "SpelunkyAndrew2009" isn't style-file defined
+--line 785 of file main.bib
+Warning--string name "january" is undefined
+--line 843 of file main.bib
 Warning--empty institution in Mateas
 Warning--empty year in Mateas
 Warning--empty institution in Holtar
@@ -21,48 +35,51 @@ Warning--empty year in Holtar
 Warning--empty institution in Risi2012
 Warning--empty institution in Harik1999
 Warning--empty year in garner2014sonic
+Warning--empty author and editor in MarioBrosInstruction
+Warning--empty author in SuperMario
+Warning--empty author and editor in SuperMarioInstruction
 Warning--empty year in cook2011multi
 Warning--empty booktitle in Calle2019
 Warning--empty institution in Smith2009
-You've used 33 entries,
+You've used 45 entries,
             1876 wiz_defined-function locations,
-            685 strings with 9839 characters,
-and the built_in function-call counts, 8437 in all, are:
-= -- 764
-> -- 414
+            749 strings with 11497 characters,
+and the built_in function-call counts, 10191 in all, are:
+= -- 929
+> -- 457
 < -- 1
-+ -- 151
-- -- 118
-* -- 633
-:= -- 1233
-add.period$ -- 35
-call.type$ -- 33
-change.case$ -- 35
++ -- 173
+- -- 128
+* -- 721
+:= -- 1465
+add.period$ -- 50
+call.type$ -- 45
+change.case$ -- 44
 chr.to.int$ -- 0
-cite$ -- 43
-duplicate$ -- 425
-empty$ -- 799
-format.name$ -- 118
-if$ -- 2003
+cite$ -- 58
+duplicate$ -- 512
+empty$ -- 1039
+format.name$ -- 128
+if$ -- 2454
 int.to.chr$ -- 0
-int.to.str$ -- 33
-missing$ -- 27
-newline$ -- 104
-num.names$ -- 33
-pop$ -- 146
+int.to.str$ -- 45
+missing$ -- 33
+newline$ -- 143
+num.names$ -- 42
+pop$ -- 216
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 266
+skip$ -- 314
 stack$ -- 0
-substring$ -- 449
-swap$ -- 147
+substring$ -- 481
+swap$ -- 160
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 10
-while$ -- 81
-width$ -- 35
-write$ -- 299
-(There were 10 warnings)
+warning$ -- 13
+while$ -- 93
+width$ -- 47
+write$ -- 398
+(There were 20 warnings)

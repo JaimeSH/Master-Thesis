@@ -200,37 +200,49 @@ tener en cuenta sin embargo dentro del ámbito de videojuegos, es un elemento
 comúnmente utilizado, algunos ejemplos recientes siendo Spelunky, Minecraft y
 Disgaea. %% urls o referencias
 
-Primero tenemos el juego de plataforma Spelunky desarrollado por Derek Yu, el
-juego consta de múltiples niveles alrededor de cinco diferentes áreas, cada área
-con un estilo diferente (niveles con hielo, lava, etc.) en este juego los niveles
-que recorre el jugador son desarrollados de manera procedural por diferentes
-algoritmos dependiendo el área en la que se encuentre el jugador.%% urls o referencias
+Primero tenemos el juego de plataforma Spelunky desarrollado por Derek
+Yu \cite{Mossmouth2013} \cite{SpelunkyAndrew2009}, el juego consta de múltiples niveles
+alrededor de cinco diferentes áreas, cada área con un estilo diferente (niveles
+con hielo, lava, etc.) en este juego los niveles que recorre el jugador son
+desarrollados de manera procedural por diferentes algoritmos dependiendo el área
+en la que se encuentre el jugador.\cite{BurchAnthony2009}%% urls o referencias
 
-El segundo ejemplo es un videojuego desarrollado por Markus Persson llamado %% urls o referencias
-Minecraft, este juego consta de un área estilo caja de arena en donde el jugador
-puede realizar las acciones que quiera, las estructuras están definidas en
-manera de bloques con diferentes texturas y propiedades que el jugador puede
-utilizar para construir diferentes cosas, la manera en cómo se utiliza la
-generación de contenido es mediante la generación de todo un nivel al iniciar el
-juego de tal manera que se utiliza una semilla de generación y se utiliza el
-método \textit{Perlin Noise} 3D con interpolación lineal para generar los biomas,
-elementos y entidades que conformaran el nivel, además de esto el área inicial
-del juego no es la única área que puede ser recorrida durante la sesión de
-juego, sino que el sistema utiliza una "semilla"(seed) que define la manera en
-cómo está conformado el mapa, mientras más se va recorriendo del mapa las áreas
-se van generando acorde a la semilla de manera infinita.
+El segundo ejemplo es un videojuego desarrollado por Markus Persson llamado %%
+urls o referencias Minecraft, \cite{PerssonK2011} \cite{DoulAndrew2008} este
+juego consta de un área estilo caja de arena en donde el jugador puede realizar
+las acciones que quiera, las estructuras están definidas en manera de bloques
+con diferentes texturas y propiedades que el jugador puede utilizar para
+construir diferentes cosas, la manera en cómo se utiliza la generación de
+contenido es mediante la generación de todo un nivel al iniciar el juego de tal
+manera que se utiliza una semilla de generación y se utiliza el método
+\textit{Perlin Noise} \cite{perlin1988image} 3D con interpolación lineal para
+generar los biomas, elementos y entidades que conformaran el nivel, además de
+esto el área inicial del juego no es la única área que puede ser recorrida
+durante la sesión de juego, sino que el sistema utiliza una "semilla"(seed) que
+define la manera en cómo está conformado el mapa, mientras más se va recorriendo
+del mapa las áreas se van generando acorde a la semilla de manera infinita. El
+juego también cuenta con un sistema que genera los biomas que aparecen en el
+juego, en este caso la manera en como se generan es mediante el apoyo de un
+diagrama Whittaker \cite{WhittakerDiagramAndrew2008} el cual es una manera de
+dividir las áreas generadas y categorizarlas en diferentes biomas con sus
+propias temperaturas, flora y fauna. 
 
-Finalmente tenemos el juego Disgaea desarrollado por Nippon Ichi Software, este %% urls o referencias
-es un juego de estrategia por turnos en donde el objetivo es eliminar a todos
-los enemigos en un mapa para continuar al siguiente, la manera en cómo se
-utiliza la generación de contenido procedural es en una sección extra del juego
-en donde se puede entrar a un arma para completar niveles gradualmente mas
-difíciles para darle más poder a dicha arma, en esta parte los niveles que se
-encuentra el jugador son generados proceduralmente tomando en cuenta las alturas
-de las partes donde se puede caminar y la colocación de los enemigos en el mapa
-\ref{figure:DisgaeaIW}, para la generación se toma en cuenta el nivel del arma y
-su rareza, mientras más altos sean estos valores de igual manera los niveles
-generados serán más difíciles.
+Finalmente tenemos el juego Disgaea desarrollado por Nippon Ichi
+Software \cite{DisgaeaAndrew2008}, este es un juego de estrategia por turnos en %% urls o referencias 
+donde el objetivo es eliminar a todos los enemigos en un mapa para continuar al
+siguiente, la manera en cómo se utiliza la generación de contenido procedural es
+en una sección extra del juego en donde se puede entrar a un arma para completar
+niveles gradualmente mas difíciles para darle más poder a dicha arma, en esta
+parte los niveles que se encuentra el jugador son generados proceduralmente
+tomando en cuenta las alturas de las partes donde se puede caminar y la
+colocación de los enemigos en el mapa \ref{figure:DisgaeaIW}, para la generación
+se toma en cuenta el nivel del arma y su rareza, mientras más altos sean estos
+valores de igual manera los niveles generados serán más difíciles. Este tipo de
+generación de niveles también es conocido como generación aleatoria de niveles
+durante proceso de ejecución (del Inglés runtime random level generation) el
+cual es un proceso en donde el contenido se va generando gradualmente durante el
+tiempo de ejecución de un software \cite{RuntimeLevelAndrew2008}, este es
+utilizado en diferentes juegos para generar diferentes áreas de los mismos.
 
 \begin{figure}
     \centering
@@ -391,7 +403,9 @@ requieran acomodar a esta nueva habilidad y de igual manera los niveles de un
 juego se tengan que re-imaginar de tal modo que ahora se pueda utilizar en
 ciertas o se coloquen lugares que solo se pueden acceder con esa habilidad por
 ejemplo la transición de reglas y mecánicas entre los juegos Super Mario Bros.
-(Nintendo, 1985) y Super Mario World (Nintendo, 1990). %Referencias
+(Nintendo, 1985) \cite{DeMaria2004} \cite{MarioBrosInstruction} y Super Mario
+World (Nintendo, 1990). \cite{SuperMario} \cite{SuperMarioInstruction}
+%Referencias
 
 Para la evaluación de la generación de mecánicas y reglas de un juego existen
 diferentes métodos a utilizar, el primero se basa en el balance de las reglas es

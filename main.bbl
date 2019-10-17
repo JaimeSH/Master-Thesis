@@ -4,7 +4,8 @@
 {Rovio Entertainment Corporation}, ``{Angry Birds},'' 2009.
 
 \bibitem{Mossmouth2013}
-L.~Mossmouth, ``{Spelunky World},'' 2013.
+L.~Mossmouth, ``{Spelunky World}.'' [Online]:
+  \url{https://www.spelunkyworld.com/}, 2013.
 
 \bibitem{Mateas}
 M.~Mateas and A.~Stern, ``{Fa{\c{c}}ade: An Experiment in Building a
@@ -31,6 +32,41 @@ D.~C. S.~U. Whitley, ``{A Genetic Algorithm Tutorial},'' {\em Statistics and
 G.~R. Harik, F.~G. Lobo, and D.~E. Goldberg, ``{The Compact Genetic
   Algorithm},'' Tech. Rep.~4, 1999.
 
+\bibitem{SpelunkyAndrew2009}
+D.~Andrew, ``{Spelunky}.'' [Online]:
+  \url{http://pcg.wikidot.com/pcg-games:spelunky}, 2009.
+
+\bibitem{BurchAnthony2009}
+{Burch Anthony}, ``{Infinite Caves, Infinite Stories}.'' [Online Article]:
+  \url{https://v1.escapistmagazine.com/articles/view/video-games/issues/issue{\_}209/6235-Infinite-Caves-Infinite-Stories},
+  2009.
+
+\bibitem{PerssonK2011}
+{Persson Markus}, ``{The Word of Notch — Terrain generation, Part 1}.''
+  [Online]:
+  \url{https://notch.tumblr.com/post/3746989361/terrain-generation-part-1},
+  2011.
+
+\bibitem{DoulAndrew2008}
+D.~Andrew, ``{Minecraft}.'' [Online]:
+  \url{http://pcg.wikidot.com/pcg-games:minecraft}, 2008.
+
+\bibitem{perlin1988image}
+K.~Perlin, ``An image synthesizer,'' in {\em Tutorial: computer graphics; image
+  synthesis}, pp.~333--342, Computer Science Press, Inc., 1988.
+
+\bibitem{WhittakerDiagramAndrew2008}
+D.~Andrew, ``Procedural content generation wiki.'' [Online]:
+  \url{http://pcg.wikidot.com/pcg-algorithm:whittaker-diagram}, 2008.
+
+\bibitem{DisgaeaAndrew2008}
+D.~Andrew, ``{Disgaea}.'' \url{http://pcg.wikidot.com/pcg-games:disgaea}, 2008.
+
+\bibitem{RuntimeLevelAndrew2008}
+D.~Andrew, ``{Runtime Random Level Generation}.'' [Online]:
+  \url{http://pcg.wikidot.com/pcg-algorithm:runtime-random-level-generation},
+  2008.
+
 \bibitem{Hastings2009}
 E.~Hastings, R.~Guha, and K.~Stanley, ``{Automatic Content Generation in the
   Galactic Arms Race Video Game},'' {\em IEEE Transactions on Computational
@@ -54,6 +90,23 @@ M.~Mateas and A.~Stern, ``Fa{\c{c}}ade: An experiment in building a
 R.~Evans and E.~Short, ``Versu—a simulationist storytelling system,'' {\em
   IEEE Transactions on Computational Intelligence and AI in Games}, vol.~6,
   no.~2, pp.~113--130, 2013.
+
+\bibitem{DeMaria2004}
+R.~DeMaria and J.~L. Wilson, {\em {High score! : the illustrated history of
+  electronic games}}.
+\newblock McGraw-Hill/Osborne, 2004.
+
+\bibitem{MarioBrosInstruction}
+{\em {Super Mario Bros. Instruction Booklet}}.
+\newblock USA: Nintendo of America, 1985.
+
+\bibitem{SuperMario}
+``{Super Mario World - Videogame by Nintendo},'' {\em The International Arcade
+  Museum}, 1995.
+
+\bibitem{SuperMarioInstruction}
+{\em {Super Mario World Instruction Booklet}}.
+\newblock Nintendo of America, aug 1991.
 
 \bibitem{Browne2010}
 C.~Browne and F.~Maire, ``{Evolutionary Game Design},'' {\em IEEE Transactions
