@@ -28,24 +28,24 @@
 \BOOKMARK [1][-]{section.4.2}{Propuestas anteriores}{chapter.4}% 28
 \BOOKMARK [2][-]{subsection.4.2.1}{Propuesta orientada a m\351todos}{section.4.2}% 29
 \BOOKMARK [2][-]{subsection.4.2.2}{Regla de tercios}{section.4.2}% 30
-\BOOKMARK [0][-]{chapter.5}{Implementacion}{}% 31
+\BOOKMARK [0][-]{chapter.5}{Implementaci\363n}{}% 31
 \BOOKMARK [1][-]{section.5.1}{Codificando los diccionarios de piezas}{chapter.5}% 32
-\BOOKMARK [1][-]{section.5.2}{Creacion de compuestos}{chapter.5}% 33
-\BOOKMARK [1][-]{section.5.3}{Definicion de clase auxiliar de individuo}{chapter.5}% 34
-\BOOKMARK [1][-]{section.5.4}{Generacion de individuos}{chapter.5}% 35
-\BOOKMARK [2][-]{subsection.5.4.1}{Integracion de miembros elite}{section.5.4}% 36
-\BOOKMARK [2][-]{subsection.5.4.2}{Operador de seleccion}{section.5.4}% 37
+\BOOKMARK [1][-]{section.5.2}{Creaci\363n de compuestos}{chapter.5}% 33
+\BOOKMARK [1][-]{section.5.3}{Definici\363n de clase auxiliar de individuo}{chapter.5}% 34
+\BOOKMARK [1][-]{section.5.4}{Generaci\363n de individuos}{chapter.5}% 35
+\BOOKMARK [2][-]{subsection.5.4.1}{Integraci\363n de miembros elite}{section.5.4}% 36
+\BOOKMARK [2][-]{subsection.5.4.2}{Operador de selecci\363n}{section.5.4}% 37
 \BOOKMARK [2][-]{subsection.5.4.3}{Operador de cruce}{section.5.4}% 38
-\BOOKMARK [2][-]{subsection.5.4.4}{Operador de mutacion}{section.5.4}% 39
+\BOOKMARK [2][-]{subsection.5.4.4}{Operador de mutaci\363n}{section.5.4}% 39
 \BOOKMARK [2][-]{subsection.5.4.5}{Representacion de individuos}{section.5.4}% 40
 \BOOKMARK [2][-]{subsection.5.4.6}{Calculo de fitness}{section.5.4}% 41
 \BOOKMARK [2][-]{subsection.5.4.7}{Seleccion de miembros elite}{section.5.4}% 42
 \BOOKMARK [0][-]{chapter.6}{Experimentos y Resultados}{}% 43
-\BOOKMARK [1][-]{section.6.1}{Generacion de niveles estables}{chapter.6}% 44
+\BOOKMARK [1][-]{section.6.1}{Generaci\363n de niveles estables}{chapter.6}% 44
 \BOOKMARK [2][-]{subsection.6.1.1}{Experimento 1}{section.6.1}% 45
 \BOOKMARK [2][-]{subsection.6.1.2}{Experimento 2}{section.6.1}% 46
 \BOOKMARK [2][-]{subsection.6.1.3}{Experimento 3}{section.6.1}% 47
-\BOOKMARK [1][-]{section.6.2}{Diversidad del contenido ceado}{chapter.6}% 48
+\BOOKMARK [1][-]{section.6.2}{Diversidad del contenido creado}{chapter.6}% 48
 \BOOKMARK [0][-]{chapter.7}{Conclusiones y trabajo futuro}{}% 49
 \BOOKMARK [1][-]{section.7.1}{Conclusiones}{chapter.7}% 50
 \BOOKMARK [1][-]{section.7.2}{Trabajo futuro}{chapter.7}% 51

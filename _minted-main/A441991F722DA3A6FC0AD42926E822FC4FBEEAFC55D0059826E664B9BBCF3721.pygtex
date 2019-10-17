@@ -10,7 +10,7 @@
         \PYG{c+c1}{\PYGZsh{}random.randint(0,len(Composites)\PYGZhy{}1) for p in range(ind\PYGZus{}pieces)}
         \PYG{k}{return} \PYG{n}{chrom}
 
- \PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n}{pieces}\PYG{p}{):}
+ \PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}new\PYGZus{}másk}\PYG{p}{(}\PYG{n}{pieces}\PYG{p}{):}
         \PYG{n}{div\PYGZus{}list} \PYG{o}{=}\PYG{p}{[]}
         \PYG{k}{while} \PYG{n+nb+bp}{True}\PYG{p}{:}
             \PYG{n}{div\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{pieces}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{for} \PYG{n}{col} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{)]}

@@ -24,36 +24,36 @@ Warning--empty year in garner2014sonic
 Warning--empty year in cook2011multi
 Warning--empty booktitle in Calle2019
 Warning--empty institution in Smith2009
-You've used 32 entries,
+You've used 33 entries,
             1876 wiz_defined-function locations,
-            681 strings with 9743 characters,
-and the built_in function-call counts, 8298 in all, are:
-= -- 753
-> -- 406
+            685 strings with 9839 characters,
+and the built_in function-call counts, 8437 in all, are:
+= -- 764
+> -- 414
 < -- 1
-+ -- 148
-- -- 116
-* -- 627
-:= -- 1213
-add.period$ -- 34
-call.type$ -- 32
-change.case$ -- 34
++ -- 151
+- -- 118
+* -- 633
+:= -- 1233
+add.period$ -- 35
+call.type$ -- 33
+change.case$ -- 35
 chr.to.int$ -- 0
-cite$ -- 42
-duplicate$ -- 421
-empty$ -- 781
-format.name$ -- 116
-if$ -- 1968
+cite$ -- 43
+duplicate$ -- 425
+empty$ -- 799
+format.name$ -- 118
+if$ -- 2003
 int.to.chr$ -- 0
-int.to.str$ -- 32
+int.to.str$ -- 33
 missing$ -- 27
-newline$ -- 101
-num.names$ -- 32
-pop$ -- 139
+newline$ -- 104
+num.names$ -- 33
+pop$ -- 146
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 261
+skip$ -- 266
 stack$ -- 0
 substring$ -- 449
 swap$ -- 147
@@ -62,7 +62,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 10
-while$ -- 80
-width$ -- 34
-write$ -- 292
+while$ -- 81
+width$ -- 35
+write$ -- 299
 (There were 10 warnings)

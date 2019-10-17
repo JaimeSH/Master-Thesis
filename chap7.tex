@@ -3,140 +3,140 @@
 
 En las siguientes secciones se presentan las conclusiones a las que se llegaron
 durante el desarrollo del proyecto de tesis presentado en este documento, sobre
-la manera en como se implementaron los aspectos propuestos asi como de los
-resultados que se lograron obtener mediante el uso de estas propuestas. Asi
-mismo dentro de la ultima seccion de este capitulo se discuten y proponen
-dferentes metodos que pueden ser implementados a futuro para mejorar los
-resultados obtenidos, rutas de investigacion que se teorizaron podrian funcionar
-asi como aspectos que requieren de mejorar para un funcionamiento mas fluido del
+la manera en cómo se implementaron los aspectos propuestos, así como de los
+resultados que se lograron obtener mediante el uso de estas propuestas. Así
+mismo dentro de la última sección de este capítulo se discuten y proponen
+diferentes métodos que pueden ser implementados a futuro para mejorar los
+resultados obtenidos, rutas de investigación que se teorizaron podrían funcionar
+así como aspectos que requieren de mejorar para un funcionamiento más fluido del
 sistema.
 
 \section{Conclusiones}
 \label{section:conclusions}
 
-Esta tesis presenta un metodo novedoso para la generacion de nivees del juego de
-Angry Birds apoyandose en las mecanicas de la evolucion genetica y de tomando
-aspecos de open-ended evolution. El sistema que se logro generar cuenta con las
-capacidades para generar estructuras compuestas utilizando elementos basicos del
-juego, ademas que de que debido a la manera en como fue programado es posible
-modificar los modulos de clases sin requerir modificaciones enormes en el codigo
-fuente, por ejemplo es posible realizar modificaciones a las funciones de
-seleccion y mutacion que se reflejen de manera rapida en el sistema al realizar
-las simulaciones de igual manera el sistema de evaluacion se puede mejorar ya
-sea cambiando las metricas de evaluacion propuestas o agregando nuevas segun sea
+Esta tesis presenta un método novedoso para la generación de niveles del juego de
+Angry Birds apoyándose en las mecánicas de la evolución genética y de tomando
+aspectos de open-ended evolution. El sistema que se logró generar cuenta con las
+capacidades para generar estructuras compuestas utilizando elementos básicos del
+juego, además que de que debido a la manera en cómo fue programado es posible
+modificar los módulos de clases sin requerir modificaciones enormes en el código
+fuente, por ejemplo, es posible realizar modificaciones a las funciones de
+selección y mutación que se reflejen de manera rápida en el sistema al realizar
+las simulaciones de igual manera el sistema de evaluación se puede mejorar ya
+sea cambiando las métricas de evaluación propuestas o agregando nuevas según sea
 requerido.
 
-Para fines de este proyecto el sistema fue provado con el simulador de Science
-Birds utilizando todos los puntos propuestosen la seccion
+Para fines de este proyecto el sistema fue probado con el simulador de Science
+Birds utilizando todos los puntos propuestos en la sección
 \ref{chapter:proposed-method} y se obtuvieron resultados como los mostrados en
-la seccion \ref{chapter:experiments-and-results}, sin embargo una de las ideas
+la sección \ref{chapter:experiments-and-results}, sin embargo, una de las ideas
 en el desarrollo de este proyecto es el de permitir la adaptabilidad en el
 sentido de que se espera que siempre y cuando un caso de estudio particular es
 decir un juego diferente tenga niveles que puedan ser descompuestos hasta las
-expresiones minimas, es decir los bloques de construccion que permitiran generar
-un nivel sera posible en teoria utilizar este mismo sistema para generar niveles
+expresiones mínimas, es decir los bloques de construcción que permitirán generar
+un nivel será posible en teoría utilizar este mismo sistema para generar niveles
 en otros juegos simplemente ajustando algunas variables que permitan comparar
 los compuestos a fin de obtener los resultados esperados.
 
-La implementacion mostrada en la seccion \ref{chapter:proposed-method} muestra
-como se explico anteriormente las ideas que se consideran fueron las mejores
-para desarrollar el sistema, sin embargo aquellas mostradas como propuestas
+La implementación mostrada en la sección \ref{chapter:proposed-method} muestra
+cómo se explicó anteriormente las ideas que se consideran fueron las mejores
+para desarrollar el sistema, sin embargo, aquellas mostradas como propuestas
 anteriores demuestran los cambios por los cuales el sistema tuvo que pasar para
-poder obtener lo que consideramos como el "mejor" en terminos de lo que se
-proponia lograr, asi como estos mismos metodos podian aproximar resultados a los
-obtenidos en el sistema final pueden existir diferentes tecnicas que no se
+poder obtener lo que consideramos como el "mejor" en términos de lo que se
+proponía lograr, así como estos mismos métodos podían aproximar resultados a los
+obtenidos en el sistema final pueden existir diferentes técnicas que no se
 exploraron a detalle que logren obtener resultados iguales o inclusive mejores,
-ejemplos como los presentados en la seccion \ref{chapter:related-work}
-demuestran que diferentes personas lograron tener diferentes metodos de atacar
-esta problematica, desde el uso de sistemas inteligentes o sistemas
-auto-adaptables, mediante el uso de estas diferentes tecnicas se observa una
-gran diversidad de resultados, en el caso de este sistema los metodos que se
-opina pueden sustituir al algoritmo genetico son tecnicas basadas en busquedas
-meta-heuristicas debido a la naturaleza del sistema.
+ejemplos como los presentados en la sección \ref{chapter:related-work}
+demuestran que diferentes personas lograron tener diferentes métodos de atacar
+esta problemática, desde el uso de sistemas inteligentes o sistemas
+auto-adaptables, mediante el uso de estas diferentes técnicas se observa una
+gran diversidad de resultados, en el caso de este sistema los métodos que se
+opina pueden sustituir al algoritmo genético son técnicas basadas en búsquedas
+meta-heurísticas debido a la naturaleza del sistema.
 
-Uno de los puntos tratadados durante los capitulos \ref{chapter:implementation}
+Uno de los puntos tratados durante los capítulos \ref{chapter:implementation}
 y \ref{chapter:experiments-and-results} es el problema relacionado con el tiempo
-de simulacion, debido a que los niveles genrados requieren ser evaluados dentro
-de los parametros del juego como tal se requiere que el juego se ejecute y
-evalue cada nivel uno a la vez, esto provoca que los tiempos de simulacion sean
+de simulación, debido a que los niveles generados requieren ser evaluados dentro
+de los parámetros del juego como tal se requiere que el juego se ejecute y
+evalué cada nivel uno a la vez, esto provoca que los tiempos de simulación sean
 tardados debido a que cada nivel requiere ser simulado durante 10 segundos con
 el fin de que las estructuras generadas tengan tiempo de reaccionar bajo la
-gravedad, si estan mal acomodadas caeran y si estan correctamente acomodadas se
-mantendran de pie o balanceadas ademas de este tiempo de simulacion se toma
-tambien en cuenta el tiempo que tarda en escribir los resultados de cada nivel
-en sus respectivos archivos eh inclusive el tiempo que el software de simulacion
-tarda en ser ejecutado, este punto fue uno de los obstaculos mas grandes en el
-sistema debido a que solo analizar si un cambio funcionaba bien podia tardar
-mucho, sin embargo este tiempo se reduce considerabemente cuando se trabaja en
+gravedad, si están mal acomodadas caerán y si están correctamente acomodadas se
+mantendrán de pie o balanceadas además de este tiempo de simulación se toma
+también en cuenta el tiempo que tarda en escribir los resultados de cada nivel
+en sus respectivos archivos eh inclusive el tiempo que el software de simulación
+tarda en ser ejecutado, este punto fue uno de los obstáculos más grandes en el
+sistema debido a que solo analizar si un cambio funcionaba bien podía tardar
+mucho, sin embargo, este tiempo se reduce considerablemente cuando se trabaja en
 generaciones diferentes a la inicial debido a que en generaciones subsecuentes
-solo se programo que simulara aquellos individuos que fueron generados, gracias
-a que este fue un obstaculo que se tuvo que mantener en el sistema se lograron
-adaptar partes del sistema para realizar las simulaciones de manera mas fluida y
-no requerir de volver a ejetura una simulacion para analizar el flujo de los
-datos lo cual permitio encontrar errores mas rapidamente.
+solo se programó que simulara aquellos individuos que fueron generados, gracias
+a que este fue un obstáculo que se tuvo que mantener en el sistema se lograron
+adaptar partes del sistema para realizar las simulaciones de manera más fluida y
+no requerir de volver a ejecutar una simulación para analizar el flujo de los
+datos lo cual permitió encontrar errores más rápidamente.
 
 \section{Trabajo futuro}
 \label{section:future-work}
 
-La conclusiones descritas previamente proveen dan un entendimiento de los
-obstaculos que por los cuales se tuvo que pasar para poder completar el
-proyecto, el problema y posible solucion tratados en las conclusiones sobre las
+Las conclusiones descritas previamente proveen dan un entendimiento de los
+obstáculos que por los cuales se tuvo que pasar para poder completar el
+proyecto, el problema y posible solución tratados en las conclusiones sobre las
 simulaciones generadas es el tiempo desperdiciado debido al uso del software de
-simulacion, debido a que las simulaciones requieren de este software para poder
+simulación, debido a que las simulaciones requieren de este software para poder
 obtener los resultados es necesario encontrar una manera en la cual se pueda
-estimar mediante el uso de formulas las posiciones en las cuales terminaran los
+estimar mediante el uso de fórmulas las posiciones en las cuales terminaran los
 elementos del nivel, considerando que el juego como tal tiene un sistema de
-gravedad que provoca que las piezas caigan al suelo deberia de ser posible
+gravedad que provoca que las piezas caigan al suelo debería de ser posible
 calcular u obtener el valor de gravedad utilizada para desarrollar un sistema
-capaz de calcular el movimiento de las piezas considerando tambien la
-interaccion de las piezas unas con otras asi como las resistencias con las que
+capaz de calcular el movimiento de las piezas considerando también la
+interacción de las piezas unas con otras, así como las resistencias con las que
 cuentan.
 
-El ambito de la evaluacion de los individuos es uno de los principales que puede
+El ámbito de la evaluación de los individuos es uno de los principales que puede
 ser mejorado o modificado, esto es debido a que las funciones que se utilizaron
-para la evaluacion en esta tesis son las que se consideraron optimas para la
-problematica tratada, deacuerdo a lo que se requiera obtener es posible
-modificar la manera en como se obtienen los resultados de aptitud de los
-individuos, en el caso de lo que se utilizo para el desarrollo del proyecto es
-posible modificar los calculos de los resultados de estabilidad, en este caso lo
-que se esperaba obtener es el valor mas cercano a 100 para cada individuo en
+para la evaluación en esta tesis son las que se consideraron óptimas para la
+problemática tratada, de acuerdo a lo que se requiera obtener es posible
+modificar la manera en cómo se obtienen los resultados de aptitud de los
+individuos, en el caso de lo que se utilizó para el desarrollo del proyecto es
+posible modificar los cálculos de los resultados de estabilidad, en este caso lo
+que se esperaba obtener es el valor más cercano a 100 para cada individuo en
 donde 100 representaba que ninguno de los elementos que conformaban el nivel se
-destruyeron o cayeron, sin embargo es posible utilizar alguna otras funciones o
-calculos para poder obtener estos resultadoso inclusive cambiar la manera de
-interpretar la estabilidad como el uso de calculos de aceleracion promedio o
+destruyeron o cayeron, sin embargo, es posible utilizar algunas otras funciones o
+cálculos para poder obtener estos resultados inclusive cambiar la manera de
+interpretar la estabilidad como el uso de cálculos de aceleración promedio o
 movimiento angular de las mismas piezas.
 
-Uno de los ambitos que tambien requiere ser tratado es el de la estabilidad de
+Uno de los ámbitos que también requiere ser tratado es el de la estabilidad de
 los niveles generados, es decir el sistema logra generar niveles mediante el
-acomodo de los compuestos que se tienen registrados, sin embargo una de las
-manera en como el proceso de evalucion asi como el de simulacion puede ser
-optimizado un poco mas es mediante el uso de reglas de generacion o revision de
+acomodo de los compuestos que se tienen registrados, sin embargo, una de las
+maneras en cómo el proceso de evaluación, así como el de simulación puede ser
+optimizado un poco mas es mediante el uso de reglas de generación o revisión de
 patrones en el ordenamiento de los compuestos en los niveles para poder detectar
-areas en donde se pueda estimar que durante la simulacion ciertas estructuras
-mal acomodadas debido a los componentes basicos que utilizan puedan causar que
+áreas en donde se pueda estimar que durante la simulación ciertas estructuras
+mal acomodadas debido a los componentes básicos que utilizan puedan causar que
 los niveles tengan mal rendimiento, es decir, analizar casos en donde una pieza
 en particular seguida de otras desfazadas en sus coordenadas \textit{x} o
-\textit{y} provoquen que los compuestos se caigan, esto podria ser analizadao y
+\textit{y} provoquen que los compuestos se caigan, esto podría ser analizado y
 prevenido mediante el uso de diferentes mascaras o en caso de que no sea posible
-evitarlo retirar los elementos de la simulacion a fin de requerir menos tiempo.
+evitarlo retirar los elementos de la simulación a fin de requerir menos tiempo.
 
-Otro de los factores que pueden ser mejorados es el uso de la logica detras de
-open-ended evolution, debido a que la consideracion de este algoritmo es de
-tener una evolucion casi infinita y que los niveles del juego se generan una
-sola vez al inicio de la evolucion realmente no es muy requerido generar nuevos
-compuestos de manera continua pero es posible desarrollar un sistema de
-evolucion que utilice compuestos resultantes como los mostrados en la seccion
-\ref{chapter:experiments-and-results} y los integre en una nueva evolucion para
-combinarlos con componentes basicos e inclusive consigo mismos para generar
-nuevos compuestos mas complejos que puedan ser integrados a futuras
+Otro de los factores que pueden ser mejorados es el uso de la lógica detrás de
+open-ended evolution, debido a que la consideración de este algoritmo es de
+tener una evolución casi infinita y que los niveles del juego se generan una
+sola vez al inicio de la evolución realmente no es muy requerido generar nuevos
+compuestos de manera continua, pero es posible desarrollar un sistema de
+evolución que utilice compuestos resultantes como los mostrados en la sección
+\ref{chapter:experiments-and-results} y los integre en una nueva evolución para
+combinarlos con componentes básicos e inclusive consigo mismos para generar
+nuevos compuestos más complejos que puedan ser integrados a futuras
 simulaciones.
 
-Finalmente un ultimo aspecto que se debe de tomar en cuenta es el numero de
-experimentos utilizados, como se explico anterioremente el sistema requeria de
+Finalmente, un último aspecto que se debe de tomar en cuenta es el número de
+experimentos utilizados, como se explicó anteriormente el sistema requería de
 mucho tiempo para realizar las simulaciones requeridas por los individuos, esto
-inhibio la capacidad de generar una gran cantidad de simulaciones para realizar
-comparaciones, sin embargo con la cantidad actual de resultados obtenidos es
-posible validar la capacidades del generador, sin embargo se requiere realizar
-aun mas simulaciones utilizando diferentes configuraciones del algoritmo con el
+inhibió la capacidad de generar una gran cantidad de simulaciones para realizar
+comparaciones, sin embargo, con la cantidad actual de resultados obtenidos es
+posible validar las capacidades del generador, sin embargo, se requiere realizar
+aun más simulaciones utilizando diferentes configuraciones del algoritmo con el
 fin de determinar que el sistema es capaz de trabajar correctamente no solo con
-el conjunto de configuraciones determinado en la seccion de resultados.
+el conjunto de configuraciones determinado en la sección de resultados.

@@ -1,4 +1,4 @@
 \begin{Verbatim}[commandchars=\\\{\}]
   \PYG{n}{pop} \PYG{o}{=} \PYG{p}{[}\PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{get\PYGZus{}random\PYGZus{}chrom}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{p}{),} \PYG{o}{..}
-    \PYG{o}{..}\PYG{n}{mask} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{p}{))} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{population}\PYG{p}{)]}
+    \PYG{o}{..}\PYG{n}{másk} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}másk}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{p}{))} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{population}\PYG{p}{)]}
 \end{Verbatim}
