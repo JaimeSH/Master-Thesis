@@ -7,9 +7,9 @@ capítulo está dividido en dos secciones la primera siendo la sección
 \ref{section:used-method} en donde se explican los conceptos propuestos y
 utilizados en el proyecto, esta sección se divide en varias subsecciones en
 donde se explican partes de la propuesta y el cómo permitirán que el sistema
-generado cumpla con los objetivos requeridos, la segunda parte siendo la sección
+generado cumpla con los objetivos requeridos, la segunda sección
 \ref{section:previous-proposed-methods} explica ideas y conceptos que se
-propusieron a lo largo del desarrollo, el cómo estos ayudarían a mejorar el
+propusieron a lo largo del desarrollo y el cómo estos ayudarían a mejorar el
 sistema generado.
 
 \section{Propuesta utilizada}
@@ -51,13 +51,13 @@ mismas, de esta manera al momento de querer unir dos o más piezas para formar u
 conjunto la medida del conjunto se calculará buscando el punto más alto, más
 bajo, así como las posiciones más a la derecha e izquierda teniendo ambas piezas
 unidas, un ejemplo de la unión de cuatro piezas se muestra en la figura
-\ref{figure:bounding-box-calculation} en donde cuatro piezas se colocan unas
-sobre otras para formar un objeto cuadrado, para poder agregar las piezas cómo
+\ref{figure:bounding-box-calculation} en donde cuatro piezas se colocan una
+sobre otra para formar un objeto cuadrado. Para poder agregar las piezas cómo
 un conjunto se buscan los puntos más alejados, una vez que se ha calculado el
 alto y ancho del conjunto se procede a encontrar el punto central del mismo,
 desde este punto se calcula la distancia en \textit{x} y \textit{y} hacia los
 centros de cada una de las piezas del conjunto, estos valores de centros se
-agregan en manera de diccionario para poder generar los objetos requeridos al
+agregan utilizando una estructura de diccionario para poder generar los objetos requeridos al
 momento de crear a los individuos antes de iniciar las generaciones.
 
 \begin{figure}
@@ -73,8 +73,8 @@ composiciones de piezas y solo trabaja con estas mediante las operaciones
 genéticas del propio algoritmo, esto permitirá que el algoritmo utilice menos
 tiempo identificando posibles composiciones.
 
-Utilizando esta manera de generar los compuestos simplemente se utiliza un
-algoritmo basado en clases para poder acomodar los elementos y crear los objetos
+Utilizando esta manera de generar los compuestos se utiliza un
+algoritmo orientado a objetos, para poder acomodar los elementos y crear los objetos
 requeridos según sean necesarios, esto se explica más detalladamente en la
 sección \ref{subsection:classorientedidea}.
 
@@ -82,9 +82,9 @@ sección \ref{subsection:classorientedidea}.
 \label{subsection:classorientedidea}
 
 Para mantener un control de los compuestos, principalmente de las piezas
-individuales que forman los compuestos se propuso la generación de clases con
-herencia en donde una clase principal contendrá los métodos que las clases hijas
-utilizarán para obtener valores específicos cuando las piezas requieran,
+individuales, se propuso la una jerarquía de clases con
+herencia, en donde una clase base contendrá los métodos que las clases derivadas
+para obtener valores específicos cuando las piezas requieran,
 principalmente estos métodos se encargan de calcular las esquinas de las piezas
 particulares las cuales permitirán una vez se tenga un conjunto encontrar la
 altura y tamaño total del conjunto, así como el centro del mismo.
@@ -121,8 +121,8 @@ controlan los conjuntos y subsecuentemente las piezas individuales.
   \label{figure:pieces-class-diagram}
 \end{figure}
 
-Estas clases se desarrollaron utilizando herencia, cómo se muestra en la figura
-\ref{figure:pieces-class-diagram} las once clases de las piezas básicas heredan
+Estas clases se desarrollaron utilizando herencia y polimorfismo, cómo se muestra en la figura
+\ref{figure:pieces-class-diagram}. Las once clases de las piezas básicas heredan
 los métodos de la clase principal, esto es cómo se menciona anteriormente por
 que las acciones que las clases particulares harán serán las mismas sin
 modificar nada en los métodos, sin embargo, cada una activa un constructor con
@@ -180,10 +180,10 @@ manera que un cambio realizado en la clase principal de un individuo deberá de
 propagarse hasta la base del mismo siendo estos el controlador de conjuntos y
 las piezas individuales, de esta manera las modificaciones realizadas por las
 operaciones genéticas de igual manera se deberán de propagar por todo el
-individuo realizando las actualizaciones y modificaciones pertinentes en las
+individuo realizando las actualizaciones y modificaciones necesarias en las
 posiciones y tipos de piezas utilizadas. Cómo se ha mencionado a lo largo de
-esta sección el uso de clases para controlar los aspectos básicos de lo
-individuos resulto de gran utilidad, una de las maneras anteriores de controlar
+esta sección el uso de clases para controlar los aspectos básicos de los
+individuos resultó de gran utilidad, una de las maneras anteriores de controlar
 este aspecto fue mediante el uso individual de métodos para realizar las
 modificaciones de los individuos de manera más detallada sin embargo el sistema
 de clases permitía que muchos de los métodos se fusionaran de tal manera que
@@ -200,11 +200,11 @@ con otras ideas que no fueron utilizadas o fueron modificadas.
 \label{subsection:generate-levels-using-GA}
 
 Utilizando las ideas anteriormente presentadas, se llegó a la definición del
-algoritmo genérico, se decido que deberá de ser lo que se utilizaría para
+algoritmo genético, se decidó que deberá de ser lo que se utilizaría para
 representar a los individuos de la población dentro del algoritmo, así como el
-que sería lo que evolucionaria y evaluaría, mientras que el sistema de clases
-permite tener un control de que es lo que englobara a un individuo el algoritmo
-genético es el que a final de cuentas se encargara de realizar la evolución
+que sería lo que evolucionaría y evaluaría, mientras que el sistema de clases
+permite tener un control de que es lo que englobará a un individuo el algoritmo
+genético es el que a final de cuentas se encargará de realizar la evolución
 necesaria mediante los parámetros propuestos, para esto primero se decidió que
 sería lo que se alimentaria en el algoritmo para realizar la evaluación de los
 individuos, para este valor o variable se decidió que lo que se alimentaria
@@ -220,7 +220,7 @@ utilizaría para evolucionar a los individuos, en este aspecto se decidió
 utilizar una lista de valores enteros que representan a los individuos, esta
 lista se explica más a detalle en la sección \ref{chapter:implementation} esta
 lista se utilizará dentro del algoritmo genético para realizar las operaciones
-genéticas necesarias para crear a los nuevos individuos de la población. e
+genéticas necesarias para crear a los nuevos individuos de la población. 
 
 El diagrama del sistema se muestra en la figura \ref{figure:algorithm_model}, en
 este diagrama se muestra el proceso por el cual pasa el algoritmo genético, desde
@@ -265,8 +265,8 @@ compuestos antes de entrar al ciclo del algoritmo genético.
 \subsection{Propuesta orientada a métodos}
 \label{subsection:objectorientedidea}
 
-Una de las maneras en las que propuso originalmente el desarrollo del proyecto
-fue mediante el uso de diccionarios mediante el uso de Python, esto permitiría
+Una de las maneras en las que se propuso originalmente el desarrollo del proyecto
+fue mediante el uso de diccionarios en Python, esto permitiría
 tener un control de los compuestos generados debido a que mediante el uso de
 diccionarios se podía generar un apuntados que permitiría que al momento de
 generar los cromosomas de los individuos de la población estos utilizarán
@@ -274,7 +274,7 @@ simplemente listas numéricas que hicieran referencia al compuesto al cual
 pertenecían, esto al final permitiría generar un solo diccionario que
 contuviera todos los apuntadores a los compuestos generados.
 
-Esto sin embargo presento un problema para la generación de nuevos compuestos
+Esto sin embargo presentó un problema para la generación de nuevos compuestos
 debido a que en caso de querer realizar pruebas restringiendo el uso de ciertas
 piezas o ciertas combinaciones de material-pieza se tenía que cambiar cada
 elemento en el diccionario generado, además de esto se requería que las
@@ -290,25 +290,19 @@ manera directa a los individuos lo cual provocaba que simplemente se asignaran
 diccionarios que especifican el conjunto de métodos que se deberían de llamar,
 sin embargo, al no tener los beneficios de un sistema de clases que puede ser
 re-instanciado en caso de ser requerido se tiene el problema de que cada que se
-realiza una modificación en los métodos llamados estos cambios se propagan a los
+realiza una modificación en los métodos, los cambios se propagan a los
 demás individuos provocando errores en los niveles generados.
 
-Uno de los puntos importantes que se lograron rescatar de esta idea fue el uso
-de diccionarios para almacenar los valores iniciales de las piezas para permitir
-que cada conjunto o compuesto pudiera generarse de manera diferente y que las
-piezas en cada uno estarían separadas en relación a un centro absoluto del
-compuesto, además de que permite agregar nuevos compuestos de manera rápida lo
-cual permite una mejor escalabilidad en la complejidad de los niveles generados.
 
 \subsection{Regla de tercios}
 \label{subsection:ruleofthirds}
 
 Uno de los temas que más interesaba en la generación de niveles fue la manera en
 cómo se acomodarían las estructuras en al área del juego, debido a que lo que se
-busco en el proyecto originalmente fue crear estructuras que tuvieran una gran
-altura y lograran mantenerse estables se buscaron maneras de lograr que los
-posicionamientos de las piezas o compuestos fuese lo más \textit{'controlado'}
-posible debido a que simplemente colocar piezas al azar generaría demasiado caos
+buscó en el proyecto originalmente fue crear estructuras que tuvieran una gran
+altura y lograran mantenerse estables se buscaron maneras de lograr que el
+posicionamiento de las piezas o compuestos fuese lo más \textit{'controlado'}
+posible debido a que simplemente colocar piezas al azar generaría demasiada incongruencia
 en los niveles generados, por tal motivo una de las primeras propuestas fue el
 uso de la \textit{regla de tercios}.
 
@@ -319,10 +313,8 @@ de la imagen, un ejemplo de esto se puede apreciar en la figura
 \ref{figure:ruleofthirdsexample} en donde el objeto principal que se quiere
 resaltar se trata de colocar en el área central de la imagen completa.
 
-La regla de tercios es una técnica utilizada en el área de fotografía cuyo
-propósito es crear imágenes balanceadas y estéticamente agradables a la vista,
-esto es mediante el uso de líneas imaginarias que dividen la imagen en nueve
-áreas, la manera en que funciona la regla es que mediante el uso de la
+La regla de tercios hace uso de líneas imaginarias que dividen la imagen en nueve
+áreas, y mediante el uso de la
 cuadricula generada se colocan los objetos principales de una imagen entre
 líneas divisorias de tal manera que en caso de imágenes grandes donde existen dos
 o más elementos importantes un solo objeto no tome el centro absoluto de la
@@ -330,8 +322,8 @@ imagen, sino que se mantenga alineado a un punto donde las líneas se cruzan par
 que los demás elementos de la imagen tengan un mismo nivel de interés y en el
 caso de que solo sea un elemento no utilice toda la parte central de la imagen
 sino que exista un nivel de balance en la imagen en donde el cielo o el fondo
-tenga una tercera parte del espacio de la fotografía, mientras que el 'área
-activa' o el área inmediatamente adyacente al sujeto de la imagen cubra el
+tenga una tercera parte del espacio de la fotografía, mientras que el área
+activa o el área inmediatamente adyacente al sujeto de la imagen cubra el
 resto de la misma.
 
 La manera en cómo se planeó utilizar esta técnica es mediante el uso de una
@@ -356,8 +348,8 @@ esta manera se evita el tener que estar calculando áreas para los nueve
 cuadrantes utilizando la regla de tercios y se utilizan siempre los mismos
 valores para distribuir las piezas en los niveles.
 
-La manera en cómo se planeó principalmente el uso de la regla de tercios dentro
-del proyecto fue mediante el uso de máscaras de generación, estas máscaras se
+El uso de la regla de tercios dentro
+del proyecto fue mediante la utilización de máscaras de generación, estas máscaras se
 generaron mediante la modificación de la idea detrás de la regla de tercios,
 esto se utilizó de igual manera una cuadricula que cubriera el área de juego, la
 cuadricula se modificó para cubriera el área con un tamaño de 3 cuadros de
