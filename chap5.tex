@@ -2,9 +2,9 @@
 \label{chapter:implementation}
 
 El siguiente conjunto de secciones describen la implementación del método
-propuesto según las explicaciones presentadas en el Capitulo
+propuesto según las explicaciones presentadas en el Capítulo
 \ref{chapter:proposed-method}. La implementación propuesta utiliza un software
-de simulación cómo el mostrado en \cite{Renz2013}
+de simulación como el mostrado en \cite{Renz2013}
 (\url{https://aibirds.org/other-events/level-generation-competition/basic-instructions.html}),
 este software de simulación está programado en Unity con código fuente en
 lenguaje C\# de Visual Studio.
@@ -12,9 +12,9 @@ lenguaje C\# de Visual Studio.
 \section{Codificando los diccionarios de piezas}
 \label{section:piece_dictionary}
 
-La primera parte que se desarrolló para poder integrar el listado de piezas al
-sistema de generación fue decir la manera en cómo se establecerían las
-diferentes piezas cómo las mostradas en la figura \ref{figure:game-basic-blocks}
+Para poder integrar el listado de piezas al
+sistema de generación se decidió la manera en la que se establecerían las
+diferentes piezas, como las mostradas en la figura \ref{figure:game-basic-blocks}
 del Capitulo \ref{chapter:proposed-method}, para esto se tomaron en cuenta
 varias posibilidades, la primera, cómo se explica en la sección
 \ref{subsection:objectorientedidea} se buscaba ordenar las diferentes piezas
@@ -64,8 +64,8 @@ cada pieza al centro de todo el conjunto.
   \label{code:dic_individual_piece}
 \end{listing}
 
-De esta manera cómo se explicó anteriormente era más sencillo crear compuestos,
-sin embargo, la desventaja que conllevaba utilizar este método era que no podían
+De esta manera, como se explicó anteriormente era más sencillo crear compuestos,
+sin embargo, la desventaja de utilizar este método era que no se podían
 realizar modificaciones a las restricciones de las piezas, es decir, en caso de
 querer evitar que un conjunto de piezas con determinados materiales no fueran
 generados no se tenía la facilidad de impedir este tipo de combinaciones.
@@ -75,7 +75,7 @@ mencionado en la sección \ref{subsection:classorientedidea}, el código
 \ref{code:dic_individual_piece} muestra la nueva estructura utilizada según el
 diagrama de clases presentado en la figura \ref{figure:pieces-class-diagram},
 de acuerdo al diagrama presentado una clase base con las operaciones y
-propiedades necesarias funcionaria cómo una clase \textit{padre} para las clases
+propiedades necesarias funcionaria cómo una clase base para las clases
 de piezas particulares, de esta manera los individuos se representarán cómo un
 conjunto de referencias a las clases que deben de ser generadas para la
 composición de niveles, sin embargo, está manera de representar a los individuos
@@ -84,7 +84,7 @@ piezas-materiales, debido a esto se optó por generar una lista global que
 mantuviera un récord de las restricciones aplicadas en el sistema, y al momento
 de generar cada re-instanciacion de clase para los individuos está información se
 pasará a las clases según fuese requerido, en el código se presenta una variable
-con el nombre \textit{mat}, está variable tomara una lista de 3 valores que
+con el nombre \textit{mat}, está variable tomará una lista de 3 valores que
 define si alguno o algunos de los materiales no puede ser utilizado al momento
 de asignar las clases a los individuos, al momento de encontrar una pieza que de
 la coincidencia no puede ser utilizada con ningún material se eliminarán los
@@ -107,10 +107,10 @@ datos de la pieza generada y se pedirá al sistema genere otra de manera aleator
 \section{Creación de compuestos}
 \label{section:composite_creation}
 
-Una vez definidas las clases particulares que controlaran la información de las
-piezas en el algoritmo se procede a definir la manera en cómo se entregarán y
-controlaran los diferentes compuestos de piezas, para términos más simples los
-compuestos son grupos de una o más piezas y se mostraran a manera de diccionario
+Una vez definidas las clases particulares que controlarán la información de las
+piezas en el algoritmo se procede a definir la manera en la que se entregarán y
+controlarán los diferentes compuestos de piezas, para términos más simples los
+compuestos son grupos de una o más piezas y se mostrarán a manera de diccionario
 de listas cómo se muestra en el código \ref{code:dic_composites}, de esta manera
 cada entrada en el diccionario tiene por nombre o apuntador el valor posición
 según se fueron agregando al diccionario mientras que el contenido es una lista
@@ -146,8 +146,8 @@ haya proporcionado al crear el compuesto.
 \section{Definición de clase auxiliar de individuo}
 \label{section:definition_of_clases}
 
-Mediante el uso de la clase de composite se tiene un mejor control de los genes
-que conformaran cada individuo de la población, una vez que se tiene este
+Mediante el uso de la clase \textit{Composite} se tiene un mejor control de los genes
+que conformarán cada individuo de la población, una vez que se tiene este
 aspecto controlado el siguiente paso es el de crear programar la clase que
 llevará el control de los cromosomas de un individuo, siendo los cromosomas los
 compuestos asignados a cada individuo particular, de tal manera que un individuo
@@ -164,7 +164,7 @@ cada elemento será una instancia de un compuesto asignado al individuo, de est�
 manera si se requiere modificar la posición o materiales de un compuesto
 particular en el individuo es posible hacerlo desde la clase de
 \textit{individuo}, de igual manera está clase tiene cómo funciones principales
-cómo se muestran en el diagrama de clase de la figura
+como se muestran en el diagrama de clase de la figura
 \ref{figure:individual-class-diagram} realizar los cálculos de fitness y generar
 las listas de piezas que serán utilizadas para generar los archivos de salida
 necesarios para las simulaciones de los niveles generados.
@@ -184,7 +184,7 @@ cuestión es cómo sigue:
 \end{minted}
 
 Mediante el uso de esta línea de código se le indica al sistema que se requiere
-una lista que representara a los individuos de la población, cada elemento de
+una lista que representará a los individuos de la población, cada elemento de
 está lista será una instancia independiente de la clase \textit{Individual},
 para generar está instancia de clase es requerido dos valores siendo estos
 primero una lista de valores numéricos que representan cuales piezas se
