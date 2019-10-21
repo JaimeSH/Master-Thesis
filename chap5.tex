@@ -7,20 +7,20 @@ propuesto según las explicaciones presentadas en el Capítulo
 de simulación mostrado en \cite{Renz2013}
 (\url{https://aibirds.org/other-events/level-generation-competition/basic-instructions.html}),
 el cual está programado en Unity, con código fuente en
-lenguaje C\#.
+lenguaje C\#. 
 
 \section{Codificando los diccionarios de piezas}
 \label{section:piece_dictionary}
 
 Para poder integrar el listado de piezas al
 sistema de generación se decidió la manera en la que se establecerían las
-diferentes piezas, como las mostradas en la figura \ref{figure:game-basic-blocks}
+diferentes piezas, como las mostradas en la Figura \ref{figure:game-basic-blocks}
 del Capítulo \ref{chapter:proposed-method}, para esto se tomaron en cuenta
 varias posibilidades, la primera, cómo se explica en la sección
 \ref{subsection:objectorientedidea} se buscaba ordenar las diferentes piezas
 cómo diccionarios que contuvieran una o más referencias a las piezas que
 integraban cada entrada del diccionario, para esto las primeras 11 posiciones
-eran elementos individuales, uno para cada pieza cómo el mostrado en la figura
+eran elementos individuales, uno para cada pieza cómo el mostrado en el código
 \ref{code:dic_individual_piece}, en el código se aprecia la manera en la que se
 designaba una pieza del juego, para poder trabajar de manera dinámica y
 agregar más compuestos. Según fuese necesario se utilizaban dos diccionarios
@@ -72,8 +72,8 @@ generados.
 
 En luz de esta información se optó por utilizar el método orientado a objetos
 mencionado en la sección \ref{subsection:classorientedidea}, el código
-\ref{code:dic_individual_piece} muestra la nueva estructura utilizada según el
-diagrama de clases presentado en la figura \ref{figure:pieces-class-diagram},
+\ref{code:dic_individual_piece_class} muestra la nueva estructura utilizada según el
+diagrama de clases presentado en la Figura \ref{figure:pieces-class-diagram},
 una clase base con las operaciones y
 propiedades necesarias funcionaría cómo una clase base para las clases
 de piezas particulares, de esta manera los individuos se representan cómo un
@@ -101,7 +101,7 @@ datos de la pieza generada y se pedirá al sistema genere otra de manera aleator
           self.update_values()
   \end{minted}
   \caption{Ejemplo de estructura de las clases hija que heredan de la principal}
-  \label{code:dic_individual_piece}
+  \label{code:dic_individual_piece_class}
 \end{listing}
 
 \section{Creación de compuestos}
@@ -163,7 +163,7 @@ cada elemento será una instancia de un compuesto asignado al individuo, de est�
 manera si se requiere modificar la posición o materiales de un compuesto
 particular en el individuo es posible hacerlo desde la clase de
 \textit{Individuo}, de igual manera está clase tiene otras funciones 
-como se muestra en el diagrama de clase de la figura
+como se muestra en el diagrama de clase de la Figura
 \ref{figure:individual-class-diagram}, por ejemplo, realizar los cálculos de fitness y generar
 las listas de piezas que serán utilizadas para generar los archivos de salida
 para las simulaciones de los niveles generados.
@@ -351,7 +351,7 @@ individuos no sean mostradas y el caso contrario permitirá que un individuo
 pueda o no quedar con el mismo caso y puede que se dé el caso en donde alguno de
 ambos elementos logren obtener un mejor nivel de fitness en la generación.
 
-Un ejemplo de estos dos tipos de cruce se puede apreciar en la figura
+Un ejemplo de estos dos tipos de cruce se puede apreciar en la Figura
 \ref{figure:crossover} en donde dos individuos realizan un cruce con sus
 máscaras y las máscaras generadas para los hijos resultan con diferente cantidad
 de piezas.
@@ -424,7 +424,7 @@ aleatoria de entre la cantidad de compuestos creados, estos mismos se integran
 al final de la lista de compuestos del individuo. Para eliminar elementos de la
 lista se realiza una corrida por todos los elementos y en cada uno se realiza
 una probabilidad de \textit{50\%} de sea borrado de la lista, un ejemplo de este
-proceso se muestra en la figura \ref{figure:mutate_add_remove} en donde se
+proceso se muestra en la Figura \ref{figure:mutate_add_remove} en donde se
 presenta una tabla que denota las posiciones de los compuestos en base a la
 máscara, en este ejemplo se realizó una corrida para remover elementos (color
 rojo) y una segunda para agregar nuevos compuestos (color verde).
@@ -446,7 +446,7 @@ hielo y finalmente \textit{2} representa el material de piedra, debido a que el
 juego solo acepta está lista de compuestos no es posible asignar valores
 diferentes a estos.
 
-En la figura \ref{figure:mutate_material} se muestra un ejemplo de la manera en
+En la Figura \ref{figure:mutate_material} se muestra un ejemplo de la manera en
 cómo opera la mutación del tipo de compuesto, en este ejemplo se muestra el
 genotipo y fenotipo de un individuo, el genotipo muestra los colores naranja,
 azul y gris para denotar los materiales de madera, hielo y piedra
@@ -477,7 +477,7 @@ existentes, por ejemplo, suponiendo que se tiene solo la cantidad base de piezas
 en el algoritmo entonces la selección será un valor aleatorio desde \textit{0}
 hasta \textit{10}.
 
-La figura \ref{figure:mutate_composite} nos muestra un ejemplo de cómo es que
+La Figura \ref{figure:mutate_composite} nos muestra un ejemplo de cómo es que
 actúa la mutación de tipo de compuesto, en el ejemplo mostrado se tiene el
 genotipo de un individuo combinado con su respectiva máscara así cómo su
 fenotipo respectivo (lado izquierda) al ser representado en la pantalla del
@@ -522,7 +522,7 @@ individuo y posteriormente armar los archivos mediante el uso de estos datos.
   \label{figure:individual_representation}
 \end{figure}
 
-En la figura \ref{figure:individual_representation} muestra la estructura de los
+En la Figura \ref{figure:individual_representation} muestra la estructura de los
 componentes de un individuo, un individuo es representado por \textit{2} capas
 diferentes en forma de lista, la primera es la capa de compuestos, está capa se
 muestra la lista de compuestos que representan a un individuo, esta lista puede
@@ -543,7 +543,7 @@ diferentes cómo castillos, torres, casas o diferentes figuras. Sin embargo
 utilizar este tipo de estructuras no permitía que el algoritmo lograra
 evolucionar, sino que simplemente encontraría la mejor combinación de
 piezas-máscara en determinado momento, por esto se optó por utilizar la
-generación de máscaras que se muestra en la figura
+generación de máscaras que se muestra en la Figura
 \ref{figure:individual_representation} y que fue explicado en la sección
 \ref{section:ind_generation} la cual únicamente muestra una determinada cantidad
 de piezas a asignar en posiciones diferentes del nivel, esto permite tener mejor
@@ -580,7 +580,7 @@ mismas.
 
 Mediante la combinación de los enemigos con el genotipo construido de un
 individuo se obtiene el nivel a mostrar en el juego, una representación de esto
-se muestra en la figura \ref{figure:ind_representation_plus_pigs}, en donde al
+se muestra en la Figura \ref{figure:ind_representation_plus_pigs}, en donde al
 genotipo armado de acuerdo a los puntos anteriormente mencionados se le agrega el
 listado de posiciones de los enemigos. En este caso los enemigos son
 representados por un color verde en las posiciones en donde estarán. 
@@ -592,7 +592,7 @@ esquina inferior derecha de la misma imagen.
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{img/layer123_combine.png}
-  \caption{Ejemplo de la combinación de un genotipo armado de la figura \ref{figure:individual_representation} con la colocación de enemigos}
+  \caption{Ejemplo de la combinación de un genotipo armado de la Figura \ref{figure:individual_representation} con la colocación de enemigos}
   \label{figure:ind_representation_plus_pigs}
 \end{figure}
 

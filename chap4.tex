@@ -29,7 +29,7 @@ bloques, además de 2 grupos de objetos siendo estos cajas de explosivos y los
 puercos que pueden ser colocados en el nivel, además de esto cuenta con
 plataformas que pueden ser agregadas y rotadas para establecer plataformas en
 donde colocar más bloques, de estos solo utilizaremos las 11 piezas básicas
-mostradas en la figura \ref{figure:game-basic-blocks} y los puercos para generar
+mostradas en la Figura \ref{figure:game-basic-blocks} y los puercos para generar
 niveles.
 
 Las piezas básicas no pueden ser modificadas, tampoco es posible agregar nuevos
@@ -50,7 +50,7 @@ valores de alto y ancho de las piezas para poder definir los bordes de las
 mismas, de esta manera al momento de querer unir dos o más piezas para formar un
 conjunto la medida del conjunto se calculará buscando el punto más alto, más
 bajo, así como las posiciones más a la derecha e izquierda teniendo ambas piezas
-unidas, un ejemplo de la unión de cuatro piezas se muestra en la figura
+unidas, un ejemplo de la unión de cuatro piezas se muestra en la Figura
 \ref{figure:bounding-box-calculation} en donde cuatro piezas se colocan una
 sobre otra para formar un objeto cuadrado. Para poder agregar las piezas cómo
 un conjunto se buscan los puntos más alejados, una vez que se ha calculado el
@@ -89,7 +89,7 @@ principalmente estos métodos se encargan de calcular las esquinas de las piezas
 particulares las cuales permitirán una vez se tenga un conjunto encontrar la
 altura y tamaño total del conjunto, así como el centro del mismo.
 
-Utilizando la estrategia mostrada en la figura
+Utilizando la estrategia mostrada en la Figura
 \ref{figure:bounding-box-calculation} y explicada en el capítulo anterior se
 define una clase para los conjuntos de piezas, aquí se utilizan los cálculos de
 las clases particulares anteriormente mencionadas para obtener los valores de
@@ -121,14 +121,14 @@ controlan los conjuntos y subsecuentemente las piezas individuales.
   \label{figure:pieces-class-diagram}
 \end{figure}
 
-Estas clases se desarrollaron utilizando herencia y polimorfismo, cómo se muestra en la figura
-\ref{figure:pieces-class-diagram}. Las once clases de las piezas básicas heredan
-los métodos de la clase principal, esto es cómo se menciona anteriormente por
-que las acciones que las clases particulares harán serán las mismas sin
-modificar nada en los métodos, sin embargo, cada una activa un constructor con
-los datos de tamaño y nombre específicos, estos datos son utilizados para las
-mediciones y para integrar casa pieza particular cómo una lista de texto que se
-utilizará para generar los archivos de los niveles.
+Estas clases se desarrollaron utilizando herencia y polimorfismo, cómo se
+muestra en la Figura \ref{figure:pieces-class-diagram}. Las once clases de las
+piezas básicas heredan los métodos de la clase principal, esto es cómo se
+menciona anteriormente por que las acciones que las clases particulares harán
+serán las mismas sin modificar nada en los métodos, sin embargo, cada una activa
+un constructor con los datos de tamaño y nombre específicos, estos datos son
+utilizados para las mediciones y para integrar casa pieza particular cómo una
+lista de texto que se utilizará para generar los archivos de los niveles.
 
 De igual manera se utiliza una clase específica para controlar la generación de
 los conjuntos, la manera en cómo funciona esta clase es que se entrega una lista
@@ -161,7 +161,7 @@ resultados de fitness después de las simulaciones, así como también controlar
 número y listado de las piezas que conformaran cada nivel que representa el
 individuo, además de esto la clase permite que los individuos generen los
 archivos necesarios de los niveles para ser evaluados, el modelo básico de esta
-clase se muestra en la figura \ref{figure:composite-class-diagram} en donde se
+clase se muestra en la Figura \ref{figure:composite-class-diagram} en donde se
 puede ver los elementos que utiliza la clase cómo variables principales así cómo
 los métodos que es capaz de ejecutar una vez iniciado el algoritmo.
 
@@ -222,7 +222,7 @@ lista se explica más a detalle en la sección \ref{chapter:implementation} esta
 lista se utilizará dentro del algoritmo genético para realizar las operaciones
 genéticas necesarias para crear a los nuevos individuos de la población. 
 
-El diagrama del sistema se muestra en la figura \ref{figure:algorithm_model}, en
+El diagrama del sistema se muestra en la Figura \ref{figure:algorithm_model}, en
 este diagrama se muestra el proceso por el cual pasa el algoritmo genético, desde
 el inicio que utiliza un archivo con los parámetros de configuración necesarios
 para inicializar el sistema, así como el proceso por el cual pasan los
@@ -247,7 +247,7 @@ sistema.
 
 Dentro del aspecto de generar compuestos nuevos para ser utilizados, previamente
 se propuso utilizar los resultados de un nivel cómo compuestos para las
-siguientes generaciones, un ejemplo de esto se muestra en la figura
+siguientes generaciones, un ejemplo de esto se muestra en la Figura
 \ref{figure:prev_composite_proposal_bef_aft} en donde una estructura generada
 mediante el algoritmo genético se simula en el juego y después de varios
 segundos el resultante del mismo podía ser utilizado cómo un compuesto para la
@@ -309,7 +309,7 @@ uso de la \textit{regla de tercios}.
 La regla de tercios es una técnica utilizada en el área de fotografía cuyo
 propósito es crear imágenes estéticamente agradables a la vista en donde el
 punto focal o punto de interés se encuentra colocado en la alguna de las áreas
-de la imagen, un ejemplo de esto se puede apreciar en la figura
+de la imagen, un ejemplo de esto se puede apreciar en la Figura
 \ref{figure:ruleofthirdsexample} en donde el objeto principal que se quiere
 resaltar se trata de colocar en el área central de la imagen completa.
 
@@ -327,7 +327,7 @@ activa o el área inmediatamente adyacente al sujeto de la imagen cubra el
 resto de la misma.
 
 La manera en cómo se planeó utilizar esta técnica es mediante el uso de una
-cuadricula de tres por tres de la misma manera que se me muestra en la figura
+cuadricula de tres por tres de la misma manera que se me muestra en la Figura
 \ref{figure:ruleofthirdsexample}, pero en el caso de los niveles generados se
 espera utilizar la cuadricula para rellenar áreas del nivel iniciando desde la
 parte inferior para generar niveles más robustos en sentido de que la
@@ -355,7 +355,7 @@ esto se utilizó de igual manera una cuadricula que cubriera el área de juego, 
 cuadricula se modificó para cubriera el área con un tamaño de 3 cuadros de
 altura y 7 cuadros de largo, de esta manera las piezas tendrían un poco más de
 libertad sobre el dónde sería posible colocarlas, el ejemplo básico de la idea
-detrás del uso de la regla de tercios se muestra en la figura
+detrás del uso de la regla de tercios se muestra en la Figura
 \ref{figure:ruleofthird_on_pieces} en donde se utiliza una máscara simple para
 acomodar los elementos en un individuo de tal manera que el ordenamiento dentro
 de la cuadricula permitiría la generación de estructuras más complejas, sin
@@ -364,7 +364,7 @@ piezas conllevaba un error debido que no solo se debería de buscar los puntos e
 los cuales los elementos se podrían apoyar entre ellos, si no que era requerido
 tomar en cuenta las posiciones, alturas, tamaños y ángulos de todos los
 elementos presentes en el cromosoma una vez colocados en el nivel, los
-resultados obtenidos utilizando la regla de tercios se muestran en la figura
+resultados obtenidos utilizando la regla de tercios se muestran en la Figura
 \ref{figure:ruleofthird_on_chromosome}, en esta imagen se muestra cómo una
 máscara pre-generada con una forma de castillo mostrada del lado izquierdo de la
 imagen se combina con el cromosoma entrante de un individuo para generar el

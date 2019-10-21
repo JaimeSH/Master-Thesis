@@ -1,7 +1,7 @@
 \BOOKMARK [0][-]{section*.4}{\315ndice general}{}% 1
 \BOOKMARK [0][-]{section*.5}{\315ndice de Figuras}{}% 2
 \BOOKMARK [0][-]{section*.6}{List of Tables}{}% 3
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 4
+\BOOKMARK [0][-]{chapter.1}{Introducci\363n}{}% 4
 \BOOKMARK [1][-]{section.1.1}{Justificaci\363n}{chapter.1}% 5
 \BOOKMARK [0][-]{chapter.2}{Preliminares}{}% 6
 \BOOKMARK [1][-]{section.2.1}{Algoritmos Gen\351ticos}{chapter.2}% 7
@@ -38,8 +38,8 @@
 \BOOKMARK [2][-]{subsection.5.4.3}{Operador de cruce}{section.5.4}% 38
 \BOOKMARK [2][-]{subsection.5.4.4}{Operador de mutaci\363n}{section.5.4}% 39
 \BOOKMARK [2][-]{subsection.5.4.5}{Representacion de individuos}{section.5.4}% 40
-\BOOKMARK [2][-]{subsection.5.4.6}{Calculo de fitness}{section.5.4}% 41
-\BOOKMARK [2][-]{subsection.5.4.7}{Seleccion de miembros elite}{section.5.4}% 42
+\BOOKMARK [2][-]{subsection.5.4.6}{C\341lculo de fitness}{section.5.4}% 41
+\BOOKMARK [2][-]{subsection.5.4.7}{Seleccion de miembros \351lite}{section.5.4}% 42
 \BOOKMARK [0][-]{chapter.6}{Experimentos y Resultados}{}% 43
 \BOOKMARK [1][-]{section.6.1}{Generaci\363n de niveles estables}{chapter.6}% 44
 \BOOKMARK [2][-]{subsection.6.1.1}{Experimento 1}{section.6.1}% 45
