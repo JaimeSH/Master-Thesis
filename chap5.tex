@@ -2,29 +2,29 @@
 \label{chapter:implementation}
 
 El siguiente conjunto de secciones describen la implementación del método
-propuesto según las explicaciones presentadas en el Capitulo
-\ref{chapter:proposed-method}. La implementación propuesta utiliza un software
-de simulación cómo el mostrado en \cite{Renz2013}
+propuesto según las explicaciones presentadas en el Capítulo
+\ref{chapter:proposed-method}. La implementación propuesta utiliza el software
+de simulación mostrado en \cite{Renz2013}
 (\url{https://aibirds.org/other-events/level-generation-competition/basic-instructions.html}),
-este software de simulación está programado en Unity con código fuente en
-lenguaje C\# de Visual Studio.
+el cual está programado en Unity, con código fuente en
+lenguaje C\#.
 
 \section{Codificando los diccionarios de piezas}
 \label{section:piece_dictionary}
 
-La primera parte que se desarrolló para poder integrar el listado de piezas al
-sistema de generación fue decir la manera en cómo se establecerían las
-diferentes piezas cómo las mostradas en la figura \ref{figure:game-basic-blocks}
-del Capitulo \ref{chapter:proposed-method}, para esto se tomaron en cuenta
+Para poder integrar el listado de piezas al
+sistema de generación se decidió la manera en la que se establecerían las
+diferentes piezas, como las mostradas en la figura \ref{figure:game-basic-blocks}
+del Capítulo \ref{chapter:proposed-method}, para esto se tomaron en cuenta
 varias posibilidades, la primera, cómo se explica en la sección
 \ref{subsection:objectorientedidea} se buscaba ordenar las diferentes piezas
 cómo diccionarios que contuvieran una o más referencias a las piezas que
 integraban cada entrada del diccionario, para esto las primeras 11 posiciones
-eran elementos individuales uno para cada pieza cómo el mostrado en la figura
-\ref{code:dic_individual_piece}, en el código se aprecia la manera en cómo se
-designaba una pieza del juego, para poder trabajar de manera dinámica para poder
-agregar más compuestos según fuese necesario se utilizaban dos diccionarios
-extra, estos contenían los datos de los tipos de materiales posibles y la
+eran elementos individuales, uno para cada pieza cómo el mostrado en la figura
+\ref{code:dic_individual_piece}, en el código se aprecia la manera en la que se
+designaba una pieza del juego, para poder trabajar de manera dinámica y
+agregar más compuestos. Según fuese necesario se utilizaban dos diccionarios
+extra, estos contenían los datos de los tipos de materiales y la
 información de los tamaños de las piezas, de esta manera en caso de tener más de
 una pieza en algún punto del diccionario era posible modificar el valor de
 offset de cada una de las piezas calculando la distancia del punto central de
@@ -64,19 +64,19 @@ cada pieza al centro de todo el conjunto.
   \label{code:dic_individual_piece}
 \end{listing}
 
-De esta manera cómo se explicó anteriormente era más sencillo crear compuestos,
-sin embargo, la desventaja que conllevaba utilizar este método era que no podían
-realizar modificaciones a las restricciones de las piezas, es decir, en caso de
-querer evitar que un conjunto de piezas con determinados materiales no fueran
-generados no se tenía la facilidad de impedir este tipo de combinaciones.
+De esta manera, era más sencillo crear compuestos,
+sin embargo, la desventaja de utilizar este método era que no se podían
+realizar modificaciones a las restricciones de las piezas, por ejempl, para el caso de
+querer evitar que un conjunto de piezas con determinados materiales no sean
+generados.
 
-En luz de esta información se optó por utilizar el método en base a clases
+En luz de esta información se optó por utilizar el método orientado a objetos
 mencionado en la sección \ref{subsection:classorientedidea}, el código
 \ref{code:dic_individual_piece} muestra la nueva estructura utilizada según el
 diagrama de clases presentado en la figura \ref{figure:pieces-class-diagram},
-de acuerdo al diagrama presentado una clase base con las operaciones y
-propiedades necesarias funcionaria cómo una clase \textit{padre} para las clases
-de piezas particulares, de esta manera los individuos se representarán cómo un
+una clase base con las operaciones y
+propiedades necesarias funcionaría cómo una clase base para las clases
+de piezas particulares, de esta manera los individuos se representan cómo un
 conjunto de referencias a las clases que deben de ser generadas para la
 composición de niveles, sin embargo, está manera de representar a los individuos
 no contempla las restricciones que pueden ser definidas para la combinación de
@@ -84,7 +84,7 @@ piezas-materiales, debido a esto se optó por generar una lista global que
 mantuviera un récord de las restricciones aplicadas en el sistema, y al momento
 de generar cada re-instanciacion de clase para los individuos está información se
 pasará a las clases según fuese requerido, en el código se presenta una variable
-con el nombre \textit{mat}, está variable tomara una lista de 3 valores que
+con el nombre \textit{mat}, está variable tomará una lista de 3 valores que
 define si alguno o algunos de los materiales no puede ser utilizado al momento
 de asignar las clases a los individuos, al momento de encontrar una pieza que de
 la coincidencia no puede ser utilizada con ningún material se eliminarán los
@@ -107,20 +107,20 @@ datos de la pieza generada y se pedirá al sistema genere otra de manera aleator
 \section{Creación de compuestos}
 \label{section:composite_creation}
 
-Una vez definidas las clases particulares que controlaran la información de las
-piezas en el algoritmo se procede a definir la manera en cómo se entregarán y
-controlaran los diferentes compuestos de piezas, para términos más simples los
-compuestos son grupos de una o más piezas y se mostraran a manera de diccionario
+Una vez definidas las clases que controlarán la información de las
+piezas en el algoritmo se procede a definir la manera en la que se entregarán y
+controlarán los diferentes compuestos de piezas, para términos más simples los
+compuestos son grupos de una o más piezas y se mostrarán a manera de diccionario
 de listas cómo se muestra en el código \ref{code:dic_composites}, de esta manera
 cada entrada en el diccionario tiene por nombre o apuntador el valor posición
-según se fueron agregando al diccionario mientras que el contenido es una lista
+según se fueron agregando al diccionario, mientras que el contenido es una lista
 con tuplas donde se estipula la información pertinente de cada pieza en el
-compuesto, un ejemplo claro es el elemento en la posición \textit{9} el cual
+compuesto. Un ejemplo claro es el elemento en la posición \textit{9}, el cual
 cuenta con 3 piezas que muestran los valores de offset medida desde el centro
-del compuesto visto gráficamente en el juego, está lista se utiliza para
+del compuesto, visto gráficamente en el juego, está lista se utiliza para
 mantener un control de los compuestos que se pueden ir agregando durante la
-ejecución del algoritmo, de tal manera que las clases auxiliares de
-\textit{Composite} creadas harán referencia a una o más piezas según la lista se
+ejecución del algoritmo, de tal manera que las clases derivadas de
+\textit{Composite} harán referencia a una o más piezas según la lista que se
 haya proporcionado al crear el compuesto.
 
 \begin{listing}[ht]
@@ -146,28 +146,27 @@ haya proporcionado al crear el compuesto.
 \section{Definición de clase auxiliar de individuo}
 \label{section:definition_of_clases}
 
-Mediante el uso de la clase de composite se tiene un mejor control de los genes
-que conformaran cada individuo de la población, una vez que se tiene este
-aspecto controlado el siguiente paso es el de crear programar la clase que
-llevará el control de los cromosomas de un individuo, siendo los cromosomas los
-compuestos asignados a cada individuo particular, de tal manera que un individuo
+Mediante el uso de la clase \textit{Composite}, se tiene un mejor control de los genes
+que conformarán cada individuo de la población. El siguiente paso es el de 
+programar la clase que llevará el control de los cromosomas de un individuo, 
+siendo los cromosomas los compuestos asignados a cada individuo, de tal manera que un individuo
 dentro de la información de cromosomas hará referencia a otra lista de
-compuestos, la manera en cómo un \textit{Individuo} relaciona los compuestos es
+compuestos, la manera en la que un \textit{Individuo} relaciona los compuestos es
 mediante el uso de la línea de código:
 
 \begin{minted}{python}
   chromosome_objects = [Composite(Composites[composite]) for composite in self.chromosome]
 \end{minted}
 
-Mediante esta línea de código se indica que se deberá de crear una lista en donde
+Mediante esta línea de código, se crea una lista en donde
 cada elemento será una instancia de un compuesto asignado al individuo, de está
 manera si se requiere modificar la posición o materiales de un compuesto
 particular en el individuo es posible hacerlo desde la clase de
-\textit{individuo}, de igual manera está clase tiene cómo funciones principales
-cómo se muestran en el diagrama de clase de la figura
-\ref{figure:individual-class-diagram} realizar los cálculos de fitness y generar
+\textit{Individuo}, de igual manera está clase tiene otras funciones 
+como se muestra en el diagrama de clase de la figura
+\ref{figure:individual-class-diagram}, por ejemplo, realizar los cálculos de fitness y generar
 las listas de piezas que serán utilizadas para generar los archivos de salida
-necesarios para las simulaciones de los niveles generados.
+para las simulaciones de los niveles generados.
 
 \section{Generación de individuos}
 \label{section:ind_generation}
@@ -175,8 +174,8 @@ necesarios para las simulaciones de los niveles generados.
 Una vez definida la manera de controlar las clases el paso siguiente es el de
 comenzar con la generación de ls individuos de la población, para poder lograr
 esto se creó una línea de código en la cual los puntos necesarios para la
-generación de los individuos se entregan totalmente, está línea de código en
-cuestión es cómo sigue: 
+generación de los individuos se entregan totalmente, mediante la siguiente 
+línea de código: 
 
 \begin{minted}{python}
   pop = [Individual(chromosome = get_random_chrom(ind_pieces), ..
@@ -184,7 +183,7 @@ cuestión es cómo sigue:
 \end{minted}
 
 Mediante el uso de esta línea de código se le indica al sistema que se requiere
-una lista que representara a los individuos de la población, cada elemento de
+una lista que representará a los individuos de la población, cada elemento de
 está lista será una instancia independiente de la clase \textit{Individual},
 para generar está instancia de clase es requerido dos valores siendo estos
 primero una lista de valores numéricos que representan cuales piezas se
@@ -204,26 +203,26 @@ de la clase \textit{Individual}.
 Para la generación de la lista de piezas o cromosomas asignados a un individuo
 mostrada en la parte (1) del código en \ref{code:get_random_chrom}, aquí el
 valor que se recibe denota la cantidad de piezas o compuestos que se deberán de
-asignar en la lista para el individuo, para asignar estos valores primero se
-obtiene un numero aleatorio que va desde \textit{0} hasta la cantidad de piezas o
-compuestos presentes en la lista menos una unidad para evitar errores de
-posicionamiento de lista, posteriormente se revisa si la pieza seleccionada
+asignar en la lista del individuo, para asignar estos valores primero se
+obtiene un número aleatorio que va desde \textit{0} hasta la cantidad de piezas o
+compuestos presentes en la lista, menos la unidad, para evitar errores de
+posicionamiento de lista. Posteriormente se revisa si la pieza seleccionada
 puede ser utilizada al menos en una combinación dentro de la generación, en caso
-de que no puede ser utilizada se obtiene otra y de igual manera se revisa, en
-caso de poder ser utilizada se agrega a la lista y avanza un contador para saber
-cuando se llegue al límite de piezas posibles de usar, finalmente se entrega la
+de que no pueda ser utilizada se obtiene otra y de igual manera se revisa, en
+caso de poder ser utilizada, se agrega a la lista y avanza un contador para saber
+cuando se llegue al límite de piezas posibles. Finalmente se entrega la
 lista de piezas para la generación de la instancia de clase. Para la generación
-de la máscara de acomodo de piezas se utiliza la sección de código mostrado en
-la parte (2), en esta parte lo que se realiza es que se revisa la cantidad de
-compuestos que se pueden utilizar cómo en la parte anterior, este valor se
+de la máscara de acomodo de piezas, se utiliza la sección de código mostrada en
+la parte (2). En esta parte se revisa la cantidad de
+compuestos que se pueden utilizar, cómo en la parte anterior, este valor se
 utiliza posteriormente para generar una lista aleatoria, la lista que se genera
-tiene un total de 7 posiciones que denotan 7 divisiones que se realizan en el
-área de un nivel para el acomodo de las piezas, mediante el uso del valor de
+tiene un total de 7 posiciones que denotan las 7 divisiones que se realizan en el
+área de un nivel para el acomodo de las piezas. Mediante el uso del valor de
 piezas en cada individuo se realiza una aleatorización de números desde
-\textit{0} hasta la cantidad máxima de piezas, una vez se obtienen estos valores
+\textit{0} hasta la cantidad máxima de piezas, una vez que se obtienen estos valores
 aleatorios se revisa si la suma de estos da la cantidad de piezas en el
-individuo, en caso de que no sea así se repite el proceso, en caso de que si se
-cumpla entonces la lista se regresa para la creación de la instancia de clase.
+individuo, en caso de que no sea así, se repite el proceso, en caso de que si se
+cumpla entonces la lista se regresa para la creación del individuo.
 
 \begin{listing}[ht]
   \begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{python}
@@ -253,8 +252,7 @@ cumpla entonces la lista se regresa para la creación de la instancia de clase.
 
 Una vez que se ha logrado crear la lista de individuos se procede a inicializar
 el algoritmo evolutivo, este algoritmo se ejecutará una determinada cantidad de
-veces que se haya establecido en el código, el pseudo-código ah ejecutar con su
-respectiva implementación en código se enlista a continuación en el código
+veces, el pseudocódigo se enlista a continuación en el código
 \ref{code:algorithm_pseudocode}, este pseudocódigo engloba los aspectos
 principales del sistema de generación de niveles, el código se explica más a
 detalle en las secciones siguientes.
@@ -272,11 +270,11 @@ Está parte se encarga de iniciar los bucles de generación, la función princip
 de este bloque de código es la revisar la lista auxiliar de miembros de elite
 que existe en memoria, en caso de tener elementos en la lista estos se integran
 a la lista de la población integrándose al inicio de la misma, una vez agregados
-todos los miembros la lista de la población se corta hasta el numero máximo de
+todos los miembros la lista de la población se corta hasta el número máximo de
 miembros permitidos en las generaciones, este valor se asigna cómo un valor de
 entrada al inicio del archivo que contiene el código.
 
-Una vez terminada está acción se procede a denotar la cantidad de padres que
+Una vez terminada esta acción se procede a denotar la cantidad de padres que
 serán necesarios para generar los hijos de las generaciones futuras, esto se
 hace mediante el cálculo:
 \begin{minted}{python}
@@ -284,15 +282,15 @@ hace mediante el cálculo:
 \end{minted}
 En donde \textit{pop} representa la lista de miembros de la población,
 \textit{per\_cross} representa un valor entre \textit{0\.0} y \textit{1\.0}, este
-valor representa que tanto porcentaje de la población se quiere realice cruces,
-de está manera la variable \textit{many} representa la cantidad de individuos
-que se deberan de utilizar para cumplir el porcentaje de cruce, debido a que el
+valor representa que tanto porcentaje de la población realizará cruces,
+de esta manera la variable \textit{many} representa la cantidad de individuos
+que se deberán utilizar para cumplir el porcentaje de cruce, debido a que el
 valor de \textit{per\_cross} puede generar un valor flotante se tiene una parte
-de código en donde si el total de individuos que realizaran cruces es un numero
+de código en donde si el total de individuos que realizarán cruces es un número
 impar entonces el valor que se deberá de utilizar será el numero par redondeado
 hacia abajo, es decir, si de 10 individuos en la población se quiere que un
 total de individuos cercano al \textit{50\%} realicen un cruce entonces el valor
-resultante para la variable \textit{many} seria de 5, en este caso lo que se
+resultante para la variable \textit{many} sería de 5, en este caso lo que se
 hace es restar 1 al resultado y después se redondea hacia abajo, lo cual haría
 que el número de padres requeridos para los cruces sea de 4.
 
@@ -307,30 +305,30 @@ encarga de obtenerlos y entregar los resultados después de la simulación.
 
 Una vez que los archivos de simulación han sido generados el algoritmo manda un
 comando que manda la ejecución del software de simulación, el software en
-particular cuenta con una ventana grafica en la que se puede apreciar los niveles
-que se generaron o involucionaron en caso de estar simulando archivos de una
+particular cuenta con una ventana gráfica en la que se puede apreciar los niveles
+que se generaron o evolucionaron en caso de estar simulando archivos de una
 generación después de la primera, de igual manera el software genera un archivo
-en formato \textit{XML} similar al que se genera antes de la simulación, la
-diferencia entre ambos archivos es que el que es entregado después de la
+en formato \textit{XML}, similar al que se genera antes de la simulación, la
+diferencia entre ambos archivos es que el entregado después de la
 simulación entrega los datos de posición del ultimo estado registrado del nivel,
 además de que se puede solicitar que entregue el valor de la aceleración de la
-misma, el valor de aceleración es tomado en cuenta desde el punto en el que la
+misma. El valor de aceleración es tomado en cuenta desde el punto en el que la
 pieza comienza su descenso, en caso de que una pieza sea destruida durante el
 proceso de simulación ninguno de los datos de esa pieza son grabados en los
 archivos, la manera de llevar control de las piezas que entran y las que salen
-es mediante el uso de un numero de lista asignado al momento de generar los
+es mediante el uso de un número de lista asignado al momento de generar los
 archivos de simulación de la sección anterior.
 
-Posterior a la simulación los archivos entregados son revisados y en base la
+Posterior a la simulación los archivos entregados son revisados y en base a la
 información de las piezas se calcula el \textit{Fitness} de las mismas,
 posteriormente a esto se procede a ordenar la lista, y realizar las operaciones
-de selección, cruce, mutación los cuales se explican en la sección siguiente.
+de selección, cruce y mutación los cuales se explican en la sección siguiente.
 
 \subsection{Operador de selección}
 \label{subsection:sel_operator}
 
-El proceso de selección se definió de dos maneras diferentes, la primer es
-mediante el uso de una ruleta para las selecciones, en está ruleta los valores que
+El proceso de selección se definió de dos maneras, la primera es
+mediante el uso de una ruleta, en está ruleta los valores que
 se toman en cuenta es el fitness de cada individuo, mientras más alto sea el
 fitness mayor será la probabilidad de ser seleccionado para el cruce en la
 siguiente sección.
@@ -381,8 +379,9 @@ De está manera los hijos se pueden comprender de la siguiente manera:
   hijo1 = padre1 + madre2
   hijo2 = madre1 + padre2
 \end{minted}
-Para el caso del cruce de dos puntos la manera en cómo se realiza es que en vez
-de dividir el genotipo de un individuo en dos partes se divide en tres y al
+
+Para el caso del cruce de dos puntos, en vez
+de dividir el genotipo de un individuo en dos partes, se divide en tres y al
 momento de realizar la combinación se toma la primer parte del primer individuo,
 después la parte de enmedio del segundo individuo y finalmente la parte final
 del primero, de tal forma que solo la parte central de ambos individuos se
@@ -402,6 +401,7 @@ La mutación de los individuos de la población ocurre solo al momento de hacer 
 cruce de los mismos, es decir solo a los elementos nuevos se les aplica el
 operador de mutación, este operador puede modificar los siguientes elementos de
 un individuo:
+
 \begin{enumerate}
   \item La cantidad de piezas que conforman al individuo.
   \item El material del cual están formados los elementos.
@@ -410,12 +410,12 @@ un individuo:
   \item La posición individual (\textit{x} o \textit{y}) de los compuestos.
 \end{enumerate}
 
-La manera en cómo se aplica el operador de mutación se describe cómo sigue,
+El operador de mutación se describe cómo sigue,
 primero al momento de generar al nuevo individuo se realiza un cálculo de
-porcentaje en donde se decide si tendrá o no mutación dependiendo del porcentaje
+porcentaje en donde se decide si tendrá o no mutación, dependiendo del porcentaje
 de mutación que se haya asignado al inicio del algoritmo, posteriormente en caso
-de que el valor de porcentaje quede dentro del rango se toma para las
-operaciones, está mismas se explican de la manera siguiente.
+de que el valor de porcentaje quede dentro del rango, se toma para las
+operaciones siguientes:
 
 Para mutar la cantidad de compuestos en un individuo primero se realiza una
 selección aleatoria entre las opciones de agregar o quitar compuestos,
@@ -437,8 +437,8 @@ rojo) y una segunda para agregar nuevos compuestos (color verde).
 \end{figure}
 
 La segunda mutación se encarga de modificar el material del que están
-conformados los compuestos del individuo, la manera en cómo trabaja este proceso
-es primero se selecciona aleatoriamente cuales compuestos serán modificados sin
+conformados los compuestos del individuo, primero se selecciona aleatoriamente 
+cuales compuestos serán modificados sin
 repetir valores, posteriormente se modifica de manera aleatoria el valor que
 define el tipo de material del que se conforma, para esto se toma en cuenta que
 \textit{0} representa material de madera, \textit{1} representa material de
@@ -495,7 +495,7 @@ estructuras permitiendo así mejorar el algoritmo.
   \label{figure:mutate_composite}
 \end{figure}
 
-El ultimo tipo de mutación realizada en los individuos es la modificación de las
+El último tipo de mutación realizada en los individuos es la modificación de las
 posiciones \textit{x} y \textit{y} de algunos compuestos dentro del individuo,
 la modificación de las posiciones se realiza mediante una selección de valores
 aleatorios de una distribución gaussiana dentro de un cierto rango de distancia
@@ -506,9 +506,9 @@ original.
 \label{section:individual_representation}
 
 Una vez que se han agregado nuevos individuos a la población, y que estos
-individuos pasaron por su fase de mutación si es que requerían se procede a
+individuos pasaron por su fase de mutación, si es que requerían, se procede a
 realizar la combinación de los elementos que conforman al individuo con el fin
-de generar los archivos requeridos para la simulación de estos mismos, cabe
+de generar los archivos requeridos para la simulación de estos mismos. Cabe
 resaltar que está combinación se realiza también en los individuos iniciales
 antes de la simulación inicial, debido a que el juego requiere una
 representación mediante el uso de archivos en formatos \textit{XML}, se requiere
@@ -525,22 +525,22 @@ individuo y posteriormente armar los archivos mediante el uso de estos datos.
 En la figura \ref{figure:individual_representation} muestra la estructura de los
 componentes de un individuo, un individuo es representado por \textit{2} capas
 diferentes en forma de lista, la primera es la capa de compuestos, está capa se
-muestra la lista de compuestos que representan a un individuo, está listas puede
-variar en tamaño dependiendo de si durante las operaciones de mutación se le
+muestra la lista de compuestos que representan a un individuo, esta lista puede
+variar en tamaño, dependiendo de si durante las operaciones de mutación se le
 agregaron o quitaron elementos al individuo, de igual manera cómo se explicó en
-el la sección \ref{section:composite_creation} cada valor de la lista representa
+el la sección \ref{section:composite_creation}, cada valor de la lista representa
 no una pieza del juego sino uno de los compuestos que se crean antes de iniciar
-el algoritmo o aquellos que se agregan durante el mismo en caso de haber.
+el algoritmo o aquellos que se agregan durante el mismo.
 
 La segunda parte que compone la representación del individuo es la máscara, cómo
-se explica en la sección \ref{subsection:ruleofthirds} la idea detrás del uso de
-está máscara es la de generar estructuras utilizando la lista de compuestos del
+se explica en la sección \ref{subsection:ruleofthirds}. La idea detrás del uso de
+está máscara, es la de generar estructuras utilizando la lista de compuestos del
 individuo, en esta misma sección se presentó una propuesta de crear máscaras en
 donde se denotará la forma que se quería que tuviera un individuo particular,
-aplicando estás estructuras en los individuos generaba los resultados esperados,
+aplicando estás estructuras en los individuos, generaba los resultados esperados,
 siendo el caso niveles en donde la distribución de los compuestos crearan formas
-diferentes cómo castillos, torres, casas o diferentes figuras, sin embargo
-utilizar está tipo de estructuras no permitía que el algoritmo lograra
+diferentes cómo castillos, torres, casas o diferentes figuras. Sin embargo
+utilizar este tipo de estructuras no permitía que el algoritmo lograra
 evolucionar, sino que simplemente encontraría la mejor combinación de
 piezas-máscara en determinado momento, por esto se optó por utilizar la
 generación de máscaras que se muestra en la figura
@@ -553,7 +553,7 @@ Al momento de combinar ambos componentes del individuo se obtiene un resultado
 similar al mostrado en la parte inferior de la imagen en donde los compuestos se
 organizan en manera de cola, es decir el primer elemento en la lista será el
 primero en ser colocado, una vez que se definen cuales elementos serán colocados
-en cada columna el sistema calcula la altura total de cada compuesto y
+en cada columna, el sistema calcula la altura total de cada compuesto y
 comenzando desde la parte inferior coloca un compuesto en el nivel, después
 calcula la distancia desde la parte superior del mismo hasta la parte central
 del siguiente para colocarlo de tal forma que al comenzar la simulación no
@@ -562,15 +562,15 @@ se previenen problemas de balance al permitir que las piezas caigan y
 reboten en direcciones que provocaran que las estructuras terminen por caer
 totalmente, en la misma imagen se aprecian cuadros de diferentes colores, estos
 mismos representan el material del cual está construido cada compuesto cómo se
-explico en la sección de mutación anterior.
+explicó en la sección de mutación anterior.
 
 Finalmente, una vez que se tiene la información anterior definida se procede a
 realizar una búsqueda de los lugares en donde aparecerán los enemigos del juego,
-la manera en cómo se define dónde pueden aparecer estos es mediante una función
-que revisa los compuestos que existen en el nivel, cuando un compuesto cumple
+se define dónde pueden aparecer estos mediante una función
+que revisa los compuestos que existen en el nivel. Cuando un compuesto cumple
 con ciertas características se permite que uno de los enemigos pueda ser
 colocado en la parte central o superior del mismo, al iniciar este método se
-busca aquellos que cumplen está característica y se ordenan en una lista
+busca aquellos que cumplen esta característica y se ordena en una lista
 auxiliar, después de manera pseudo-aleatoria se decide la cantidad de enemigos
 que tendrá el nivel, de acuerdo a este valor se seleccionan \textit{x} cantidad
 de posiciones para colocar a los enemigos donde \textit{x} es el valor de
@@ -580,13 +580,13 @@ mismas.
 
 Mediante la combinación de los enemigos con el genotipo construido de un
 individuo se obtiene el nivel a mostrar en el juego, una representación de esto
-se muestra en la figura \ref{figure:ind_representation_plus_pigs} en donde al
+se muestra en la figura \ref{figure:ind_representation_plus_pigs}, en donde al
 genotipo armado de acuerdo a los puntos anteriormente mencionados se le agrega el
-listado de posiciones de los enemigos, en este caso los enemigos son
-representados por un color verde en las posiciones en donde estarán, finalmente
-esto permite tener la estructura de los niveles completa, está información se
+listado de posiciones de los enemigos. En este caso los enemigos son
+representados por un color verde en las posiciones en donde estarán. 
+Esto permite tener la estructura de los niveles completa, esta información se
 utiliza al momento de generar los archivos de \textit{XML} los cuales en el
-software de simulación generaran una vista de los mismos cómo se muestra en la
+software de simulación generarán una vista de los mismos, cómo se muestra en la
 esquina inferior derecha de la misma imagen. 
 
 \begin{figure}
@@ -601,16 +601,16 @@ esquina inferior derecha de la misma imagen.
 
 Cuando los individuos pasan por el proceso de simulación se genera un archivo en
 formato \textit{XML} que contiene los resultados de los compuestos que fueron
-puestos en los archivos antes de la simulación con la diferencia de que estos
-archivos contienen la información del ultimo estado de los mismos compuestos al
-terminar dicha simulación es decir se obtiene un listado de piezas y enemigos con
-la información de sus posiciones \textit{x} y \textit{y} así cómo del angulo con
+puestos en los archivos antes de la simulación, con la diferencia de que estos
+archivos contienen la información del último estado de los mismos compuestos. Al
+terminar dicha simulación, se obtiene un listado de piezas y enemigos con
+la información de sus posiciones \textit{x} y \textit{y} así cómo del ángulo con
 en el cual quedaron al concluir la simulación, además de esto se entrega la
-información de la velocidad promedio de movimiento que tuvieron.
+información de la velocidad promedio del movimiento que tuvieron.
 
 Está información permite conocer las imperfecciones que tuvieron los niveles al
 concluir las simulaciones, para mejorar la evaluación obtenida que determina la
-aptitud de los individuos se toma en cuenta una evaluación de dos fases la
+aptitud de los individuos se toma en cuenta una evaluación de dos fases, la
 primera fase tiene que ver con la estabilidad de los individuos y se evalúa en
 base a dos métricas:
 \begin{enumerate}
@@ -629,9 +629,9 @@ el proceso de cálculo de fitness, para calcular le diferencia de piezas se
 compara la cantidad de elementos en ambas, debido que al momento de caer de
 alturas grandes algunos elementos tienden a romperse entonces la cantidad de
 elementos después de la simulación podrá ser menor, para obtener el primer valor
-se realizara un cálculo para obtener un valor entre \textit{0} y \textit{100}
+se realizará un cálculo para obtener un valor entre \textit{0} y \textit{100}
 que define la calificación en forma de porcentaje del total de piezas que se
-salvaron en la simulación es decir si antes de la simulación se tenía un total
+salvaron en la simulación, es decir, si antes de la simulación se tenía un total
 de \textit{10} piezas y al terminar la simulación en el archivo correspondiente
 solo existen \textit{5} entonces el individuo tendrá una calificación de
 \textit{50\%} debido a que solo la mitad de las piezas no fueron destruidas.
@@ -640,13 +640,13 @@ El segundo valor toma se utiliza para definir si los conjuntos que no se
 destruyeron se lograron mantener los más estábles posible, esto se calcula
 mediante el uso de dos fórmulas mostradas en las formulas
 \ref{equation:error_pos} y \ref{equation:error_ang} mediante el uso de estás
-formulas se comprueba si las piezas se lograron o no mantener en sus posiciones
-originales, en los casos donde las piezas no se hayan destruido se utilizan
+formulas se comprueba si las piezas lograron o no mantenerse en sus posiciones
+originales. En los casos donde las piezas no se hayan destruido se utilizan
 estás fórmulas para revisar si las posiciones y ángulos de inicio y final de la
-simulación son los mismos, en caso de que así sea entonces no se realizan
-modificaciones al fitness obtenido previamente, en caso contrario se obtiene una
-penalización al fitness equivalente a una tercera parte del valor de porcentaje
-por una pieza si se movió de posición y otra tercera parte si su angulo cambio.
+simulación son los mismos, en caso de que así sea, no se modifica el fitness
+obtenido previamente, en caso contrario se obtiene una
+penalización al fitness, equivalente a una tercera parte del valor de porcentaje
+por una pieza si se movió de posición y otra tercera parte, si su ángulo cambió.
 
 \begin{equation}
     \begin{split}
@@ -673,9 +673,9 @@ por una pieza si se movió de posición y otra tercera parte si su angulo cambio
 \end{equation}
 
 Por otro lado, la segunda fase de la evaluación busca tener más diversidad en los
-individuos, esto es que tan \textit{nuevos} y \textit{diferentes} logran ser, la
+individuos, esto es, que tan \textit{novedosos} o \textit{diferentes} logran ser, la
 manera en cómo se propone realizar está evaluación de diversidad es mediante el
-uso de las métricas:
+uso de las siguientes métricas:
 \begin{enumerate}
     \item La diversidad de las piezas utilizadas en los individuos
     \item El resultado de la función de entropía con las piezas utilizadas.
@@ -720,10 +720,10 @@ d = min \begin{Bmatrix} $ d(x, $ y)$ : $ x, $ y $ \epsilon $ C, si $ x \neq y $ 
 
 Una vez que se obtuvo el cálculo de la entropía del individuo se procede a
 obtener la distancia \textit{Hamming} del mismo, de manera sencilla la
-\textit{distancia de hamming} (Hamming distance en Inglés) representa el calculo
+\textit{distancia de Hamming} (Hamming distance en Inglés) representa el cálculo
 realizado en dos cadenas de valores en donde el punto es encontrar el valor
 mínimo de sustituciones necesarias para cambiar una cadena a otra, visto de otra
-manera, la \textit{distancia de hamming} se encarga de encontrar la distancia
+manera, la \textit{distancia de Hamming} se encarga de encontrar la distancia
 más corta entre dos cadenas, la manera en cómo funciona está función se muestra
 en la formula \ref{equation:hamming}, en esta misma ecuación los objetos
 \textit{x} y \textit{y} representan listas, en este caso se manejan listas de
@@ -761,34 +761,34 @@ este conjunto existen las listas \textit{a, b y c}, para poder encontrar la
 \ref{equation:hamming} esto es, se revisa cada par de elementos de la listas y
 se suma \textit{1} si los elementos son diferentes, de está manera se logra
 determinar que la cantidad de cambios necesarios para hacer que la lista
-\textit{b} se asemeje completamente a la lista \textit{a} es \textit{3} debido a
+\textit{b} sea igual a la lista \textit{a} es \textit{3} debido a
 que solo se requiere cambiar los tres valores \textit{1} en la lista \textit{b},
 la razón por la que no es requerido cambiar valores en la lista \textit{a} es
 debido a que en la función la segunda lista utilizada es la que se quiere
 asemejar a la primera no solamente cambiar una lista a otra.
 
-Al utilizar la distancia de \textit{hamming} se obtiene cómo mencionado
-anteriormente la cantidad menor de cambios para asemejar una lista a otra, sin
-embargo cómo el fin de sistema es crear niveles que sean diferentes entre si
+Al utilizar la distancia de \textit{hamming} se obtiene 
+la cantidad menor de cambios para asemejar una lista a otra, sin
+embargo, cómo el fin del sistema es crear niveles que sean diferentes entre si,
 entonces es posible incluso modificar la evaluación para obtener este valor para
 obtener la mayor distancia posible de tal modo que se sabrá cuales individuos
 tendrán la tendencia de ser diferentes para generar más diversidad.
 
-\subsection{Seleccion de miembros elite}
+\subsection{Seleccion de miembros élite}
 \label{subsection:elite_selection}
 
-Finalmente, después de obtener los resultados de aptitud de los individuos se
-procede a realizar la selección de aquellos que lograran integrar el grupo de
-elite que se utilizara para sustituir miembros de la población al inicio de la
-siguiente generación, para realizar esto primero se requiere ordenar todos los
-individuos por medio de su respectivo valor de fitness desde el valor más alto
-hasta el valor más bajo, posteriormente se toma una determinada cantidad de
-individuos iniciando desde el mejor, la cantidad de individuos que se tomaran
-para el grupo de elite es una cantidad que se define antes de iniciar el
+Finalmente, después de obtener los resultados de aptitud de los individuos, se
+procede a realizar la selección de aquellos que lograrán integrar el grupo de
+élite que se utilizará para sustituir miembros de la población al inicio de la
+siguiente generación, para realizar esto, primero se requiere ordenar todos los
+individuos por medio de su respectivo valor de fitness, desde el valor más alto
+hasta el valor más bajo. Posteriormente se toma una determinada cantidad de
+individuos, iniciando desde el mejor. La cantidad de individuos que se tomarán
+para el grupo de elite, es una cantidad que se define antes de iniciar el
 algoritmo genético.
 
 Una vez que se ha tomado la cantidad de individuos requerida se procede a
-integrar estos mismos individuos a el grupo de elite, para realizar la
+integrar estos mismos individuos a el grupo de élite, para realizar la
 integración al grupo de elite primero se requiere analizar el estado del grupo,
 en caso de que no existan elementos en la lista lo cual solo sucede en la
 primera generación, el grupo seleccionado se integra automáticamente a la lista
@@ -799,15 +799,17 @@ en el grupo entonces estos miembros se integran al final de la lista del grupo
 elite, se realiza un reordenamiento en la lista en base al valor de aptitud de
 los individuos y se corta la lista en caso se ser requerido.
 
-Una vez que se han completado todos los procesos anteriormente explicados el
+Una vez que se han completado todos los procesos explicados anteriormente, el
 algoritmo agrega datos de los mejores, los perores y el promedio de los valores
 de aptitud de los individuos en listas que sirven para realizar promedios al
-final de toda la ejecución del código, además de esto también se guarda
-información de los resultados individuales de las funciones de \textit{entropia}
-y la \textit{distancia de hamming} con el fin de ver en manera de graficas el
+final de toda la ejecución. Además de esto, también se guarda
+información de los resultados individuales de las funciones de \textit{entropía}
+y la \textit{distancia de Hamming} con el fin de ver en manera de gráficas el
 comportamiento del algoritmo bajo los datos que le fueron proveídos al inicio de
-la ejecución. Al terminar este proceso de integración de datos se realiza el
-ultimo movimiento en la información de la generación siendo este obtenerlos
-archivos \textit{XML} de los individuos y guardándolos en una nueva locación con
+la ejecución. 
+
+Al terminar este proceso de integración de datos, se realiza el
+último movimiento en la información de la generación, siendo este obtener los
+archivos \textit{XML} de los individuos y guardándolos en una nueva locación, con
 el fin de mantener un registro del progreso de los individuos durante la
 ejecución del algoritmo.
