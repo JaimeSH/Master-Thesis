@@ -1,0 +1,1211 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k+kn}{from} \PYG{n+nn}{\PYGZus{}\PYGZus{}future\PYGZus{}\PYGZus{}} \PYG{k+kn}{import} \PYG{n}{division}\PYG{p}{,} \PYG{n}{absolute\PYGZus{}import}
+    \PYG{c+c1}{\PYGZsh{} to avoid integer devision problem}
+    \PYG{k+kn}{import} \PYG{n+nn}{datetime}
+    \PYG{k+kn}{import} \PYG{n+nn}{scipy}
+    \PYG{k+kn}{import} \PYG{n+nn}{pylab}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{k+kn}{import} \PYG{n+nn}{random}
+    \PYG{k+kn}{import} \PYG{n+nn}{math}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{k+kn}{import} \PYG{n+nn}{datetime}
+    \PYG{k+kn}{import} \PYG{n+nn}{time}
+    \PYG{k+kn}{from} \PYG{n+nn}{yaspin.yaspin} \PYG{k+kn}{import} \PYG{n}{yaspin}
+    \PYG{k+kn}{import} \PYG{n+nn}{os}
+    \PYG{k+kn}{import} \PYG{n+nn}{json}
+    \PYG{k+kn}{import} \PYG{n+nn}{sys}
+    \PYG{k+kn}{import} \PYG{n+nn}{subprocess}
+    \PYG{k+kn}{import} \PYG{n+nn}{itertools}
+    \PYG{k+kn}{import} \PYG{n+nn}{operator}
+    \PYG{k+kn}{import} \PYG{n+nn}{shutil}
+    \PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+    \PYG{k+kn}{from} \PYG{n+nn}{copy} \PYG{k+kn}{import} \PYG{n}{deepcopy}
+
+    \PYG{c+c1}{\PYGZsh{} Local files}
+    \PYG{k+kn}{import} \PYG{n+nn}{XmlHelpers} \PYG{k+kn}{as} \PYG{n+nn}{xml}
+    \PYG{k+kn}{import} \PYG{n+nn}{Evaluation} \PYG{k+kn}{as} \PYG{n+nn}{Eval}
+    \PYG{k+kn}{from} \PYG{n+nn}{Selection} \PYG{k+kn}{import} \PYG{n}{Selection}
+    \PYG{k+kn}{from} \PYG{n+nn}{Mutation} \PYG{k+kn}{import} \PYG{n}{Mutation}
+
+    \PYG{n}{author} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Salinas Hernandez Jaime\PYGZdq{}}
+    \PYG{n}{copyright} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Copyright 2018, Tijuana Institute of Technology\PYGZdq{}}
+    \PYG{n}{credits} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}Dr. Mario García Valdez\PYGZdq{}}\PYG{p}{,}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{]}
+    \PYG{n}{license} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}ITT\PYGZdq{}}
+    \PYG{n}{version} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}1.4.1\PYGZdq{}}
+    \PYG{n}{date} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}May 08, 2019 18:30\PYGZdq{}}
+    \PYG{n}{maintainer} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Salinas Hernandez Jaime\PYGZdq{}}
+    \PYG{n}{email} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}jaime.salinas@tectijuana.edu.mx\PYGZdq{}}
+    \PYG{n}{status} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Development\PYGZdq{}}
+    \PYG{n}{t\PYGZus{}begin} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{()}
+    \PYG{n}{t\PYGZus{}prev} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{()}
+
+
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{} Values used for the genetic algorithm}
+    \PYG{n}{population} \PYG{o}{=} \PYG{l+m+mi}{10}         \PYG{c+c1}{\PYGZsh{} For now it can only be below 10}
+    \PYG{n}{max\PYGZus{}gen} \PYG{o}{=} \PYG{l+m+mi}{100}            \PYG{c+c1}{\PYGZsh{} Max number of generations}
+    \PYG{n}{fits} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}              \PYG{c+c1}{\PYGZsh{} Variable to save the fitness of each generation}
+    \PYG{n}{gen} \PYG{o}{=} \PYG{l+m+mi}{0}                 \PYG{c+c1}{\PYGZsh{} Generation 1}
+    \PYG{n}{per\PYGZus{}cross} \PYG{o}{=} \PYG{l+m+mf}{0.5}         \PYG{c+c1}{\PYGZsh{} Percentage of cross\PYGZhy{}over (cross\PYGZhy{}over operator)}
+    \PYG{n}{per\PYGZus{}comb} \PYG{o}{=} \PYG{l+m+mf}{0.3}          \PYG{c+c1}{\PYGZsh{} Percentage of combination (combination operator)}
+    \PYG{n}{per\PYGZus{}mut} \PYG{o}{=} \PYG{l+m+mf}{0.8}           \PYG{c+c1}{\PYGZsh{} Percentage of mutation}
+    \PYG{n}{sel\PYGZus{}type} \PYG{o}{=} \PYG{l+m+mi}{1}            \PYG{c+c1}{\PYGZsh{} Selection (for crossover) type [ 0: Random \PYGZhy{} 1: Tournament \PYGZhy{} TBD]}
+    \PYG{n}{cross\PYGZus{}type} \PYG{o}{=} \PYG{l+m+mi}{0}          \PYG{c+c1}{\PYGZsh{} Type of cross\PYGZhy{}over [ 0: One point CO \PYGZhy{} 1: Random point CO \PYGZhy{} TBD]}
+    \PYG{n}{ind\PYGZus{}pieces} \PYG{o}{=} \PYG{l+m+mi}{20}         \PYG{c+c1}{\PYGZsh{} Number of pieces that define an individual}
+    \PYG{n}{all\PYGZus{}fit} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}            \PYG{c+c1}{\PYGZsh{} Average fitness for all generations}
+    \PYG{n}{fit\PYGZus{}ham} \PYG{o}{=} \PYG{p}{[]}           \PYG{c+c1}{\PYGZsh{} Average piece length fitness for all generations}
+    \PYG{n}{fit\PYGZus{}Amov} \PYG{o}{=} \PYG{p}{[]}           \PYG{c+c1}{\PYGZsh{} Average movement fitness for all generations}
+    \PYG{n}{max\PYGZus{}elite} \PYG{o}{=} \PYG{l+m+mi}{1}           \PYG{c+c1}{\PYGZsh{} Maximum number of elite members in the generation}
+    \PYG{n}{elite} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{best\PYGZus{}gen} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{mu} \PYG{o}{=} \PYG{l+m+mi}{0}                  \PYG{c+c1}{\PYGZsh{} Mean for normal distribution}
+    \PYG{n}{sigma} \PYG{o}{=} \PYG{l+m+mi}{20}              \PYG{c+c1}{\PYGZsh{} SD for normal distribution}
+
+    \PYG{n}{min\PYGZus{}fit} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}            \PYG{c+c1}{\PYGZsh{} Average fitness for all generations}
+    \PYG{n}{max\PYGZus{}fit} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}            \PYG{c+c1}{\PYGZsh{} Average fitness for all generations}
+
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{} Data required to create the xml files}
+
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} Data required to create the xml files \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+    \PYG{n}{project\PYGZus{}root} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{getcwd}\PYG{p}{()}
+    \PYG{n}{json\PYGZus{}data} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}all\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hamming\PYGZus{}avg\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}min\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}max\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{ruleset} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Ruleset/parameters.txt\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{config\PYGZus{}param} \PYG{o}{=} \PYG{n}{json}\PYG{o}{.}\PYG{n}{loads}\PYG{p}{(}\PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ga\PYGZus{}parameters.json\PYGZdq{}}\PYG{p}{,}\PYG{l+s+s2}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{read}\PYG{p}{())}
+
+    \PYG{n}{game\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}game\PYGZus{}path\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{write\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}write\PYGZus{}path\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{elite\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}elite\PYGZus{}path\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{read\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}read\PYGZus{}path\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{log\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}log\PYGZus{}dir\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{log\PYGZus{}base\PYGZus{}name} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}log\PYGZus{}base\PYGZus{}name\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{child\PYGZus{}level} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}child\PYGZus{}level\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{child\PYGZus{}output} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}child\PYGZus{}output\PYGZsq{}}\PYG{p}{]}
+
+    \PYG{c+c1}{\PYGZsh{} For tournament}
+    \PYG{n}{game\PYGZus{}path\PYGZus{}tourney} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}game\PYGZus{}path\PYGZus{}tourney\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{write\PYGZus{}path\PYGZus{}tourney} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}write\PYGZus{}path\PYGZus{}tourney\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{read\PYGZus{}path\PYGZus{}tourney} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}read\PYGZus{}path\PYGZus{}tourney\PYGZsq{}}\PYG{p}{]}
+
+    \PYG{c+c1}{\PYGZsh{} To have a copy of the generations}
+    \PYG{n}{level\PYGZus{}files\PYGZus{}path} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}level\PYGZus{}files\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{current\PYGZus{}gen\PYGZus{}folder} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}generation\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{sourcefolder} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{level\PYGZus{}files\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/Levels\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{experimentsource} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{level\PYGZus{}files\PYGZus{}path}\PYG{p}{)}
+    \PYG{n}{foldername} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{e} \PYG{k}{for} \PYG{n}{e} \PYG{o+ow}{in} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{())} \PYG{k}{if} \PYG{n}{e}\PYG{o}{.}\PYG{n}{isalnum}\PYG{p}{())}
+    \PYG{n}{experimentdest} \PYG{o}{=} \PYG{n}{config\PYGZus{}param}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}experiment\PYGZus{}results\PYGZsq{}}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}} \PYG{o}{+} \PYG{n}{foldername}
+    \PYG{n}{experimentdestination} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{experimentdest}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Data for the competition}
+    \PYG{n}{req\PYGZus{}levels} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{ruleset}\PYG{o}{.}\PYG{n}{readline}\PYG{p}{()))}
+    \PYG{n}{req\PYGZus{}np\PYGZus{}combinations} \PYG{o}{=} \PYG{n}{ruleset}\PYG{o}{.}\PYG{n}{readline}\PYG{p}{()}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{},\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{e} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{req\PYGZus{}np\PYGZus{}combinations}\PYG{p}{):}
+        \PYG{n}{req\PYGZus{}np\PYGZus{}combinations}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{req\PYGZus{}np\PYGZus{}combinations}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{()}
+    \PYG{n}{req\PYGZus{}pigs} \PYG{o}{=} \PYG{n}{ruleset}\PYG{o}{.}\PYG{n}{readline}\PYG{p}{()}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{},\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{n}{max\PYGZus{}elite} \PYG{o}{=} \PYG{n}{req\PYGZus{}levels}
+
+    \PYG{c+c1}{\PYGZsh{} Clean previous experiment}
+    \PYG{c+c1}{\PYGZsh{}shutil.rmtree(os.path.join(project\PYGZus{}root, write\PYGZus{}path))}
+    \PYG{c+c1}{\PYGZsh{}shutil.rmtree(os.path.join(project\PYGZus{}root, elite\PYGZus{}path))}
+    \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{rmtree}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{level\PYGZus{}files\PYGZus{}path}\PYG{p}{))}
+
+    \PYG{n}{os}\PYG{o}{.}\PYG{n}{makedirs}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{level\PYGZus{}files\PYGZus{}path}\PYG{p}{),} \PYG{n}{exist\PYGZus{}ok}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+    \PYG{n}{os}\PYG{o}{.}\PYG{n}{makedirs}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{write\PYGZus{}path}\PYG{p}{),} \PYG{n}{exist\PYGZus{}ok}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{os}\PYG{o}{.}\PYG{n}{makedirs}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{elite\PYGZus{}path}\PYG{p}{),} \PYG{n}{exist\PYGZus{}ok}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{os}\PYG{o}{.}\PYG{n}{makedirs}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{read\PYGZus{}path}\PYG{p}{),} \PYG{n}{exist\PYGZus{}ok}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+    \PYG{n}{os}\PYG{o}{.}\PYG{n}{makedirs}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{log\PYGZus{}path}\PYG{p}{),} \PYG{n}{exist\PYGZus{}ok}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+
+
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{} \PYGZdq{}Dictionary\PYGZdq{} to save the base pieces and structures}
+    \PYG{n}{SW\PYGZus{}HIDE} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{info} \PYG{o}{=} \PYG{n}{subprocess}\PYG{o}{.}\PYG{n}{STARTUPINFO}\PYG{p}{()}
+    \PYG{n}{info}\PYG{o}{.}\PYG{n}{dwFlags} \PYG{o}{=} \PYG{n}{subprocess}\PYG{o}{.}\PYG{n}{STARTF\PYGZus{}USESHOWWINDOW}
+    \PYG{n}{info}\PYG{o}{.}\PYG{n}{wShowWindow} \PYG{o}{=} \PYG{n}{SW\PYGZus{}HIDE}
+
+    \PYG{c+c1}{\PYGZsh{}just for fun making further development easier and with joy}
+    \PYG{n}{pi}     \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{pi}
+    \PYG{n}{dot}    \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{dot}
+    \PYG{n}{sin}    \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{sin}
+    \PYG{n}{cos}    \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{cos}
+    \PYG{n}{ar}     \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{array}
+    \PYG{n}{rand}   \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{rand}
+    \PYG{n}{arange} \PYG{o}{=} \PYG{n}{scipy}\PYG{o}{.}\PYG{n}{arange}
+    \PYG{n}{plot}   \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{plot}
+    \PYG{n}{show}   \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{show}
+    \PYG{n}{axis}   \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{axis}
+    \PYG{n}{grid}   \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{grid}
+    \PYG{n}{title}  \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{title}
+    \PYG{n}{rad}    \PYG{o}{=} \PYG{k}{lambda} \PYG{n}{ang}\PYG{p}{:} \PYG{n}{ang}\PYG{o}{*}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{180}                 \PYG{c+c1}{\PYGZsh{}lovely lambda: degree to radian}
+
+
+
+    \PYG{c+c1}{\PYGZsh{} Function to rotate points}
+    \PYG{k}{def} \PYG{n+nf}{Rotate2D}\PYG{p}{(}\PYG{n}{pts}\PYG{p}{,}\PYG{n}{cnt}\PYG{p}{,}\PYG{n}{ang}\PYG{o}{=}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{4}\PYG{p}{):}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}pts = \PYGZob{}\PYGZcb{} Rotates points(nx2) about center cnt(2) by angle ang(1) in radian\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{k}{return} \PYG{n}{dot}\PYG{p}{(}\PYG{n}{pts}\PYG{o}{\PYGZhy{}}\PYG{n}{cnt}\PYG{p}{,}\PYG{n}{ar}\PYG{p}{([[}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{ang}\PYG{p}{),}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{ang}\PYG{p}{)],[}\PYG{o}{\PYGZhy{}}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{ang}\PYG{p}{),}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{ang}\PYG{p}{)]]))}\PYG{o}{+}\PYG{n}{cnt}
+
+
+    \PYG{c+c1}{\PYGZsh{} Generation masks}
+    \PYG{n}{type\PYGZus{}small\PYGZus{}l} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}large\PYGZus{}l} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}small\PYGZus{}cube} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}large\PYGZus{}cube} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}small\PYGZus{}floor} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}large\PYGZus{}floor} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                        \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}castle} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}house} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+    \PYG{n}{type\PYGZus{}towers} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]]}
+
+    \PYG{n}{Mask\PYGZus{}List} \PYG{o}{=} \PYG{p}{[}
+        \PYG{n}{type\PYGZus{}small\PYGZus{}l}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}large\PYGZus{}l}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}small\PYGZus{}cube}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}large\PYGZus{}cube}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}small\PYGZus{}floor}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}large\PYGZus{}floor}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}castle}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}house}\PYG{p}{,}
+        \PYG{n}{type\PYGZus{}towers}
+    \PYG{p}{]}
+
+    \PYG{c+c1}{\PYGZsh{} Global Piece class and a class for each piece in the game}
+    \PYG{k}{class} \PYG{n+nc}{Piece}\PYG{p}{:}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{):}
+            \PYG{c+c1}{\PYGZsh{}self.Height = 72}
+            \PYG{c+c1}{\PYGZsh{}self.Width = 72}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Material} \PYG{o}{=} \PYG{n}{mat}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Dict} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Valid} \PYG{o}{=} \PYG{n+nb+bp}{True}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X} \PYG{o}{=} \PYG{n}{x}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y} \PYG{o}{=} \PYG{n}{y}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{R} \PYG{o}{=} \PYG{n}{r}
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Materials}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Material} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}stone\PYGZdq{}}
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Materials}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Material} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}ice\PYGZdq{}}
+
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}edges}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n}{ed\PYGZus{}lis} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{ed\PYGZus{}lis}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}     \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{,}      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{])}
+            \PYG{n}{ed\PYGZus{}lis}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}     \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{,} \PYG{l+m+mi}{0} \PYG{o}{\PYGZhy{}}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{])}
+            \PYG{n}{ed\PYGZus{}lis}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{l+m+mi}{0} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{,} \PYG{l+m+mi}{0} \PYG{o}{\PYGZhy{}}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{])}
+            \PYG{n}{ed\PYGZus{}lis}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{l+m+mi}{0} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{,}      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{+}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{])}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Edges} \PYG{o}{=} \PYG{n}{ed\PYGZus{}lis}
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}points}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{r}\PYG{p}{):}
+            \PYG{n}{ang} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{R} \PYG{o}{*} \PYG{n}{pi} \PYG{o}{/} \PYG{l+m+mi}{180}
+            \PYG{n}{ots} \PYG{o}{=} \PYG{n}{Rotate2D}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Edges}\PYG{p}{,} \PYG{n}{ar}\PYG{p}{([}\PYG{l+m+mi}{0} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{,} \PYG{l+m+mi}{0} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{]),} \PYG{n}{ang}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Points} \PYG{o}{=} \PYG{n}{ots}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{()}
+            \PYG{c+c1}{\PYGZsh{}print(self.Points)}
+
+        \PYG{k}{def} \PYG{n+nf}{change\PYGZus{}material}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{m}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Material} \PYG{o}{=} \PYG{n}{m}
+
+        \PYG{k}{def} \PYG{n+nf}{as\PYGZus{}dictionary}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n}{self\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{self\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name}\PYG{p}{)}
+            \PYG{n}{self\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{)}
+            \PYG{n}{self\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{X}\PYG{p}{)}
+            \PYG{n}{self\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Y}\PYG{p}{)}
+            \PYG{n}{self\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{R}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Dict} \PYG{o}{=} \PYG{n}{self\PYGZus{}list}
+
+        \PYG{k}{def} \PYG{n+nf}{update\PYGZus{}values}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{c+c1}{\PYGZsh{}if \PYGZsq{}errormessage\PYGZsq{} in kwargs:}
+            \PYG{c+c1}{\PYGZsh{}    print(\PYGZdq{}llegue\PYGZdq{})}
+            \PYG{c+c1}{\PYGZsh{}else:}
+            \PYG{c+c1}{\PYGZsh{}    self.Material = kwargs.get(\PYGZsq{}material\PYGZsq{})}
+            \PYG{c+c1}{\PYGZsh{}self.Material = \PYGZdq{}ice\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}edges}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}points}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{R}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{as\PYGZus{}dictionary}\PYG{p}{()}
+
+    \PYG{k}{class} \PYG{n+nc}{Circle}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{75}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{75}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+    \PYG{k}{class} \PYG{n+nc}{RectTiny}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}RectTiny\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{25}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{45}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{RectSmall}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}RectSmall\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{25}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{RectMedium}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}RectMedium\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{25}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{165}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{RectBig}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}RectBig\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{25}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{185}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{RectFat}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}RectFat\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{45}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{SquareTiny}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}SquareTiny\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{22}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{22}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{SquareSmall}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}SquareSmall\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{45}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{45}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{Triangle}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Triangle\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{75}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{75}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{TriangleHole}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}TriangleHole\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{k}{class} \PYG{n+nc}{SquareHole}\PYG{p}{(}\PYG{n}{Piece}\PYG{p}{):}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{,} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{r}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Name} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}SquareHole\PYGZdq{}}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{l+m+mi}{85}
+            \PYG{n}{Piece}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+
+
+    \PYG{c+c1}{\PYGZsh{} Composite class to control the generation of the individuals}
+    \PYG{k}{class} \PYG{n+nc}{Composite}\PYG{p}{:}
+
+        \PYG{n}{bl\PYGZus{}list\PYGZus{}x} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{n}{bl\PYGZus{}list\PYGZus{}y} \PYG{o}{=} \PYG{p}{[]}
+
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{blocks}\PYG{p}{):}
+            \PYG{c+c1}{\PYGZsh{} Blocks must be a list}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Objetos2} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bl\PYGZus{}list\PYGZus{}x} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bl\PYGZus{}list\PYGZus{}y} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{blocks} \PYG{o}{=} \PYG{n}{blocks}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Objetos} \PYG{o}{=} \PYG{p}{[}\PYG{n}{clases}\PYG{p}{[}\PYG{n}{clase}\PYG{p}{](}\PYG{n}{m}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{r}\PYG{p}{)} \PYG{k}{for} \PYG{p}{(}\PYG{n}{clase}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{r}\PYG{p}{,}\PYG{n}{m}\PYG{p}{)} \PYG{o+ow}{in}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{blocks}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{height} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{height}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{top\PYGZus{}center} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gen\PYGZus{}top\PYGZus{}center}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{as\PYGZus{}dictionary} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gen\PYGZus{}dictionary}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{low\PYGZus{}center} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}low\PYGZus{}center}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{overtop\PYGZus{}center} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}overtop}\PYG{p}{()}
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}values}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{blocks}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{2}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig} \PYG{o}{=} \PYG{n+nb+bp}{True}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig} \PYG{o}{=} \PYG{n+nb+bp}{False}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders} \PYG{o}{=} \PYG{p}{[[(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)} \PYG{k}{for} \PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{in} \PYG{n}{Obj}\PYG{o}{.}\PYG{n}{Points}\PYG{p}{]} \PYG{k}{for} \PYG{n}{Obj} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders}\PYG{p}{,} \PYG{p}{[])}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{=} \PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders}\PYG{p}{,} \PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{t}\PYG{p}{:}\PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{max}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders}\PYG{p}{,}
+                \PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{t}\PYG{p}{:}\PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])[}\PYG{l+m+mi}{0}\PYG{p}{])}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height} \PYG{o}{=} \PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders}\PYG{p}{,} \PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{t}\PYG{p}{:}\PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{max}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Borders}\PYG{p}{,}
+                \PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{t}\PYG{p}{:}\PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])[}\PYG{l+m+mi}{1}\PYG{p}{])}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{height}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{l+m+mf}{0.0}
+
+        \PYG{k}{def} \PYG{n+nf}{width}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{l+m+mf}{0.0}
+
+        \PYG{k}{def} \PYG{n+nf}{set\PYGZus{}borders}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+
+            \PYG{k}{return} \PYG{l+m+mf}{0.0}
+
+        \PYG{k}{def} \PYG{n+nf}{gen\PYGZus{}top\PYGZus{}center}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n}{height\PYGZus{}center} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}
+            \PYG{n}{lenght\PYGZus{}center} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{return} \PYG{p}{[}\PYG{n}{lenght\PYGZus{}center}\PYG{p}{,} \PYG{n}{height\PYGZus{}center}\PYG{p}{]}
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}low\PYGZus{}center}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}overtop}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{p}{]}
+
+        \PYG{k}{def} \PYG{n+nf}{gen\PYGZus{}dictionary}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n}{block\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{block\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Width}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Height}\PYG{p}{])}
+            \PYG{c+c1}{\PYGZsh{} Width represents the x coordinate and Height the y one}
+            \PYG{k}{for} \PYG{n}{piece} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{:}
+                \PYG{n}{block\PYGZus{}comp} \PYG{o}{=} \PYG{p}{[]}
+                \PYG{n}{block\PYGZus{}comp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{piece}\PYG{o}{.}\PYG{n}{Dict}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                \PYG{n}{block\PYGZus{}comp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{piece}\PYG{o}{.}\PYG{n}{Dict}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+                \PYG{n}{block\PYGZus{}comp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{piece}\PYG{o}{.}\PYG{n}{Dict}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{])}
+                \PYG{n}{block\PYGZus{}comp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{piece}\PYG{o}{.}\PYG{n}{Dict}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{])}
+                \PYG{n}{block\PYGZus{}comp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{piece}\PYG{o}{.}\PYG{n}{Dict}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                \PYG{n}{block\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{block\PYGZus{}comp}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{}block\PYGZus{}list.append(block\PYGZus{}comp)}
+            \PYG{c+c1}{\PYGZsh{}print(block\PYGZus{}list)}
+            \PYG{k}{return} \PYG{n}{block\PYGZus{}list}
+
+        \PYG{k}{def} \PYG{n+nf}{move\PYGZus{}xy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}x}\PYG{p}{,} \PYG{n}{n\PYGZus{}y}\PYG{p}{,} \PYG{n}{mat\PYGZus{}f}\PYG{p}{,} \PYG{n}{el\PYGZus{}r}\PYG{p}{):}
+            \PYG{c+c1}{\PYGZsh{}self.X = n\PYGZus{}x}
+            \PYG{c+c1}{\PYGZsh{}self.Y = n\PYGZus{}y}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Objetos} \PYG{o}{=} \PYG{p}{[}\PYG{n}{clases}\PYG{p}{[}\PYG{n}{clase}\PYG{p}{](}\PYG{n}{mat\PYGZus{}f}\PYG{p}{,} \PYG{n}{x} \PYG{o}{+} \PYG{n}{n\PYGZus{}x}\PYG{p}{,} \PYG{n}{y} \PYG{o}{+} \PYG{n}{n\PYGZus{}y}\PYG{p}{,} \PYG{n}{el\PYGZus{}r}\PYG{p}{)} \PYG{k}{for}
+                \PYG{p}{(}\PYG{n}{clase}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{r}\PYG{p}{,} \PYG{n}{mat}\PYG{p}{)} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{blocks}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()]}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{as\PYGZus{}json}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{p}{\PYGZob{}\PYGZcb{}}
+
+
+    \PYG{n}{clases} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+            \PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}\PYG{p}{:}\PYG{n}{Circle}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}RectTiny\PYGZdq{}}\PYG{p}{:}\PYG{n}{RectTiny}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}RectSmall\PYGZdq{}}\PYG{p}{:}\PYG{n}{RectSmall}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}RectMedium\PYGZdq{}}\PYG{p}{:}\PYG{n}{RectMedium}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}RectBig\PYGZdq{}}\PYG{p}{:}\PYG{n}{RectBig}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}RectFat\PYGZdq{}}\PYG{p}{:}\PYG{n}{RectFat}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}SquareTiny\PYGZdq{}}\PYG{p}{:}\PYG{n}{SquareTiny}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}SquareSmall\PYGZdq{}}\PYG{p}{:}\PYG{n}{SquareSmall}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}SquareHole\PYGZdq{}}\PYG{p}{:}\PYG{n}{SquareHole}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}Triangle\PYGZdq{}}\PYG{p}{:}\PYG{n}{Triangle}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}TriangleHole\PYGZdq{}}\PYG{p}{:}\PYG{n}{TriangleHole} \PYG{p}{\PYGZcb{}}
+
+    \PYG{n}{clases1} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+            \PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}\PYG{p}{:}\PYG{n}{Circle}
+            \PYG{p}{\PYGZcb{}}
+
+    \PYG{n}{Composites} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectTiny\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{1}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectSmall\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{2}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectMedium\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{3}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectBig\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{4}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectFat\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{5}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}SquareSmall\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{6}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}SquareHole\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{7}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)],}
+        \PYG{l+m+mi}{8}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}TriangleHole\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{)]}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{n}{Composites\PYGZus{}res} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectTiny\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{1}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectSmall\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{2}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectMedium\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{3}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectBig\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{4}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}RectFat\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{5}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}SquareSmall\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{6}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}SquareHole\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{7}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)],}
+        \PYG{l+m+mi}{8}\PYG{p}{:} \PYG{p}{[(}\PYG{l+s+s2}{\PYGZdq{}TriangleHole\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{True}\PYG{p}{)]}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{n}{materials} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+            \PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}stone\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
+            \PYG{l+s+s2}{\PYGZdq{}ice\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{2}\PYG{p}{\PYGZcb{}}
+
+    \PYG{n}{restrictions} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+            \PYG{l+s+s2}{\PYGZdq{}Circle\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}CircleSmall\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}RectTiny\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}RectSmall\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}RectMedium\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}RectBig\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}RectFat\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}SquareTiny\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}SquareSmall\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}SquareHole\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}Triangle\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],}
+            \PYG{l+s+s2}{\PYGZdq{}TriangleHole\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{for} \PYG{n}{element} \PYG{o+ow}{in} \PYG{n}{req\PYGZus{}np\PYGZus{}combinations}\PYG{p}{:}
+        \PYG{n}{restrictions}\PYG{p}{[}\PYG{n}{element}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]][}\PYG{n}{materials}\PYG{p}{[}\PYG{n}{element}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]]]} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+    \PYG{k}{for} \PYG{n}{piece} \PYG{o+ow}{in} \PYG{n}{Composites\PYGZus{}res}\PYG{p}{:}
+        \PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites\PYGZus{}res}\PYG{p}{[}\PYG{n}{piece}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Materials} \PYG{o}{=} \PYG{n}{restrictions}\PYG{p}{[}\PYG{n}{Composites\PYGZus{}res}\PYG{p}{[}\PYG{n}{piece}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}
+
+    \PYG{k}{for} \PYG{n}{piece} \PYG{o+ow}{in} \PYG{n}{Composites\PYGZus{}res}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites\PYGZus{}res}\PYG{p}{[}\PYG{n}{piece}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Materials}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites\PYGZus{}res}\PYG{p}{[}\PYG{n}{piece}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Valid} \PYG{o}{=} \PYG{n+nb+bp}{False}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites\PYGZus{}res}\PYG{p}{[}\PYG{n}{piece}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Valid} \PYG{o}{=} \PYG{n+nb+bp}{True}
+            \PYG{c+c1}{\PYGZsh{}if clases[Composites\PYGZus{}res[piece][0][0]].Materials[0] == 0:}
+
+        \PYG{c+c1}{\PYGZsh{}if sum(piece.Materials) == 0:}
+            \PYG{c+c1}{\PYGZsh{}piece.Valid = False}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}random\PYGZus{}chrom}\PYG{p}{(}\PYG{n}{sl}\PYG{p}{):}
+        \PYG{n}{asl} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{chrom} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{while} \PYG{n}{asl} \PYG{o}{\PYGZlt{}} \PYG{n}{sl}\PYG{p}{:}
+            \PYG{n}{prop} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{k}{if} \PYG{n}{clases}\PYG{p}{[}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{prop}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{Valid} \PYG{o}{==} \PYG{n+nb+bp}{True}\PYG{p}{:}
+                \PYG{n}{chrom}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{prop}\PYG{p}{)}
+                \PYG{n}{asl} \PYG{o}{+=} \PYG{l+m+mi}{1}
+        \PYG{c+c1}{\PYGZsh{}random.randint(0,len(Composites)\PYGZhy{}1) for p in range(ind\PYGZus{}pieces)}
+        \PYG{k}{return} \PYG{n}{chrom}
+
+    \PYG{k}{def} \PYG{n+nf}{combine\PYGZus{}pieces}\PYG{p}{():}
+        \PYG{n}{piece1} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{piece2} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}value} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}
+        \PYG{n}{prop1} \PYG{o}{=} \PYG{n}{Composite}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{])}
+        \PYG{n}{prop2} \PYG{o}{=} \PYG{n}{Composite}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{])}
+        \PYG{n}{final\PYGZus{}group} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{if} \PYG{n}{piece1} \PYG{o}{==} \PYG{n}{piece2}\PYG{p}{:}
+            \PYG{n}{initial} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+            \PYG{k}{if} \PYG{n}{initial} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} Estaran pegados}
+                \PYG{c+c1}{\PYGZsh{} Checar si los bordes coinciden}
+                \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Igual pegados\PYGZdq{})}
+                \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+                \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+                \PYG{n}{list1} \PYG{o}{=} \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Borders}
+                \PYG{n}{list2} \PYG{o}{=} \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Borders}
+                \PYG{c+c1}{\PYGZsh{} Calculate center point of each piece and add to list}
+                \PYG{n}{test}\PYG{o}{=}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                    \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])} \PYG{o}{+} \PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                    \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                    \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                    \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                    \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                    \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{mov\PYGZus{}rand} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{n}{math}\PYG{o}{.}\PYG{n}{ceil}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{l+m+mi}{90}\PYG{p}{)}
+                \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Igual separados\PYGZdq{})}
+                \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{mov\PYGZus{}rand}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{((}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{mov\PYGZus{}rand}\PYG{p}{)),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+
+                \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+                \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+                \PYG{n}{prop3} \PYG{o}{=} \PYG{n}{Composite}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{])}
+
+                \PYG{n}{prop3}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{prop3}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{prop3}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{prop3}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+
+                \PYG{n}{points} \PYG{o}{=} \PYG{p}{[[(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{mov\PYGZus{}rand}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{p}{[(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{((}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{mov\PYGZus{}rand}\PYG{p}{)),}\PYG{l+m+mi}{0}\PYG{p}{],}
+                    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{prop3}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]]}
+                \PYG{n}{com} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{delta} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{com}
+                \PYG{n}{shifted\PYGZus{}points} \PYG{o}{=} \PYG{n}{points} \PYG{o}{+} \PYG{n}{delta}
+
+                \PYG{n}{list1} \PYG{o}{=} \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Borders}
+                \PYG{n}{list2} \PYG{o}{=} \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Borders}
+                \PYG{n}{list3} \PYG{o}{=} \PYG{n}{prop3}\PYG{o}{.}\PYG{n}{Borders}
+                \PYG{c+c1}{\PYGZsh{}final\PYGZus{}group.extend(Composites[piece1])}
+                \PYG{c+c1}{\PYGZsh{}final\PYGZus{}group.extend(Composites[piece2])}
+                \PYG{c+c1}{\PYGZsh{}final\PYGZus{}group.extend(Composites[3])}
+                \PYG{c+c1}{\PYGZsh{}print(list3)}
+                \PYG{n}{test}\PYG{o}{=}\PYG{n}{Composites}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                    \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]))}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]) + (prop1.Height/2)+(prop3.Height/2) + 1)}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                    \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                    \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                    \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (prop1.Width/2) + mov\PYGZus{}rand + 1)}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                    \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                    \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                    \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (0\PYGZhy{}((prop2.Width/2) + mov\PYGZus{}rand)) \PYGZhy{} 1)}
+                    \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                    \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                    \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                    \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+            \PYG{n}{Composites}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(\PYGZob{}}\PYG{n}{new\PYGZus{}value}\PYG{p}{:}\PYG{n}{final\PYGZus{}group}\PYG{p}{\PYGZcb{})}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Diferente pegados\PYGZdq{})}
+            \PYG{n}{ap1} \PYG{o}{=} \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{*}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Height}
+            \PYG{n}{ap2} \PYG{o}{=} \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{*}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Height}
+            \PYG{k}{if} \PYG{n}{ap1} \PYG{o}{\PYGZgt{}} \PYG{n}{ap2}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{90}\PYG{p}{:}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Vertical\PYGZdq{})}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{R} \PYG{o}{=} \PYG{l+m+mi}{90}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)),}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{90}\PYG{p}{)}
+
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+
+                    \PYG{n}{points} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]]}
+                    \PYG{n}{com} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{delta} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{com}
+                    \PYG{n}{shifted\PYGZus{}points} \PYG{o}{=} \PYG{n}{points} \PYG{o}{+} \PYG{n}{delta}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]) + (prop1.Width/2))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{90}\PYG{p}{)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (0\PYGZhy{}((prop2.Width/2))) \PYGZhy{} 1)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Horizontal\PYGZdq{})}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{points} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]]}
+                    \PYG{n}{com} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{delta} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{com}
+                    \PYG{n}{shifted\PYGZus{}points} \PYG{o}{=} \PYG{n}{points} \PYG{o}{+} \PYG{n}{delta}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]))}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]) + (prop1.Width/2))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (0\PYGZhy{}((prop2.Width/2))) \PYGZhy{} 1)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{90}\PYG{p}{:}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Vertical\PYGZdq{})}
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{R} \PYG{o}{=} \PYG{l+m+mi}{90}
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)),}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{90}\PYG{p}{)}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{points} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Height}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]]}
+                    \PYG{n}{com} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{delta} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{com}
+                    \PYG{n}{shifted\PYGZus{}points} \PYG{o}{=} \PYG{n}{points} \PYG{o}{+} \PYG{n}{delta}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]))}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]) + (prop1.Width/2))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (0\PYGZhy{}((prop2.Width/2))) \PYGZhy{} 1)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{90}\PYG{p}{)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Horizontal\PYGZdq{})}
+                    \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{((}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{Material}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{points} \PYG{o}{=} \PYG{p}{[[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{l+m+mi}{0}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{))],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,(}\PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]]}
+                    \PYG{n}{com} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{delta} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{((}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{com}
+                    \PYG{n}{shifted\PYGZus{}points} \PYG{o}{=} \PYG{n}{points} \PYG{o}{+} \PYG{n}{delta}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]))}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]) + (prop1.Width/2))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                    \PYG{n}{test} \PYG{o}{=} \PYG{n}{Composites}\PYG{p}{[}\PYG{n}{piece2}\PYG{p}{]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+                    \PYG{k}{for} \PYG{n}{comp} \PYG{o+ow}{in} \PYG{n}{test}\PYG{p}{:}
+                        \PYG{n}{temp} \PYG{o}{=} \PYG{p}{[]}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[1]) + (0\PYGZhy{}((prop2.Width/2))) \PYGZhy{} 1)}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{shifted\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+                        \PYG{c+c1}{\PYGZsh{}temp.append(int(comp[2]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+                        \PYG{n}{temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comp}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+                        \PYG{n}{fin} \PYG{o}{=} \PYG{n+nb}{tuple}\PYG{p}{(}\PYG{n}{temp}\PYG{p}{)}
+                        \PYG{n}{final\PYGZus{}group}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fin}\PYG{p}{)}
+                \PYG{c+c1}{\PYGZsh{}prop1.move\PYGZus{}xy(0,(prop1.Height/2),prop1.Objetos[0].Material, 0)}
+                \PYG{c+c1}{\PYGZsh{}prop2.move\PYGZus{}xy(0,(0\PYGZhy{}(prop2.Height/2)),prop2.Objetos[0].Material, 0)}
+            \PYG{n}{Composites}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(\PYGZob{}}\PYG{n}{new\PYGZus{}value}\PYG{p}{:}\PYG{n}{final\PYGZus{}group}\PYG{p}{\PYGZcb{})}
+            \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+            \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{get\PYGZus{}values}\PYG{p}{()}
+            \PYG{n}{list1} \PYG{o}{=} \PYG{n}{prop1}\PYG{o}{.}\PYG{n}{Borders}
+            \PYG{n}{list2} \PYG{o}{=} \PYG{n}{prop2}\PYG{o}{.}\PYG{n}{Borders}
+
+        \PYG{c+c1}{\PYGZsh{}print(list1)}
+        \PYG{c+c1}{\PYGZsh{}print(list2)}
+
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} Code Adaptation \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{n}{sel\PYGZus{}operator} \PYG{o}{=} \PYG{n}{Selection}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{game\PYGZus{}path\PYGZus{}tourney}\PYG{p}{,} \PYG{n}{info}\PYG{p}{)}
+    \PYG{n}{mut\PYGZus{}operator} \PYG{o}{=} \PYG{n}{Mutation}\PYG{p}{(}\PYG{n}{per\PYGZus{}mut}\PYG{p}{,} \PYG{n}{mu}\PYG{p}{,} \PYG{n}{sigma}\PYG{p}{,} \PYG{n}{clases}\PYG{p}{)}
+    \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{UpdateComposites}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} Class Definitions \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+
+
+
+    \PYG{k}{class} \PYG{n+nc}{Individual}\PYG{p}{:}
+        \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}chromosome\PYGZsq{}}\PYG{p}{,} \PYG{p}{[])}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mask} \PYG{o}{=} \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}mask\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{}self.assign\PYGZus{}mask(Mask\PYGZus{}List[kwargs.get(\PYGZsq{}mask\PYGZsq{})])}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}dict\PYGZus{}\PYGZus{}}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{kwargs}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects} \PYG{o}{=} \PYG{p}{[}\PYG{n}{Composite}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{composite}\PYG{p}{])} \PYG{k}{for} \PYG{n}{composite} \PYG{o+ow}{in}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list\PYGZus{}gen}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}masked} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Movement} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0} \PYG{k}{for} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Struct} \PYG{o}{=} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{k}{for} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Material} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}wood\PYGZdq{}} \PYG{k}{for} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{]}
+
+        \PYG{k}{def} \PYG{n+nf}{position\PYGZus{}chromosome}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{c+c1}{\PYGZsh{}To do}
+            \PYG{c+c1}{\PYGZsh{} Here you can use the chromosome objects etc.}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{UpdateMutation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{struc} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Struct}\PYG{p}{):}
+                \PYG{k}{if} \PYG{n}{struc} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+                    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{[}\PYG{n}{c}\PYG{p}{]} \PYG{o}{=} \PYG{n}{struc}
+
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects} \PYG{o}{=} \PYG{p}{[}\PYG{n}{Composite}\PYG{p}{(}\PYG{n}{Composites}\PYG{p}{[}\PYG{n}{composite}\PYG{p}{])} \PYG{k}{for} \PYG{n}{composite} \PYG{o+ow}{in}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{]}
+
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{objeto} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects}\PYG{p}{):}
+                \PYG{k}{for} \PYG{n}{pieza} \PYG{o+ow}{in} \PYG{n}{objeto}\PYG{o}{.}\PYG{n}{Objetos}\PYG{p}{:}
+                    \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Material}\PYG{p}{[}\PYG{n}{c}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{n}{pieza}\PYG{o}{.}\PYG{n}{Material} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Material}\PYG{p}{[}\PYG{n}{c}\PYG{p}{]}
+                        \PYG{n}{pieza}\PYG{o}{.}\PYG{n}{change\PYGZus{}material}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Material}\PYG{p}{[}\PYG{n}{c}\PYG{p}{])}
+                        \PYG{n}{pieza}\PYG{o}{.}\PYG{n}{update\PYGZus{}values}\PYG{p}{()}
+                \PYG{n}{objeto}\PYG{o}{.}\PYG{n}{as\PYGZus{}dictionary} \PYG{o}{=} \PYG{n}{objeto}\PYG{o}{.}\PYG{n}{gen\PYGZus{}dictionary}\PYG{p}{()}
+
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{mov} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Movement}\PYG{p}{):}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects}\PYG{p}{[}\PYG{n}{c}\PYG{p}{]}\PYG{o}{.}\PYG{n}{move\PYGZus{}xy}\PYG{p}{(}\PYG{n}{mov}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Mut\PYGZus{}Material}\PYG{p}{[}\PYG{n}{c}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list\PYGZus{}gen}\PYG{p}{()}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{chromosome\PYGZus{}coordinates}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+
+            \PYG{k}{return} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}
+
+        \PYG{k}{def} \PYG{n+nf}{object\PYGZus{}list\PYGZus{}gen}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n}{final\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{k}{for} \PYG{n}{com} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects}\PYG{p}{:}
+                \PYG{n}{com}\PYG{o}{.}\PYG{n}{as\PYGZus{}dictionary} \PYG{o}{=} \PYG{n}{com}\PYG{o}{.}\PYG{n}{gen\PYGZus{}dictionary}\PYG{p}{()}
+                \PYG{n}{obj\PYGZus{}list} \PYG{o}{=}\PYG{p}{[]}
+                \PYG{n}{obj\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{com}\PYG{o}{.}\PYG{n}{as\PYGZus{}dictionary}\PYG{p}{)}
+                \PYG{n}{final\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{obj\PYGZus{}list}\PYG{p}{)}
+            \PYG{k}{return} \PYG{n}{final\PYGZus{}list}
+
+        \PYG{k}{def} \PYG{n+nf}{generate\PYGZus{}xml}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{writeXML}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list}\PYG{p}{,} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{write\PYGZus{}path} \PYG{o}{+}
+                \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}0\PYGZdq{}}\PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}height} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pieces} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{read\PYGZus{}xml}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Remaining\PYGZus{}Pieces} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{readXML}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{read\PYGZus{}path} \PYG{o}{+}
+                \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}\PYGZdq{}}\PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece\PYGZus{}count} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Remaining\PYGZus{}Pieces}\PYG{p}{)}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{read\PYGZus{}xml\PYGZus{}tourney}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Remaining\PYGZus{}Pieces} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{readXML}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{read\PYGZus{}path\PYGZus{}tourney} \PYG{o}{+}
+                \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}\PYGZdq{}}\PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece\PYGZus{}count} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Remaining\PYGZus{}Pieces}\PYG{p}{)}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{ind\PYGZus{}height}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{ind\PYGZus{}piece}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{ind\PYGZus{}piece\PYGZus{}count}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{assign\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{mask\PYGZus{}class}\PYG{p}{):}
+            \PYG{n}{masked} \PYG{o}{=} \PYG{n}{mask\PYGZus{}class}
+            \PYG{k}{print}\PYG{p}{(}\PYG{n}{masked}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{}self.mask = mask\PYGZus{}class}
+            \PYG{k}{return} \PYG{n}{masked}
+
+        \PYG{k}{def} \PYG{n+nf}{locate\PYGZus{}pigs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig\PYGZus{}Location} \PYG{o}{=} \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{Set\PYGZus{}Pigs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects}\PYG{p}{,} \PYG{n}{req\PYGZus{}pigs}\PYG{p}{,}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mask}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Composites\PYGZus{}Centers}\PYG{p}{)}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}fitness}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{chrom\PYGZus{}list}\PYG{p}{,} \PYG{n}{pos}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Fitness}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Fit\PYGZus{}Hamming}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Fit\PYGZus{}Pos} \PYG{o}{=}
+                \PYG{n}{Eval}\PYG{o}{.}\PYG{n}{fitness}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pieces}\PYG{p}{,}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Remaining\PYGZus{}Pieces}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{,} \PYG{n}{chrom\PYGZus{}list}\PYG{p}{,} \PYG{n}{pos}\PYG{p}{)}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+
+        \PYG{k}{def} \PYG{n+nf}{combine\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}masked}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Composites\PYGZus{}Centers} \PYG{o}{=}
+                \PYG{n}{xml}\PYG{o}{.}\PYG{n}{calculate\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list}\PYG{p}{,}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mask}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{chromosome\PYGZus{}objects}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{}self.object\PYGZus{}list = xml.calculate\PYGZus{}mask(self.object\PYGZus{}list, type\PYGZus{}castle)}
+            \PYG{k}{return} \PYG{l+m+mi}{0}
+        \PYG{k}{def} \PYG{n+nf}{generate\PYGZus{}xml\PYGZus{}masked}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{writeXML\PYGZus{}masked}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig\PYGZus{}Location}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list}\PYG{p}{,}
+                \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{write\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}0\PYGZdq{}} \PYG{o}{+}
+                    \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}
+                \PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}height} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pieces} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+            \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}XML Completo\PYGZdq{})}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{generate\PYGZus{}xml\PYGZus{}tourney}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{writeXML\PYGZus{}masked}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig\PYGZus{}Location}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list}\PYG{p}{,}
+                \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{write\PYGZus{}path\PYGZus{}tourney} \PYG{o}{+}
+                    \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}0\PYGZdq{}}\PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}height\PYGZus{}tourney} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece\PYGZus{}tourney} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pieces} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+            \PYG{k}{pass}
+
+        \PYG{k}{def} \PYG{n+nf}{generate\PYGZus{}xml\PYGZus{}elite}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{):}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{res\PYGZus{}list} \PYG{o}{=} \PYG{n}{xml}\PYG{o}{.}\PYG{n}{writeXML\PYGZus{}masked}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pig\PYGZus{}Location}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{object\PYGZus{}list}\PYG{p}{,}
+                \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{elite\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/level\PYGZhy{}\PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}gen\PYGZsq{}}\PYG{p}{))} \PYG{o}{+}
+                \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}individual\PYGZsq{}}\PYG{p}{))}  \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.xml\PYGZdq{}}\PYG{p}{))}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}height} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{ind\PYGZus{}piece} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Pieces} \PYG{o}{=} \PYG{n}{res\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+            \PYG{k}{pass}
+
+
+    \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n}{pieces}\PYG{p}{):}
+        \PYG{n}{div\PYGZus{}list} \PYG{o}{=}\PYG{p}{[]}
+        \PYG{k}{while} \PYG{n+nb+bp}{True}\PYG{p}{:}
+            \PYG{n}{div\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{pieces}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{for} \PYG{n}{col} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{)]}
+            \PYG{k}{if} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{div\PYGZus{}list}\PYG{p}{)} \PYG{o}{==} \PYG{n}{pieces}\PYG{p}{:}
+                \PYG{k}{break}
+
+        \PYG{k}{return} \PYG{n}{div\PYGZus{}list}
+
+    \PYG{c+c1}{\PYGZsh{} Generate a defined number of new composites to add to the pool of selections}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{):}
+        \PYG{n}{combine\PYGZus{}pieces}\PYG{p}{()}
+
+    \PYG{n}{pop} \PYG{o}{=} \PYG{p}{[} \PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{get\PYGZus{}random\PYGZus{}chrom}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{p}{),}
+        \PYG{n}{mask} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{p}{))} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{population}\PYG{p}{)]}
+
+    \PYG{c+c1}{\PYGZsh{} variable for controlling that the fitness of the population is compared to}
+    \PYG{c+c1}{\PYGZsh{} at least 2 others in the same timeline (between resets)}
+    \PYG{n}{gen\PYGZus{}alive} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+    \PYG{k}{with} \PYG{n}{yaspin}\PYG{p}{(}\PYG{n}{text}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Executing algorithm\PYGZdq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}cyan\PYGZdq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{sp}\PYG{p}{:}
+        \PYG{k}{while} \PYG{n}{gen} \PYG{o}{\PYGZlt{}} \PYG{n}{max\PYGZus{}gen}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{}and max(fits) \PYGZlt{} 100:}
+
+            \PYG{c+c1}{\PYGZsh{} Outside IF statement}
+            \PYG{c+c1}{\PYGZsh{} Reintegrate the ELITE member to the population and remove the one}
+            \PYG{c+c1}{\PYGZsh{} in the last possition}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{elite}\PYG{p}{):}
+                \PYG{k}{for} \PYG{n}{member} \PYG{o+ow}{in} \PYG{n}{elite}\PYG{p}{:}
+                    \PYG{n}{pop}\PYG{o}{.}\PYG{n}{insert}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{member}\PYG{p}{)}
+                    \PYG{c+c1}{\PYGZsh{}pop[0] = Individual(chromosome = member[1], mask = member[2])}
+                    \PYG{n}{pop} \PYG{o}{=} \PYG{n}{pop}\PYG{p}{[:}\PYG{n}{population}\PYG{p}{]}
+
+            \PYG{c+c1}{\PYGZsh{} Check if the current number of population multiplied by the}
+            \PYG{c+c1}{\PYGZsh{} cross\PYGZhy{}over percentage is an even or odd number, in the later}
+            \PYG{c+c1}{\PYGZsh{} case remove 1 from the value}
+            \PYG{n}{many} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{)} \PYG{o}{*} \PYG{n}{per\PYGZus{}cross}
+            \PYG{k}{if} \PYG{n}{many} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{2} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{k}{pass}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{many} \PYG{o}{=} \PYG{n}{many} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}
+
+            \PYG{c+c1}{\PYGZsh{} Combine the mask of the individual before entering the simulation}
+            \PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{for} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n}{pop}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n+nb}{hasattr}\PYG{p}{(}\PYG{n}{ind}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Fitness\PYGZsq{}}\PYG{p}{):}
+                    \PYG{k}{pass}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{ind}\PYG{o}{.}\PYG{n}{combine\PYGZus{}mask}\PYG{p}{()}
+                    \PYG{n}{ind}\PYG{o}{.}\PYG{n}{locate\PYGZus{}pigs}\PYG{p}{()}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{generate\PYGZus{}xml\PYGZus{}masked}\PYG{p}{(}\PYG{n}{individual} \PYG{o}{=} \PYG{n}{ind\PYGZus{}c}\PYG{p}{)}
+                \PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{n}{ind\PYGZus{}c} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+            \PYG{c+c1}{\PYGZsh{} Runs and instance of the game}
+            \PYG{k}{if} \PYG{n+nb}{hasattr}\PYG{p}{(}\PYG{n}{ind}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Fitness\PYGZsq{}}\PYG{p}{):}
+                \PYG{k}{pass}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{subprocess}\PYG{o}{.}\PYG{n}{call}\PYG{p}{(}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}} \PYG{o}{+} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{game\PYGZus{}path}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}}\PYG{p}{,}
+                    \PYG{n}{startupinfo}\PYG{o}{=}\PYG{n}{info}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} doesn\PYGZsq{}t capture output}
+
+            \PYG{c+c1}{\PYGZsh{} After the simulation obtain the fitness value for the population}
+            \PYG{c+c1}{\PYGZsh{} Read the xml files and get the data}
+            \PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{n}{final\PYGZus{}ind\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{k}{for} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n}{pop}\PYG{p}{:}
+                \PYG{n}{value} \PYG{o}{=} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{read\PYGZus{}xml}\PYG{p}{(}\PYG{n}{individual} \PYG{o}{=} \PYG{n}{ind\PYGZus{}c}\PYG{p}{)}
+                \PYG{n}{final\PYGZus{}ind\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{value}\PYG{p}{)}
+                \PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{n}{ind\PYGZus{}c} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+            \PYG{c+c1}{\PYGZsh{} Generate a list with the chromosome values of all individuals}
+            \PYG{c+c1}{\PYGZsh{} (required for Hamming distance)}
+            \PYG{n}{chrom\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{k}{for} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n}{pop}\PYG{p}{:}
+                \PYG{n}{chrom\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{ind}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{} Calculate the fitness for each individual}
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{):}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{get\PYGZus{}fitness}\PYG{p}{(}\PYG{n}{chrom\PYGZus{}list}\PYG{p}{,} \PYG{n}{c}\PYG{p}{)}
+                \PYG{k}{pass}
+
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} Selection steps \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+            \PYG{c+c1}{\PYGZsh{} Order the population by their fitness}
+            \PYG{n}{pop}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{(}\PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:}\PYG{n}{x}\PYG{o}{.}\PYG{n}{Fitness}\PYG{p}{,} \PYG{n}{reverse}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{} Obtain the \PYGZdq{}parents\PYGZdq{} of the generation}
+            \PYG{n}{parents} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{n}{pr} \PYG{o}{=} \PYG{l+m+mi}{1}
+            \PYG{n}{parents} \PYG{o}{=} \PYG{n}{sel\PYGZus{}operator}\PYG{o}{.}\PYG{n}{Selection\PYGZus{}Base}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{,} \PYG{n}{many}\PYG{p}{,} \PYG{n}{sel\PYGZus{}type}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} Crossover steps \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+            \PYG{n}{new\PYGZus{}members} \PYG{o}{=} \PYG{p}{[]}
+
+            \PYG{c+c1}{\PYGZsh{} Generate the cross\PYGZhy{}over operation (one\PYGZhy{}point crossover)}
+            \PYG{n}{pos\PYGZus{}offspring} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{for} \PYG{n}{cross\PYGZus{}parent} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{parents}\PYG{p}{),} \PYG{l+m+mi}{2}\PYG{p}{):}
+                \PYG{c+c1}{\PYGZsh{} Generate a copy of each parent for the cross\PYGZhy{}over operation}
+                \PYG{n}{father} \PYG{o}{=} \PYG{n}{pop}\PYG{p}{[}\PYG{n}{parents}\PYG{p}{[}\PYG{n}{cross\PYGZus{}parent}\PYG{p}{]} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome}
+                \PYG{n}{mother} \PYG{o}{=} \PYG{n}{pop}\PYG{p}{[}\PYG{n}{parents}\PYG{p}{[}\PYG{n}{cross\PYGZus{}parent} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome}
+
+                \PYG{c+c1}{\PYGZsh{} \PYGZdq{}Divide\PYGZdq{} the parents chromosomes for the operation}
+                \PYG{n}{father11} \PYG{o}{=} \PYG{n}{father}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n}{math}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]}
+                \PYG{n}{father12} \PYG{o}{=} \PYG{n}{father}\PYG{p}{[}\PYG{n}{math}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{):]}
+
+                \PYG{n}{mother11} \PYG{o}{=} \PYG{n}{mother}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n}{math}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)]}
+                \PYG{n}{mother12} \PYG{o}{=} \PYG{n}{mother}\PYG{p}{[}\PYG{n}{math}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{ind\PYGZus{}pieces}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{):]}
+
+                \PYG{c+c1}{\PYGZsh{} Generate the childs of both parents}
+                \PYG{n}{son} \PYG{o}{=} \PYG{n}{father11} \PYG{o}{+} \PYG{n}{mother12}
+                \PYG{n}{daughter} \PYG{o}{=} \PYG{n}{mother11} \PYG{o}{+} \PYG{n}{father12}
+
+                \PYG{n}{mask\PYGZus{}son} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{son}\PYG{p}{))}
+                \PYG{n}{mask\PYGZus{}daughter} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{daughter}\PYG{p}{))}
+                \PYG{c+c1}{\PYGZsh{} Replace the parents in the generation}
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{son}
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{daughter}
+
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]} \PYG{o}{=} \PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{son}\PYG{p}{,} \PYG{n}{mask} \PYG{o}{=} \PYG{n}{mask\PYGZus{}son}\PYG{p}{)}
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=}
+                    \PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{daughter}\PYG{p}{,} \PYG{n}{mask} \PYG{o}{=} \PYG{n}{mask\PYGZus{}daughter}\PYG{p}{)}
+
+                \PYG{c+c1}{\PYGZsh{} Mutate the childs (by chance like throwing a 100 side dice)}
+                \PYG{c+c1}{\PYGZsh{} If greater than the treshold then mutate}
+                \PYG{n}{chance} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{)}
+                \PYG{n}{threshold} \PYG{o}{=} \PYG{l+m+mi}{100} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{l+m+mi}{100} \PYG{o}{*} \PYG{n}{per\PYGZus{}mut}\PYG{p}{)}
+                \PYG{c+c1}{\PYGZsh{}chance = 100}
+                \PYG{k}{if} \PYG{n}{chance} \PYG{o}{\PYGZgt{}} \PYG{n}{threshold}\PYG{p}{:}
+                    \PYG{n}{var}\PYG{o}{=}\PYG{l+m+mi}{0}
+                    \PYG{n}{new\PYGZus{}chrom} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}Individual}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]} \PYG{o}{=} \PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{new\PYGZus{}chrom}\PYG{p}{,}
+                        \PYG{n}{mask} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{new\PYGZus{}chrom}\PYG{p}{)))}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}Movement}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}StrucType}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}StructMat}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]}\PYG{o}{.}\PYG{n}{UpdateMutation}\PYG{p}{()}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Mutate\PYGZdq{})}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{var}\PYG{o}{=}\PYG{l+m+mi}{1}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Not Mutate\PYGZdq{})}
+
+                \PYG{c+c1}{\PYGZsh{} The same for the second child}
+                \PYG{n}{chance} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{)}
+                \PYG{n}{threshold} \PYG{o}{=} \PYG{l+m+mi}{100} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{l+m+mi}{100} \PYG{o}{*} \PYG{n}{per\PYGZus{}mut}\PYG{p}{)}
+                \PYG{c+c1}{\PYGZsh{}chance = 100}
+                \PYG{k}{if} \PYG{n}{chance} \PYG{o}{\PYGZgt{}} \PYG{n}{threshold}\PYG{p}{:}
+                    \PYG{n}{var}\PYG{o}{=}\PYG{l+m+mi}{0}
+                    \PYG{n}{new\PYGZus{}chrom} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}Individual}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{Individual}\PYG{p}{(}\PYG{n}{chromosome} \PYG{o}{=} \PYG{n}{new\PYGZus{}chrom}\PYG{p}{,}
+                        \PYG{n}{mask} \PYG{o}{=} \PYG{n}{create\PYGZus{}new\PYGZus{}mask}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{new\PYGZus{}chrom}\PYG{p}{)))}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}Movement}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}StrucType}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=}
+                        \PYG{n}{mut\PYGZus{}operator}\PYG{o}{.}\PYG{n}{M\PYGZus{}StructMat}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)}
+                    \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{UpdateMutation}\PYG{p}{()}
+                    \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Mutate\PYGZdq{})}
+
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{]}\PYG{o}{.}\PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{n}{pos\PYGZus{}offspring}
+                \PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{ind\PYGZus{}c} \PYG{o}{=} \PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}
+                \PYG{n}{new\PYGZus{}members}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring}\PYG{p}{])}
+                \PYG{n}{new\PYGZus{}members}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{pos\PYGZus{}offspring} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{])}
+
+            \PYG{c+c1}{\PYGZsh{} Calculate the new individuals fitness by sending them to a}
+            \PYG{c+c1}{\PYGZsh{} diferent simulation track}
+
+            \PYG{c+c1}{\PYGZsh{} Generate an XML to check the fitness}
+            \PYG{k}{for} \PYG{n}{ind\PYGZus{}c}\PYG{p}{,} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{new\PYGZus{}members}\PYG{p}{):}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{combine\PYGZus{}mask}\PYG{p}{()}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{locate\PYGZus{}pigs}\PYG{p}{()}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{generate\PYGZus{}xml\PYGZus{}tourney}\PYG{p}{(}\PYG{n}{individual} \PYG{o}{=} \PYG{n}{ind\PYGZus{}c}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{} Execute the application with the two memebers}
+            \PYG{n}{subprocess}\PYG{o}{.}\PYG{n}{call}\PYG{p}{(}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}} \PYG{o}{+} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{game\PYGZus{}path\PYGZus{}tourney}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}}\PYG{p}{,}
+                \PYG{n}{startupinfo}\PYG{o}{=}\PYG{n}{info}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{} Generate a list with the chromosome values of all individuals}
+            \PYG{c+c1}{\PYGZsh{} (required for Hamming distance)}
+            \PYG{n}{chrom\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{k}{for} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n}{pop}\PYG{p}{:}
+                \PYG{n}{chrom\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{ind}\PYG{o}{.}\PYG{n}{chromosome}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{} Then obtain the remaining fitness values}
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{new\PYGZus{}members}\PYG{p}{):}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{read\PYGZus{}xml\PYGZus{}tourney}\PYG{p}{(}\PYG{n}{individual} \PYG{o}{=} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{ind\PYGZus{}c}\PYG{p}{)}
+                \PYG{n}{ind}\PYG{o}{.}\PYG{n}{get\PYGZus{}fitness}\PYG{p}{(}\PYG{n}{chrom\PYGZus{}list}\PYG{p}{,} \PYG{n}{c}\PYG{p}{)}
+
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZlt{} ELITE selection \PYGZgt{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+            \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+            \PYG{c+c1}{\PYGZsh{} Obtain the average fitness of the generation}
+            \PYG{n}{gen\PYGZus{}fit} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{n}{hamming\PYGZus{}fit} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{n}{mov\PYGZus{}fit} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{n}{best\PYGZus{}ind} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{n}{fit\PYGZus{}pop} \PYG{o}{=} \PYG{p}{[]}
+            \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{ind} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{):}
+                \PYG{n}{fit\PYGZus{}pop}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{c}\PYG{p}{,} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{Fitness}\PYG{p}{])}
+                \PYG{n}{gen\PYGZus{}fit} \PYG{o}{=} \PYG{n}{gen\PYGZus{}fit} \PYG{o}{+} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{Fitness}
+                \PYG{n}{hamming\PYGZus{}fit} \PYG{o}{+=} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{Fit\PYGZus{}Hamming}
+                \PYG{n}{mov\PYGZus{}fit} \PYG{o}{+=} \PYG{n}{ind}\PYG{o}{.}\PYG{n}{Fit\PYGZus{}Pos}
+
+            \PYG{n}{fit\PYGZus{}pop}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{(}\PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:}\PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{reverse}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+            \PYG{n}{max\PYGZus{}fit}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fit\PYGZus{}pop}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+            \PYG{n}{min\PYGZus{}fit}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fit\PYGZus{}pop}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+            \PYG{n}{fit\PYGZus{}pop} \PYG{o}{=} \PYG{n}{fit\PYGZus{}pop}\PYG{p}{[:}\PYG{l+m+mi}{5}\PYG{p}{]}
+
+            \PYG{c+c1}{\PYGZsh{}}
+            \PYG{n}{best\PYGZus{}gen}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{fit\PYGZus{}pop}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+            \PYG{c+c1}{\PYGZsh{} Add the best value to the elite list}
+            \PYG{k}{for} \PYG{n}{e} \PYG{o+ow}{in} \PYG{n}{fit\PYGZus{}pop}\PYG{p}{:}
+                \PYG{n}{elite}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{[}\PYG{n}{e}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]])}
+                \PYG{n}{elite}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{generate\PYGZus{}xml\PYGZus{}elite}\PYG{p}{(}\PYG{n}{individual} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{gen} \PYG{o}{=} \PYG{n}{gen}\PYG{p}{)}
+
+            \PYG{n}{elite}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{(}\PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:}\PYG{n}{x}\PYG{o}{.}\PYG{n}{Fitness}\PYG{p}{,} \PYG{n}{reverse}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+            \PYG{n}{elite} \PYG{o}{=} \PYG{n}{elite}\PYG{p}{[:}\PYG{n}{max\PYGZus{}elite}\PYG{p}{]}
+
+            \PYG{n}{all\PYGZus{}fit}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{gen\PYGZus{}fit}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{)))}
+            \PYG{n}{fit\PYGZus{}ham}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{hamming\PYGZus{}fit}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{)))}
+            \PYG{n}{fit\PYGZus{}Amov}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{mov\PYGZus{}fit}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{)))}
+
+            \PYG{c+c1}{\PYGZsh{} Increase value of the generation for the next cycle}
+            \PYG{n}{gen} \PYG{o}{=} \PYG{n}{gen} \PYG{o}{+} \PYG{l+m+mi}{1}
+            \PYG{n}{gen\PYGZus{}alive} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+            \PYG{c+c1}{\PYGZsh{} Print the time of the generation}
+            \PYG{n}{t\PYGZus{}gen} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{()}
+            \PYG{n}{sp}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZgt{} Gen \PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{gen}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} complete, gen duration: \PYGZdq{}} \PYG{o}{+}
+                \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t\PYGZus{}gen}\PYG{o}{\PYGZhy{}}\PYG{n}{t\PYGZus{}prev}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}, current time: \PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t\PYGZus{}gen}\PYG{o}{\PYGZhy{}}\PYG{n}{t\PYGZus{}begin}\PYG{p}{))}
+            \PYG{n}{t\PYGZus{}prev} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{()}
+
+            \PYG{c+c1}{\PYGZsh{} Copy the resulting files to a folder with the number of generation}
+            \PYG{n}{destination} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{level\PYGZus{}files\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/generation\PYGZhy{}\PYGZdq{}} \PYG{o}{+}
+                \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{current\PYGZus{}gen\PYGZus{}folder}\PYG{p}{))}
+            \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{copytree}\PYG{p}{(}\PYG{n}{sourcefolder}\PYG{p}{,} \PYG{n}{destination}\PYG{p}{)}
+            \PYG{n}{current\PYGZus{}gen\PYGZus{}folder} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+        \PYG{n}{t\PYGZus{}finish} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{()}
+        \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}Total time is: \PYGZdq{} + str(t\PYGZus{}finish\PYGZhy{}t\PYGZus{}begin))}
+        \PYG{n}{sp}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZgt{} Total time is: \PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t\PYGZus{}finish}\PYG{o}{\PYGZhy{}}\PYG{n}{t\PYGZus{}begin}\PYG{p}{))}
+
+        \PYG{c+c1}{\PYGZsh{} Stop the spinner}
+        \PYG{n}{sp}\PYG{o}{.}\PYG{n}{ok}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Ok\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Plot the results for Fitness}
+    \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{))}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{all\PYGZus{}fit}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}.b\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}General Fitness\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{min\PYGZus{}fit}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}g\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Min fitness value\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{max\PYGZus{}fit}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}*\PYGZhy{}r\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Max fitness value\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{lgd} \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}center left\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{))}
+    \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Fitness\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}extra\PYGZus{}artists}\PYG{o}{=}\PYG{p}{(}\PYG{n}{lgd}\PYG{p}{,),} \PYG{n}{bbox\PYGZus{}inches}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}tight\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Same for Hamming Distance}
+    \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{))}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{fit\PYGZus{}ham}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}g\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Average Hamming Distance\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{lgd} \PYG{o}{=} \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}center left\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{))}
+    \PYG{n}{pylab}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Hamming\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}extra\PYGZus{}artists}\PYG{o}{=}\PYG{p}{(}\PYG{n}{lgd}\PYG{p}{,),} \PYG{n}{bbox\PYGZus{}inches}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}tight\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Add the data to the json files}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}all\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{all\PYGZus{}fit}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hamming\PYGZus{}avg\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{fit\PYGZus{}ham}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}min\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{min\PYGZus{}fit}
+    \PYG{n}{json\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}max\PYGZus{}fit\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max\PYGZus{}fit}
+
+    \PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}results.json\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{outfile}\PYG{p}{:}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{outfile}\PYG{p}{)}
+        \PYG{n}{json}\PYG{o}{.}\PYG{n}{dump}\PYG{p}{(}\PYG{n}{json\PYGZus{}data}\PYG{p}{,} \PYG{n}{outfile}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Clean the workspace}
+    \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{copytree}\PYG{p}{(}\PYG{n}{experimentsource}\PYG{p}{,} \PYG{n}{experimentdestination}\PYG{p}{)}
+
+    \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{copyfile}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}results.json\PYGZsq{}}\PYG{p}{,}
+        \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{experimentdest}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}/results.json\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{copyfile}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Fitness.png\PYGZsq{}}\PYG{p}{,}
+        \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{experimentdest}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}/Fitness.png\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{shutil}\PYG{o}{.}\PYG{n}{copyfile}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Hamming.png\PYGZsq{}}\PYG{p}{,}
+        \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{project\PYGZus{}root}\PYG{p}{,} \PYG{n}{experimentdest}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}/Hamming.png\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

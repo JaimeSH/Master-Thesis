@@ -39,7 +39,7 @@
 \BOOKMARK [2][-]{subsection.5.4.4}{Operador de mutaci\363n}{section.5.4}% 39
 \BOOKMARK [2][-]{subsection.5.4.5}{Representacion de individuos}{section.5.4}% 40
 \BOOKMARK [2][-]{subsection.5.4.6}{C\341lculo de fitness}{section.5.4}% 41
-\BOOKMARK [2][-]{subsection.5.4.7}{Seleccion de miembros \351lite}{section.5.4}% 42
+\BOOKMARK [2][-]{subsection.5.4.7}{Selecci\363n de miembros \351lite}{section.5.4}% 42
 \BOOKMARK [0][-]{chapter.6}{Experimentos y Resultados}{}% 43
 \BOOKMARK [1][-]{section.6.1}{Generaci\363n de niveles estables}{chapter.6}% 44
 \BOOKMARK [2][-]{subsection.6.1.1}{Experimento 1}{section.6.1}% 45
@@ -49,7 +49,8 @@
 \BOOKMARK [0][-]{chapter.7}{Conclusiones y trabajo futuro}{}% 49
 \BOOKMARK [1][-]{section.7.1}{Conclusiones}{chapter.7}% 50
 \BOOKMARK [1][-]{section.7.2}{Trabajo futuro}{chapter.7}% 51
-\BOOKMARK [0][-]{appendix*.37}{Bibliography}{}% 52
-\BOOKMARK [0][-]{appendix.A}{}{}% 53
-\BOOKMARK [1][-]{section.A.1}{Codigo del sitema}{appendix.A}% 54
-\BOOKMARK [2][-]{section*.38}{Codigo principal}{section.A.1}% 55
+\BOOKMARK [0][-]{appendix*.38}{Bibliografia}{}% 52
+\BOOKMARK [0][-]{appendix.A}{Anexos}{}% 53
+\BOOKMARK [1][-]{section.A.1}{C\363digo del sitema}{appendix.A}% 54
+\BOOKMARK [2][-]{section*.39}{C\363digo principal}{section.A.1}% 55
+\BOOKMARK [2][-]{section*.40}{C\363digo para calculo de fitness}{section.A.1}% 56

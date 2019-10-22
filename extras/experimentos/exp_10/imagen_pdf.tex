@@ -1,0 +1,24 @@
+\begin{figure}[ht!]
+    \begin{center}
+        \subfigure[Resultados de aptitud para el experimento]{%
+            \label{fig:first}
+            %\scalebox{0.8}{\includegraphics[width=0.8\textwidth]{Fitness.png}}
+            \includegraphics[width=0.8\textwidth]{Fitness.png}
+        }\\%
+        \subfigure[Distancia Hamming promedio en el experimento]{%
+           \label{fig:second}
+           %\scalebox{0.8}{\includegraphics[width=0.8\textwidth]{Fitness.png}}
+           \includegraphics[width=0.8\textwidth]{Hamming.png}
+        }\\ 
+            
+        %  ------- End of the first row ----------------------%
+        \subfigure[Mejor individuo de la primera generacion]{%
+            \label{fig:third}
+            \scalebox{2.0}{\input{Gen1Ind1Bundle.tex}}
+        }%
+        \subfigure[Peor individuo de la primera generacion]{%
+            \label{fig:fourth}
+            \scalebox{2.0}{\input{Gen1WorstBundle.tex}}
+        }
+    \end{center}
+\end{figure}

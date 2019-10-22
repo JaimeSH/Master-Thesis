@@ -85,7 +85,7 @@ de las primeras 50 generaciones, por tal motivo se decidió reducir la cantidad
 de generaciones a 10 pero incrementar el total de individuos para obtener una
 mayor diversidad.
 
-Como se explico en el parrafo anterior los experimentos que se presentaran
+Como se explico en el párrafo anterior los experimentos que se presentaran
 cubrirán las variables de 20 individuos durante un total de 10 generaciones y
 utilizando las variables presentadas en la tabla \ref{table:parametros_ga}.
 Utilizando estas configuraciones se realizaron un total de [Write number here?]
@@ -251,7 +251,7 @@ malos como los que se pueden ver en las esquinas del nivel arriba de los
 elementos de concreto o inclusive el conjunto de la base de la estructura
 central, estos elementos pueden ser buenos compuestos para futuras pruebas pero
 debido a la manera en cómo se comportan los niveles en la simulación son
-destruidos y por tal se pierden en futuras generaciones.
+destruidos y por tal se pierden en futuras generaciones. 
 
 Este experimento se puede asemejar mucho al que se discutió en \ref{chap6:exp_2}
 en donde los resultados de aptitud de los individuos se mantenían en incrementos
@@ -289,13 +289,51 @@ subsecuentes para la generación de niveles.
 \section{Diversidad del contenido creado}
 \label{section:chap6_diversity_results}
 
-La segunda seccion de resultados se enfoca en los diferentes resultados
-obtenidos de diversidad de los niveles generados, para poder generear resultados
-enfocados en la diversidad de los niveles es sistema se basa en la combinacion
-de los resultados de estabilidad e integrando los resultados de las funciones de
-entropia y distancia de hamming, la manera en como estas funciones modifican la 
+La segunda sección de resultados se enfoca en mostrar los resultados obtenidos
+en cuanto a las creación de diversidad de niveles dentro de los experimentos, la
+manera en como se trata este caso de generación es mediante el uso de un valor
+de aptitud en los individuos combinando los puntos establecidos en el capitulo
+\ref{chapter:implementation} específicamente en la sección
+\ref{subsection:fitness_calculation}, esto es, los niveles generados toman en
+cuenta ambos aspectos de las funciones siendo que se buscan tener los individuos
+que logren mantener estabilidad durante las simulaciones y al mismo tiempo que
+logren ser diferentes a los niveles que ya se tienen, los puntos que evalúa son:
 
-La segunda sección de resultados se enfoca en los diferentes resultados
+\begin{itemize}
+  \item Estabilidad
+  \item Diferentes compuestos utilizados
+  \item Diferencia en la estructura de los niveles
+\end{itemize}
+
+El ejemplo mostrado en la Figura \ref{figure:exp_10_a} muestra un experimento en
+donde la primera generación crea niveles relativamente diferentes, conforme se
+avanza en las generaciones los niveles tienden a asemejarse unos de otros debido
+al uso de los miembros elite en las generaciones, sin embargo al final del
+experimento se logra obtener un nivel que mantiene un cierto nivel de diferencia
+para con los demás de la población, uno de los puntos que se debe de tratar en
+este aspecto es el hecho de que al no tener una facilidad de agregar compuestos
+a la lista de posibles compuestos utilizables se tiene el problema de que los
+niveles no cambian mucho de manera interna, el método de agregar compuestos
+nuevos a la población es mediante el uso de la mutación de los individuos, sin
+embargo este solo se realiza con los nuevos individuos y no con aquellos que
+siguen existiendo dentro de la población.
+
+\import{extras/experimentos/exp_10/}{test.tex}
+
+El uso de ambas funciones de fitness en la evaluación de los individuos conlleva
+un cierto nivel de complejidad al momento de evolucionar a los individuos, esto
+se debe a que los individuos tratan de ser lo mas diferentes posibles por medios
+de selección y combinación, esto provoca que los individuos obtenidos en las
+ultimas generaciones tengan una tendencia de ser diferentes en cuanto a la
+distribución de los compuestos de cada uno, pero muchas veces al tratar de ser
+diferentes generan puntos de inestabilidad en las estructuras generadas. De
+igual manera como se explico anteriormente los individuos obtenidos en estas
+evoluciones tienen mayor tendencia a ser similares a aquel con mejor valor de
+estabilidad, en este caso la tendencia de este experimento es que los elementos
+se mantengan en su mayoría parecidos al mostrado en la parte inferior de la
+Figura \ref{fig:exp10_fourth}.
+
+Así mismo esta sección de resultados se enfoca en los diferentes resultados
 obtenidos de diversidad de los compuestos generados, es decir, se mostrarán los
 diferentes compuestos que se lograron generar durante las simulaciones del
 sistema, el conjunto de ejemplos que se utilizaran para esto se presenta en la
@@ -307,7 +345,7 @@ algunas de las estructuras generadas tienen la posibilidad de caer si se les da
 el tiempo suficiente para que el desplazamiento de peso logre tomar efecto, sin
 embargo muchos de los conjuntos obtenidos pueden ser evolucionados de manera
 independiente de tal manera que se pueda obtener elementos como los mostrados en
-las figure \ref{figure:chap6_div_2} en los cuales las bases de los compuestos
+las Figuras \ref{figure:chap6_div_2} en los cuales las bases de los compuestos
 sean modificadas para que en vez de tener una sola base que puede ser inestable
 se tengan dos en ambos lados que permitan al compuesto tener la estabilidad
 necesaria para que no se vean tan afectadas por la gravedad del juego o por

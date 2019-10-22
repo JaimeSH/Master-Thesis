@@ -1,0 +1,113 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} Evaluation metrics for the fitness of the individuals}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{} The metric to evaluate the fitness of an individual are:}
+    \PYG{c+c1}{\PYGZsh{} 1. If the number of pieces is different give a penalty}
+    \PYG{c+c1}{\PYGZsh{} 2. If the positioning of the pieces is diferent for more than 1 give a penalty}
+    \PYG{c+c1}{\PYGZsh{} The penalties are given has follows}
+    \PYG{c+c1}{\PYGZsh{} Initial fitness 100\PYGZpc{}}
+    \PYG{c+c1}{\PYGZsh{} \PYGZhy{} size\PYGZus{}difference}
+    \PYG{c+c1}{\PYGZsh{}       (remaining\PYGZus{}pieces * 100) / original\PYGZus{}pieces}
+    \PYG{c+c1}{\PYGZsh{} \PYGZhy{} position\PYGZus{}error}
+    \PYG{c+c1}{\PYGZsh{}       for each piece}
+    \PYG{c+c1}{\PYGZsh{}           if the piece position is different by more than 2}
+    \PYG{c+c1}{\PYGZsh{}               ((1 * 100) / original\PYGZus{}pieces)}
+    \PYG{c+c1}{\PYGZsh{}           else}
+    \PYG{c+c1}{\PYGZsh{}               ((1 * 100) / original\PYGZus{}pieces) * (((abs(position) * 100) / 2) / 100)}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}            Check the angle}
+    \PYG{c+c1}{\PYGZsh{}               if different by more/less than ± 5 then penalize}
+    \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{} After the evaluation is over if a stable group remains in the file}
+    \PYG{c+c1}{\PYGZsh{} this group will be added to the pool of pieces}
+    \PYG{c+c1}{\PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{}}
+
+    \PYG{k+kn}{from} \PYG{n+nn}{AngryBirdsGA} \PYG{k+kn}{import} \PYG{o}{*}
+    \PYG{k+kn}{import} \PYG{n+nn}{math}
+    \PYG{k+kn}{import} \PYG{n+nn}{hashlib}
+    \PYG{k+kn}{from} \PYG{n+nn}{copy} \PYG{k+kn}{import} \PYG{n}{deepcopy}
+
+
+    \PYG{k}{def} \PYG{n+nf}{fitness}\PYG{p}{(}\PYG{n}{ind\PYGZus{}orig}\PYG{p}{,} \PYG{n}{ind\PYGZus{}fin}\PYG{p}{,} \PYG{n}{chromosome}\PYG{p}{,} \PYG{n}{pop}\PYG{p}{,} \PYG{n}{pos}\PYG{p}{):}
+        \PYG{n}{criteria} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{c+c1}{\PYGZsh{}criteria = size\PYGZus{}dif(ind\PYGZus{}orig, ind\PYGZus{}fin)}
+        \PYG{n}{criteria} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{dif\PYGZus{}pieces}\PYG{p}{(}\PYG{n}{chromosome}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{10}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} 240}
+        \PYG{n}{criteria} \PYG{o}{+=} \PYG{n}{calc\PYGZus{}entropy}\PYG{p}{(}\PYG{n}{chromosome}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{100}
+        \PYG{n}{hamming\PYGZus{}dist} \PYG{o}{=} \PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{calc\PYGZus{}hamming}\PYG{p}{(}\PYG{n}{chromosome}\PYG{p}{,} \PYG{n}{pop}\PYG{p}{,} \PYG{n}{pos}\PYG{p}{))}
+        \PYG{n}{criteria} \PYG{o}{+=} \PYG{n}{hamming\PYGZus{}dist}
+
+        \PYG{n}{criteria\PYGZus{}new} \PYG{o}{=} \PYG{p}{[}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{criteria}\PYG{p}{),} \PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{hamming\PYGZus{}dist}\PYG{p}{)]}
+
+        \PYG{c+c1}{\PYGZsh{}Evaluate fitness based on stability}
+        \PYG{n}{tot\PYGZus{}fitness} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{tot\PYGZus{}fitness} \PYG{o}{+=} \PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{size\PYGZus{}dif}\PYG{p}{(}\PYG{n}{ind\PYGZus{}orig}\PYG{p}{,} \PYG{n}{ind\PYGZus{}fin}\PYG{p}{))}
+        \PYG{n}{tot\PYGZus{}fitness} \PYG{o}{+=} \PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{position\PYGZus{}error}\PYG{p}{(}\PYG{n}{ind\PYGZus{}orig}\PYG{p}{,} \PYG{n}{ind\PYGZus{}fin}\PYG{p}{))}
+
+        \PYG{k}{return} \PYG{p}{[}\PYG{n}{tot\PYGZus{}fitness}\PYG{p}{,} \PYG{n}{criteria\PYGZus{}new}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{]}
+
+    \PYG{k}{def} \PYG{n+nf}{calc\PYGZus{}hamming}\PYG{p}{(}\PYG{n}{chromosome}\PYG{p}{,} \PYG{n}{pop}\PYG{p}{,} \PYG{n}{pos}\PYG{p}{):}
+        \PYG{n}{total} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{c}\PYG{p}{,} \PYG{n}{chrom} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{pop}\PYG{p}{):}
+            \PYG{k}{if} \PYG{n}{c} \PYG{o}{!=} \PYG{n}{pos}\PYG{p}{:}
+                \PYG{n}{total}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{hamming\PYGZus{}distance}\PYG{p}{(}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{chromosome}\PYG{p}{),}
+                    \PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{chrom}\PYG{p}{))))}
+
+        \PYG{n}{total}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{(}\PYG{n}{key}\PYG{o}{=}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:}\PYG{n}{x}\PYG{p}{,} \PYG{n}{reverse}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{total}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+
+
+    \PYG{k}{def} \PYG{n+nf}{calc\PYGZus{}entropy}\PYG{p}{(}\PYG{n}{ind}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} First calculate the frequency of the elements in array}
+        \PYG{n}{value\PYGZus{}list} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{ind}\PYG{p}{)}
+
+        \PYG{n}{freqList} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{piece} \PYG{o+ow}{in} \PYG{n}{value\PYGZus{}list}\PYG{p}{:}
+            \PYG{n}{ctr} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{for} \PYG{n}{ch} \PYG{o+ow}{in} \PYG{n}{ind}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{ch} \PYG{o}{==} \PYG{n}{piece}\PYG{p}{:}
+                    \PYG{n}{ctr} \PYG{o}{+=} \PYG{l+m+mi}{1}
+            \PYG{n}{freqList}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{ctr}\PYG{p}{)} \PYG{o}{/} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{ind}\PYG{p}{))}
+
+        \PYG{n}{result} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{for} \PYG{n}{e} \PYG{o+ow}{in} \PYG{n}{freqList}\PYG{p}{:}
+            \PYG{n}{result} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{e}\PYG{o}{*}\PYG{n}{math}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{n}{e}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{))}
+        \PYG{n}{result} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{result}
+        \PYG{k}{return} \PYG{n}{result}
+
+    \PYG{k}{def} \PYG{n+nf}{dif\PYGZus{}pieces}\PYG{p}{(}\PYG{n}{b}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}type\PYGZus{}list = [piece[0] for piece in b]}
+        \PYG{k}{return} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{b}\PYG{p}{))}
+
+    \PYG{k}{def} \PYG{n+nf}{size\PYGZus{}dif}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,} \PYG{n}{b}\PYG{p}{):}
+        \PYG{n}{val\PYGZus{}a} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{a}\PYG{p}{)}                      \PYG{c+c1}{\PYGZsh{} Original amount}
+        \PYG{n}{val\PYGZus{}b} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)}                      \PYG{c+c1}{\PYGZsh{} Remaining amount}
+        \PYG{n}{percentage} \PYG{o}{=} \PYG{p}{(}\PYG{n}{val\PYGZus{}b} \PYG{o}{*} \PYG{l+m+mi}{100}\PYG{p}{)}\PYG{o}{/}\PYG{n}{val\PYGZus{}a}    \PYG{c+c1}{\PYGZsh{} Percentage to remove from total}
+        \PYG{k}{return} \PYG{n}{percentage}
+
+    \PYG{k}{def} \PYG{n+nf}{position\PYGZus{}error}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,} \PYG{n}{b}\PYG{p}{):}
+        \PYG{n}{total\PYGZus{}error} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{for} \PYG{n}{piece} \PYG{o+ow}{in} \PYG{n}{b}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} 0 = Block}
+            \PYG{c+c1}{\PYGZsh{} 1 = Material}
+            \PYG{c+c1}{\PYGZsh{} 2 = x}
+            \PYG{c+c1}{\PYGZsh{} 3 = y}
+            \PYG{c+c1}{\PYGZsh{} 4 = r}
+            \PYG{c+c1}{\PYGZsh{} 5 = id}
+            \PYG{k}{try}\PYG{p}{:}
+                \PYG{n}{orig} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{piece}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{])]}
+                \PYG{n}{error\PYGZus{}xy} \PYG{o}{=} \PYG{l+m+mi}{0} \PYG{k}{if} \PYG{l+m+mf}{1.0} \PYG{o}{\PYGZgt{}} \PYG{n}{math}\PYG{o}{.}\PYG{n}{hypot}\PYG{p}{((}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{piece}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]))} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{orig}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{])),}
+                    \PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{piece}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{orig}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{])))} \PYG{k}{else} \PYG{p}{((}\PYG{l+m+mi}{100}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{a}\PYG{p}{))} \PYG{o}{*} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.5}\PYG{p}{)}
+                \PYG{n}{error\PYGZus{}z} \PYG{o}{=} \PYG{l+m+mi}{0} \PYG{k}{if} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5} \PYG{o}{\PYGZlt{}} \PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{orig}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]))} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{piece}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])))} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{5} \PYG{k}{else}
+                    \PYG{p}{((}\PYG{l+m+mi}{100}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{a}\PYG{p}{))} \PYG{o}{*} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.5}\PYG{p}{)}
+                \PYG{n}{total\PYGZus{}error} \PYG{o}{=} \PYG{n}{total\PYGZus{}error} \PYG{o}{+} \PYG{n}{error\PYGZus{}xy} \PYG{o}{+} \PYG{n}{error\PYGZus{}z}
+            \PYG{k}{except} \PYG{n+ne}{IndexError}\PYG{p}{:}
+                \PYG{n}{text} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Missing values \PYGZhy{} Pieces destroyed or something?...\PYGZdq{}}
+        \PYG{k}{return} \PYG{n}{total\PYGZus{}error}
+
+
+    \PYG{k}{def} \PYG{n+nf}{hamming\PYGZus{}distance}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,} \PYG{n}{b}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} Calculate and return the Hamming distance of the two sets}
+        \PYG{k}{return} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{c1} \PYG{o}{!=} \PYG{n}{c2} \PYG{k}{for} \PYG{n}{c1}\PYG{p}{,} \PYG{n}{c2} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,} \PYG{n}{b}\PYG{p}{))}
+\end{Verbatim}
