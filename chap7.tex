@@ -2,10 +2,10 @@
 \label{chapter:conclusions-and-future-work}
 
 En las siguientes secciones se presentan las conclusiones a las que se llegaron
-durante el desarrollo del proyecto de tesis presentado en este documento, sobre
-la manera en cómo se implementaron los aspectos propuestos, así como de los
-resultados que se lograron obtener mediante el uso de estas propuestas. Así
-mismo dentro de la última sección de este capítulo se discuten y proponen
+durante el desarrollo del proyecto de tesis presentado en este documento. 
+Sobre la manera en cómo se implementaron los aspectos propuestos, así como de los
+resultados que se lograron obtener. Así mismo dentro de la última sección de
+este capítulo se discuten y proponen
 diferentes métodos que pueden ser implementados a futuro para mejorar los
 resultados obtenidos, rutas de investigación que se teorizaron podrían funcionar
 así como aspectos que requieren de mejorar para un funcionamiento más fluido del
@@ -15,38 +15,42 @@ sistema.
 \label{section:conclusions}
 
 Esta tesis presenta un método novedoso para la generación de niveles del juego de
-Angry Birds apoyándose en las mecánicas de la evolución genética y de tomando
-aspectos de open-ended evolution. El sistema que se logró generar cuenta con las
+Angry Birds apoyándose en las mecánicas de la evolución genética y tomando
+aspectos de open-ended evolution. El sistema cuenta con las
 capacidades para generar estructuras compuestas utilizando elementos básicos del
 juego, además que de que debido a la manera en cómo fue programado es posible
 modificar los módulos de clases sin requerir modificaciones enormes en el código
 fuente, por ejemplo, es posible realizar modificaciones a las funciones de
 selección y mutación que se reflejen de manera rápida en el sistema al realizar
-las simulaciones de igual manera el sistema de evaluación se puede mejorar ya
+las simulaciones. De igual manera el sistema de evaluación se puede mejorar ya
 sea cambiando las métricas de evaluación propuestas o agregando nuevas según sea
 requerido.
 
 Para fines de este proyecto el sistema fue probado con el simulador de Science
-Birds utilizando todos los puntos propuestos en la sección
+Birds utilizando los puntos propuestos en la sección
 \ref{chapter:proposed-method} y se obtuvieron resultados como los mostrados en
 la sección \ref{chapter:experiments-and-results}, sin embargo, una de las ideas
-en el desarrollo de este proyecto es el de permitir la adaptabilidad en el
+en el desarrollo de este proyecto es el de permitir la adaptabilidad
+%% No se entiende muy bien la idea 
+%%
+ en el
 sentido de que se espera que siempre y cuando un caso de estudio particular es
 decir un juego diferente tenga niveles que puedan ser descompuestos hasta las
 expresiones mínimas, es decir los bloques de construcción que permitirán generar
 un nivel será posible en teoría utilizar este mismo sistema para generar niveles
 en otros juegos simplemente ajustando algunas variables que permitan comparar
 los compuestos a fin de obtener los resultados esperados.
-
+%%
+%%
 La implementación mostrada en la sección \ref{chapter:proposed-method} muestra
-cómo se explicó anteriormente las ideas que se consideran fueron las mejores
+cómo se explicó anteriormente, las ideas que se consideran fueron las mejores
 para desarrollar el sistema, sin embargo, aquellas mostradas como propuestas
 anteriores demuestran los cambios por los cuales el sistema tuvo que pasar para
 poder obtener lo que consideramos como el "mejor" en términos de lo que se
 proponía lograr, así como estos mismos métodos podían aproximar resultados a los
 obtenidos en el sistema final pueden existir diferentes técnicas que no se
-exploraron a detalle que logren obtener resultados iguales o inclusive mejores,
-ejemplos como los presentados en la sección \ref{chapter:related-work}
+exploraron a detalle que logren obtener resultados iguales o inclusive mejores.
+Ejemplos como los presentados en la sección \ref{chapter:related-work}
 demuestran que diferentes personas lograron tener diferentes métodos de atacar
 esta problemática, desde el uso de sistemas inteligentes o sistemas
 auto-adaptables, mediante el uso de estas diferentes técnicas se observa una
