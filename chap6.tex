@@ -7,19 +7,19 @@ correcta funcionalidad de lo creado, así como para revisar que efectivamente el
 sistema hace lo que fue propuesto en capítulos anteriores, eso es la generación
 de niveles estables y diferentes entre sí.
 
-La manera en cómo se representarán estos resultados será mediante el uso de dos
+Estos resultados se presentan mediante el uso de dos
 gráficas, la primera establece los valores de fitness mínimos y máximos que se
-logran alcanzar durante las generaciones, además de esto en la misma grafica se
+logran alcanzar durante las generaciones, además de esto en la misma gráfica se
 presenta una línea extra que representa el promedio de los fitness de los mismos
-individuos, siguiente de esto se presenta una segunda grafica que representa la
+individuos, después de esto se presenta una segunda gráfica que representa la
 \textit{distancia hamming} mínima alcanzada en cada conjunto de individuos
-durante las generaciones, como se explicó anteriormente esta grafica representa
+durante las generaciones, como se explicó anteriormente esta gráfica representa
 el valor mínimo de cambios entre los conjuntos de listas de genotipos de los
-individuos, esta grafica tendrá la tendencia de ir reduciéndose conforme avanzan
+individuos, esta gráfica tendrá la tendencia de ir reduciéndose conforme avanzan
 las generaciones debido a que mientras más se avanza en las generaciones los
 elementos elite tenderán a ir apareciendo más.
 
-La manera en cómo se define el valor de fitness de los individuos es como se
+La manera en la que se define el valor de fitness de los individuos es como se
 explica en la sección \ref{subsection:fitness_calculation} es mediante la
 separación de los dos aspectos de importancia en los niveles, primero la
 \textit{estabilidad} que define el comportamiento del genotipo durante la
@@ -60,17 +60,17 @@ Los parámetros del algoritmo genético explicados en el capitulo
 \end{table}
 
 El contenido de este capítulo se encargará de mostrar las capacidades de
-generación del sistema propuesto e implementado según lo mostrado en el capitulo
-\ref{chapter:implementation} de acuerdo a las áreas explicadas anteriormente.
-Cada experimento mostrado se describirá en los ámbitos de la capacidad de
-generar niveles \textit{estables} así como también la capacidad de generar
-niveles \textit{diversos}, puesto que se tienen una gran cantidad de individuos
-en las simulaciones entonces para demostrar ambos ámbitos se tomarán el
+generación del sistema propuesto e implementado según lo propuesto en el capítulo
+\ref{chapter:implementation}.
+Cada experimento se evaluará según su capacidad de
+generar niveles \textit{estables} así como la capacidad de generar
+niveles \textit{diversos}, puesto que se tiene una gran cantidad de individuos
+en las simulaciones, entonces para demostrar ambas capacidades se tomarán el
 \textit{mejor} y el \textit{peor} del final de cada experimento, así como un
-individuo aleatorio de la primera generación, utilizando estos niveles generados
-se explicará la manera en cómo se evoluciono la diversidad de los niveles y
-cuáles fueron los compuestos que se pueden rescatar de las simulaciones para ser
-utilizados en experimentos subsecuentes, para tener un campo nivelado para todos
+individuo aleatorio de la primera generación. Utilizando estos niveles generados
+se explicará la manera en la que evolucionó la diversidad de los niveles y
+cuáles fueron los compuestos que se pueden rescatar de las simulaciones, para ser
+utilizados en experimentos subsecuentes. Para tener un campo nivelado para todos
 los experimentos aquellos compuestos que aparecen durante los experimentos no
 son reutilizados en otros experimentos subsecuentes.
 
@@ -85,7 +85,7 @@ de las primeras 50 generaciones, por tal motivo se decidió reducir la cantidad
 de generaciones a 10 pero incrementar el total de individuos para obtener una
 mayor diversidad.
 
-Como se explico en el párrafo anterior los experimentos que se presentaran
+Como se explicó en el párrafo anterior los experimentos que se presentarán
 cubrirán las variables de 20 individuos durante un total de 10 generaciones y
 utilizando las variables presentadas en la tabla \ref{table:parametros_ga}.
 Utilizando estas configuraciones se realizaron un total de [Write number here?]
@@ -102,15 +102,15 @@ donde se busca obtener los mejores niveles tomando en cuenta las posiciones de
 las piezas colocadas antes y después de las simulaciones siempre teniendo en
 cuenta que aquellos niveles que logren mantenerse de pie o inclusive mantener la
 mayor cantidad de compuestos aun presentes en el nivel son los que se consideran
-como los mejores niveles para cada generación, de la misma manera en cómo se
+como los mejores niveles para cada generación, de la misma manera, cómo se
 explico anteriormente aquellos niveles que logren cumplir estas características
 son registrados en una lista que mantiene la información de los mejores niveles
 generados a lo largo de las generaciones y elementos de este mismo grupo son
 reintegrados a la población al iniciar la siguiente generación.
 
-La manera en cómo se representan los resultados de las simulaciones es mediante
-el uso de 2 graficas que muestran los valores de la función de aptitud
-obtenidos, en esta grafica se muestra el promedio de los individuos en una
+Se representan los resultados de las simulaciones mediante
+el uso de 2 gráficas que muestran los valores de la función de aptitud
+obtenidos, en esta gráfica se muestra el promedio de los individuos en una
 generación dada, el valor mínimo que se alcanza en dicha generación, así como el
 valor de aptitud máximo que se logra obtener en las generaciones, en este
 aspecto cabe resaltar que obtener no todos los individuos con un valor de 100\%
@@ -127,7 +127,7 @@ representados a su vez de dos maneras, la imagen superior representa el estado
 inicial del individuo, es decir al momento de iniciar la simulación, mientras
 que la imagen inferior representa el estado final del mismo individuo, es decir
 el punto en el que la simulación termino, mediante el uso de estas imágenes es
-posible apreciar la manera en cómo los niveles generados se comportan en
+posible apreciar cómo los niveles generados se comportan en
 términos de estabilidad bajo la gravedad proporcionada en el juego.
 
 De igual manera se presenta información de la última generación de la
@@ -144,21 +144,21 @@ logran acercarse lo suficiente a los objetivos del sistema.
 
 La Figura \ref{figure:exp_01_a} más específicamente en la parte
 \ref{fig:exp1_first} la gráfica de los resultados de aptitud obtenidos durante
-las simulaciones, en esta grafica se puede notar que durante las primeras
+las simulaciones, en esta gráfica se puede notar que durante las primeras
 generaciones se un elemento de la población siempre mantiene el mismo nivel de
 estabilidad, una vista de este elemento de la población se puede aprecia en la
 sub Figura \ref{fig:exp1_third} de la misma imagen, así mismo se obtuvo uno de
 los "peores" elementos de la generación el cual se muestra en la sub Figura
-\ref{fig:exp1_fourth}, como se puede apreciar en la imagen este elemento de la
+\ref{fig:exp1_fourth}, como se puede apreciar en la imagen, este elemento de la
 población inicia la simulación con varias piezas muy elevadas e inclusive mal
-acomodadas lo cual genera que al terminar la simulación solo una parte de las
+acomodadas, lo cual genera que al terminar la simulación solo una parte de las
 estructuras originales se mantenga de pie.
 
-Como es posible apreciar en la gráfica este conjunto de niveles con dicha
-estabilidad se logra mantener durante varias generaciones no es sino hasta las
-últimas dos generaciones en donde por medio de las operaciones de cruce y
-mutación se obtiene un nuevo individuo capaz de llegar al 80\% de estabilidad,
-este nuevo elemento se puede aprecia en \ref{fig:exp1_fifth}, aquí
+Como es posible apreciar en la gráfica, este conjunto de niveles con dicha
+estabilidad se logra mantener durante varias generaciones, no es sino hasta las
+últimas dos generaciones, en donde, por medio de las operaciones de cruce y
+mutación se obtiene un nuevo individuo capaz de llegar al 80\% de estabilidad.
+Este nuevo elemento se puede aprecia en \ref{fig:exp1_fifth}, aquí
 mismo se puede aprecia que a pesar de tener el mejor resultado de aptitud de
 la generación en ocasiones no es posible mantener el balance en todos los
 elementos, sin embargo, muchos se logran mantener sin ser destruidos, de igual
@@ -181,7 +181,7 @@ a la población es el que se agrega de vuelta a la lista de miembros elite.
 \label{chap6:exp_2}
 
 Como se puede apreciar en la Figura \ref{figure:exp_03_a} o más directamente en
-\ref{fig:exp3_first} esta experimento inicio mal debido a la manera en cómo se
+\ref{fig:exp3_first}, este experimento inicio mal, debido a la manera en la que se
 generaron los compuestos al iniciar las generaciones, de igual manera este inicio
 no tan bueno se puede aprecia en la sub Figura \ref{fig:exp3_third} en donde
 varios de los elementos generados no logran mantenerse en buen balance y terminan
@@ -193,7 +193,7 @@ la estructura que se esperaba crear en ese punto.
 
 A pesar de tener mal acomodo y distribución de los elementos en el caso del peor
 individuo, se puede apreciar que a pesar de generar estructuras mal ordenadas es
-posible generar estructuras que por la manera en cómo se acomodan debido a la
+posible generar estructuras que por la manera en la que se acomodan debido a la
 gravedad son capaces de mantenerse de pie, este tipo de estructuras aun siendo
 visualmente un acomodo "errado" de las piezas puede ser considerado como una
 estructura que puede ser rescatada para su uso en futuras generaciones.
@@ -236,22 +236,22 @@ mal la simulación al tener elementos que inicial con muy mal acomodo lo cual
 provoca que la estructura que se había construido se desplome y muchos de los
 elementos que la conformaban se destruyan en el proceso, aun teniendo un mal
 inicio se puede apreciar dos estructuras generadas que logra salvarse, estos dos
-tipos de estructuras son interesantes debido a la manera en cómo están
+tipos de estructuras son interesantes debido a la manera en la que están
 conformadas lo cual permite que se mantengan estables a pesar de que la parte
 superior de ambas se desplome y pudiera afectar la estabilidad de las mismas. 
 
 El segundo caso mostrado en \ref{fig:exp4_fourth} demuestra el problema del que
 se ha estado hablando de los niveles generados, pero a una más grande escala en
 donde la mayor parte de los componentes del nivel aparecen demasiado elevados y
-separados entre sí además de tener el problema del mal acomodo de los mismo lo
-cual provoca que terminen cayendo todos al piso y se destruyan en el proceso,
-aun así, como se ha estado tratando de hacer énfasis en estos resultados es que
-conjuntos como los que se lograron generar en este nivel no son completamente
-malos como los que se pueden ver en las esquinas del nivel arriba de los
+separados entre sí además de tener el problema del mal acomodo de los mismos lo
+cual provoca que terminen cayendo todos al piso y se destruyan en el proceso.
+Aun así, como se ha estado tratando de hacer énfasis en estos resultados es que
+conjuntos como los que se lograron generar en este nivel, no son completamente
+malos, como los que se pueden ver en las esquinas del nivel arriba de los
 elementos de concreto o inclusive el conjunto de la base de la estructura
-central, estos elementos pueden ser buenos compuestos para futuras pruebas pero
-debido a la manera en cómo se comportan los niveles en la simulación son
-destruidos y por tal se pierden en futuras generaciones. 
+central. Estos elementos pueden ser buenos compuestos para futuras pruebas pero
+debido a cómo se comportan los niveles en la simulación son
+destruidos y por lo tanto, se pierden en futuras generaciones. 
 
 Este experimento se puede asemejar mucho al que se discutió en \ref{chap6:exp_2}
 en donde los resultados de aptitud de los individuos se mantenían en incrementos
@@ -290,14 +290,15 @@ subsecuentes para la generación de niveles.
 \label{section:chap6_diversity_results}
 
 La segunda sección de resultados se enfoca en mostrar los resultados obtenidos
-en cuanto a las creación de diversidad de niveles dentro de los experimentos, la
-manera en como se trata este caso de generación es mediante el uso de un valor
-de aptitud en los individuos combinando los puntos establecidos en el capitulo
-\ref{chapter:implementation} específicamente en la sección
+en cuanto a las creación de diversidad de niveles dentro de los experimentos. La
+manera en la que se trata este tipo de generación, es mediante el uso de un valor
+de aptitud en los individuos, combinando los puntos establecidos en el capítulo
+\ref{chapter:implementation}, específicamente en la sección
 \ref{subsection:fitness_calculation}, esto es, los niveles generados toman en
-cuenta ambos aspectos de las funciones siendo que se buscan tener los individuos
+cuenta ambos aspectos de las funciones. Se buscan a los individuos
 que logren mantener estabilidad durante las simulaciones y al mismo tiempo que
-logren ser diferentes a los niveles que ya se tienen, los puntos que evalúa son:
+logren ser diferentes a los niveles que ya se tienen, los puntos que evalúa la función
+de fitness son:
 
 \begin{itemize}
   \item Estabilidad
@@ -310,7 +311,7 @@ donde la primera generación crea niveles relativamente diferentes, conforme se
 avanza en las generaciones los niveles tienden a asemejarse unos de otros debido
 al uso de los miembros elite en las generaciones, sin embargo al final del
 experimento se logra obtener un nivel que mantiene un cierto nivel de diferencia
-para con los demás de la población, uno de los puntos que se debe de tratar en
+para con los demás de la población. Uno de los puntos que se debe de tratar en
 este aspecto es el hecho de que al no tener una facilidad de agregar compuestos
 a la lista de posibles compuestos utilizables se tiene el problema de que los
 niveles no cambian mucho de manera interna, el método de agregar compuestos
@@ -321,38 +322,37 @@ siguen existiendo dentro de la población.
 \import{extras/experimentos/exp_10/}{test.tex}
 
 El uso de ambas funciones de fitness en la evaluación de los individuos conlleva
-un cierto nivel de complejidad al momento de evolucionar a los individuos, esto
-se debe a que los individuos tratan de ser lo mas diferentes posibles por medios
-de selección y combinación, esto provoca que los individuos obtenidos en las
+un cierto nivel de complejidad, al momento de evolucionar a los individuos. Esto
+se debe a que los individuos tratan de ser lo mas diferentes posibles, por medio
+de la selección y la combinación, lo cual provoca que los individuos obtenidos en las
 ultimas generaciones tengan una tendencia de ser diferentes en cuanto a la
-distribución de los compuestos de cada uno, pero muchas veces al tratar de ser
-diferentes generan puntos de inestabilidad en las estructuras generadas. De
-igual manera como se explico anteriormente los individuos obtenidos en estas
+distribución de los compuestos de cada uno. Muchas veces, al tratar de ser
+diferentes, generan puntos de inestabilidad en las estructuras generadas. De
+igual manera como se explicó anteriormente los individuos obtenidos en estas
 evoluciones tienen mayor tendencia a ser similares a aquel con mejor valor de
 estabilidad, en este caso la tendencia de este experimento es que los elementos
 se mantengan en su mayoría parecidos al mostrado en la parte inferior de la
 Figura \ref{fig:exp10_fourth}.
 
-Así mismo esta sección de resultados se enfoca en los diferentes resultados
+Esta sección se enfoca en los resultados
 obtenidos de diversidad de los compuestos generados, es decir, se mostrarán los
 diferentes compuestos que se lograron generar durante las simulaciones del
-sistema, el conjunto de ejemplos que se utilizaran para esto se presenta en la
-Figura \ref{figure:chap6_div_1} en donde se muestran tres grupos de
-agrupamientos que se lograron obtener en diferentes experimentos, en estos se
+sistema. El conjunto de ejemplos que se utilizarón para esto, se presenta en la
+Figura \ref{figure:chap6_div_1} en donde se muestran tres grupos 
+que se lograron obtener en diferentes experimentos, en estos se
 puede mostrar que el sistema es capaz de generar estructuras que logran ser
-interesantes, innovadoras y llamativas para el usuario, de manera independiente
-algunas de las estructuras generadas tienen la posibilidad de caer si se les da
-el tiempo suficiente para que el desplazamiento de peso logre tomar efecto, sin
-embargo muchos de los conjuntos obtenidos pueden ser evolucionados de manera
-independiente de tal manera que se pueda obtener elementos como los mostrados en
-las Figuras \ref{figure:chap6_div_2} en los cuales las bases de los compuestos
-sean modificadas para que en vez de tener una sola base que puede ser inestable
-se tengan dos en ambos lados que permitan al compuesto tener la estabilidad
-necesaria para que no se vean tan afectadas por la gravedad del juego o por
-acciones del jugar al estar interactuando en el nivel.
+interesantes, innovadoras y llamativas para el usuario. De manera independiente,
+algunas de las estructuras generadas tienen la posibilidad de caerse, si se les da
+el tiempo suficiente. Sin embargo, muchos de los conjuntos obtenidos pueden ser evolucionados de manera
+independiente, de tal manera que se pueda obtener elementos como los mostrados en
+las Figuras \ref{figure:chap6_div_2} en las que las bases de los compuestos
+sean modificadas, para que en lugar de tener una sola base, que la haga inestable,
+se tengan dos, en ambos lados. Lo que permite al compuesto tener la estabilidad
+necesaria, para que no se vean tan afectadas por la gravedad del juego o por
+acciones del jugar, al estar el usuario interactuando con el nivel.
 
-Para estos conjuntos de resultados cabe remarcar que debido a la manera en como
-esta codificado el sistema los conjuntos que se presentan como los resultantes
+Para estos conjuntos de resultados cabe remarcar que debido a la manera en la que
+está codificado el sistema los conjuntos que se presentan como los resultantes
 así como los niveles que terminan conformando son muy difíciles de poder
 replicar, es posible replicar partes que conforman las estructuras completas
 debido a que muchos de estos son combinaciones a veces sencillas, sin embargo, no
@@ -368,6 +368,7 @@ diferentes entre otros experimentos realizados.
 
 \import{extras/experimentos/diversity/}{test.tex}
 
+%% NO ESTA CLARO
 A pesar de que los resultados que se muestran en esta sección logran demostrar
 que el sistema es capaz tanto de crear niveles diferentes e interesantes así
 como de generar compuestos de estructuras nuevas con la base de las piezas
